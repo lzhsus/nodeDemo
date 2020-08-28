@@ -1,0 +1,42 @@
+<style lang="less">
+  
+</style>
+<template>
+<div class="demo">
+    组件，{{counter}}，{{mynum}}
+    <div>
+        <button @tap="indexEmitTap">组件抛出事件</button>
+    </div>
+</div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { mapState, mapActions } from '@wepy/x';
+import store from '@/store';
+import Api from 'Api';
+import appConfig from 'Appconfig';
+import * as common from 'Common';
+wepy.component({
+    store,
+    props: {
+        mynum: {
+            type: Number,
+            coerce: function (v) {
+                return +v
+            },
+            default: 50,
+        }
+    },
+    data: {
+        
+    },
+    computed: {
+        ...mapState([ 'counter' ]),
+    },
+    methods: {
+        indexEmitTap(){
+            this.$emit('index-emit',this.mynum); 
+        },
+    },
+});
+</script>

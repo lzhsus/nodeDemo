@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <script src="https://res.wx.qq.com/open/js/cloudbase/1.0.0/cloud.js"></script> -->
+<script src="https://imgcache.qq.com/qcloud/tcbjs/1.5.1/tcb.js"></script>
+<script>
+    // let url = 'https://res.wx.qq.com/open/js/cloudbase/1.0.0/cloud.js'
+    // $ajax = $.getJSON(url + '?callback=?', {});
+
+    // $ajax.done(res => {
+    //     console.log(res)
+    //     entry()
+
+    // }).fail(res => {
+    //     cloud.init({
+    //         appid: 'wxe7bd80f710c7cb35',
+    //         env: 'text-4zw80',
+    //     })
+    // });
+    function cloudInit() {
+        cloud.init({
+            appid: 'wxe7bd80f710c7cb35',
+            env: 'text-4zw80',
+        })
+    }
+    async function entry() {
+        await cloudInit()
+
+        // cloud.callFunction({
+        //     name: 'control',
+        //     data: {
+        //         $url: "campaign/home",
+        //         data: {},
+        //         header: {
+        //             appid: "wx1314c40d5e143385",
+        //             authorization: "Bearer 35_-qeKKX7vD00cxBaTsDCs_FjFCnGzMlfyv830hdH0bcZsnzMvijMqv9OXfCTmVhTtP5yqwvsUD4iGTZwnSTrxx9R0wCvKOGi7c40vu-wx9i28GRvC0m6zwW-lahtFeLECbnZhocj0PTVOudPDDKEjAGAVCW"
+        //         }
+        //     }
+        // }).then(res => {
+
+        // }).catch(err => {
+
+        // })
+    }
+    // entry()
+    const app = tcb.init({
+        env: 'env-vvwpklgy'  // 此处填入你的环境ID
+    });
+    app.auth({
+        persistence: 'session' //在窗口关闭时清除身份验证状态
+    }).anonymousAuthProvider()
+        .signIn()   //AnonymousAuthProvider.signIn() 匿名登录云开发
+        .then((res) => { //登录成功
+            console.log('登录成功', res)
+        }).catch(err => {
+            console.log("登录失败", err) //登录失败
+        })
+
+</script>

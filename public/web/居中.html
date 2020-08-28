@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/../css/demo.css">
+    
+</head>
+<body>
+    <div id="box">
+    </div>
+    <a href='居中.html'>返回首页</a>
+</body>
+</html>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+    getFiles()
+    function getFiles() {
+        $.get('http://127.0.0.1:3000/web/files', (res) => {
+            res = JSON.parse(res)
+            var list = res.result
+            console.log(list)
+            var str = '<ul>'
+            for(var i=0;i<list.length;i++){
+                // console.log(list[i])
+                var data = list[i].split(/web\\/)
+                var href = ''+data[1]+''+'?id=1';
+                str = str+'<li><a href='+href+'>'+data[1]+'</a> </li>'
+            }
+            str = str+'</ul>'
+            $('#box').html(str)
+        })
+    }
+</script>
+<script>
+    // var a={b:true}
+
+    // if(a&&a.b){
+    //     console.log('*************')
+    // }
+    // const street = a?.b;
+
+    // if(street){
+    //     console.log('*************')
+    // }
+    // this永远指向最后调用他的那个对象
+
+    // this所在的函数被普通调用时 执行window，果然当前是严格模式，则指向underfind
+    // this所在的函数被以obj的形式调用 ，则指向这个对象
+
+    // 当 csll apply加入后 this的指向被改变了
+    // call执行与对象 apply执行与数组
+    // function a(a,b,c){
+    //     console.log(this)
+    //     console.log(this.name)
+    //     console.log(a,b,c)
+    // }
+    // const b = {
+    //     name:"少时诵诗书所所所所所"
+    // }
+    // // a.call(b,1,2,3)
+    // // a.apply(b,[1,2])  //apply 参数为数组 this对象
+
+    // const c = a.bind(b,5,6,7)
+    // // c()
+    // Function.prototype.my_call = function(context,...arg){
+    //     const fn = Symbol('临时属性');
+    //     context[fn] = this;
+    //     context[fn](...arg);
+    //     delete context[fn];
+    // }
+    // Function.prototype.my_apply = function(context,arg){
+    //     const fn = Symbol('临时属性');
+    //     context[fn] = this;
+    //     context[fn](...arg);
+    //     delete context[fn];
+    // }
+    // function test(){
+
+    // }
+    // test.my_call(b,1,2,3);
+    // test.my_apply(b,[1,2,3]);
+// 当页面布局 和几个属性发生改变时就会引起回流 相当于重新加载页面
+// 添加 删除元素 改变元素位置 尺寸 填充 边框 宽度高度
+// 浏览器 会自动 生成一个列队 用来单独存放 引起回流 聪慧的数据，等添加的到一定数量或者一定时间 
+// 浏览器酒水flsah列队 进行批次处理
+// 回流操作  
+    // 首次渲染
+    // 浏览器常客尺寸发送改变
+    // 元素的尺寸位置发送改变
+    // 元素的内容发送翻遍（数字或者图片的带下）
+    // 元素 字体发送改变
+    // 删除或者添加课件元素
+    // 激活css为了hover
+    // 查询默写属性 或者某些方法
+// 优化
+    // 直接添加或者删除类名
+    // 避免使用table布局
+    // 尽可能在dom树末端改变样式，尽可能在dom树里面改变样式
+    // 使用display:nono;技术 值引起两次回流和重绘
+    // function demo1(){
+    //     console.log(111)
+    // }
+    // // setTimeout(()=>{
+    // //     demo1()
+    // //     console.log(5555)
+    // // },1000) 
+    // setInterval(() => {
+
+    //     demo1()
+    // }, 1000);
+    // var a=[]
+    // function demo3(){
+    //     for(let i=0;i<1000000;i++){
+    //         a.push(i)
+    //     }
+    // }
+    // function demo2(){
+    //     for(let i=0;i<1000000;i++){
+    //         a.push(i)
+    //     }
+    // }
+    // function demo4(){
+    //     for(let i=0;i<1000000;i++){
+    //         a.push(i)
+    //     }
+    // }
+    // function demo5(){
+    //     for(let i=0;i<1000000;i++){
+    //         a.push(i)
+    //     }
+    // }
+    // function demo6(){
+    //     for(let i=0;i<1000000;i++){
+    //         a.push(i)
+    //     }
+    // }
+    // function demo7(){
+    //     for(let i=0;i<1000000;i++){
+    //         a.push(i)
+    //     }
+    // }
+    // setTimeout(() => {
+    //     demo3()
+    //     demo4()
+    //     demo4()
+    //     demo5()
+    //     demo6()
+    //     demo7()
+    //     console.log(222)
+    // }, 5000);
+    // function timer(){
+    //     console.log(1111)
+    //     var a=requestAnimationFrame(timer)
+    //     console.log('---',a)
+    // }
+    // requestAnimationFrame(timer)
+</script>

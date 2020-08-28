@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // function foo4(){
+    //     f=100;
+    //     let g=f;
+    //     g++;
+    //     return g;
+    // }
+
+    // console.log(f)
+    // console.log(g)
+//     const clothes = ['jacket', 't-shirt'];
+// clothes.length = 0;
+// //减少数组length属性的值的副作用就是删除数组元素
+// console.log(clothes[0]); // => ???
+// const length = 4;
+// const numbers = [];
+// for (var i = 0; i < length; i++);
+// {
+//   numbers.push(i + 1);
+// }
+
+// console.log(numbers); // => ???   [5]
+// let i;
+// for (i = 0; i < 3; i++) {
+//   const log = () => {
+//     console.log(i);
+//   }
+//   setTimeout(log, 2000);
+// }
+// console.log(myVar);   // => ???
+// console.log(myConst); // => ???
+
+// var myVar = 'value';
+// const myConst = 3.14;
+// function varTest() {
+//   var x = 31;
+//   if (true) {
+//     var x = 71;  // same variable!
+//     console.log(x);  // 71
+//   }
+//   console.log(x);  // 71
+// }
+// function letTest() {
+//   let x = 31;
+//   if (true) {
+//     let x = 71;  // different variable
+//     console.log(x);  // 71
+//   }
+//   console.log(x);  // 31
+// }
+// varTest()
+// letTest()
+// 变量提升（默认)underfind 函数提上  会把整个作用域最高端提升
+// console.log(a)
+let a=0;
+// console.log(a)
+if(true){
+// console.log(a)
+    let a=1
+}
+console.log(a)
+// let const 不存在变量提升 会直接报错ReferenceError
+// 再区域块内容  let 声明前使用变量 将会执行到暂时性死区 temproral dead zone TDZ
+// 在作用域顶端到块中声明前都属于暂时性死区 temproral dead zoom TDZ
+
+// let 声明的变量纯在变量提升,但是由于暂时性死区  无法在声明前访问这个变量
+// 暂时性死区 也就意味着typeof 不在是一个百分百安全的操作 因为typeof会八错
+{
+    typeof name;
+    // let name;
+}
+// 在块级作用域内存在let 声明的变量;
+// 他素白尼古丁
+// var 可以重复声明
+// let 在相同块级作用域不可重复声明;
+var aaaa=111111;
+let bbbb=222222
+// window.aaaa=aaaa;
+delete window.aaaa;
+console.log(window)
+// es5 中全局对象的属性与全局变量基本是等价的,但是也是有区别，比如通过var声明的全局变量不能使用delete从window.fobal 上删除，不过在变量访问上基本等价
+// es6 中做了严格的区分,使用var和function 声明的全局变量依旧作为全局对象 let cosnt 声明的全局变量不属于全局对象的属性
+
+// cosnt 常量一旦复制  就不可以在改变 但是这并不意味着cosnt 声明的本身不可变
+console.log(obj)
+const obj = {
+
+}
+obj.a=1111
+console.log(obj)
+const str = 100;
+// str=6666 Assignment to constant variable. 赋值给常量的变量权限报错
+console.log(str)
+// 复合变量保存的是引用 复合类型 数组 对象的常量不指向数组 而是执行数据heap坐在的地址stack
+</script>

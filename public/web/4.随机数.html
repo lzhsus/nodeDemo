@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/../css/demo.css">
+</head>
+<body>
+     Math 函数</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.PI 圆周率</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.round(7.5) //返回x为四舍五入的最接近的值的整数</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.pow(5,2) //返回值是 5 的2 次幂</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.sqrt(84) //返回84的平方根</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.abs(-5)  //取绝对值</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.ceil(1.1)  //值为 上舍最接近的值</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.floor(0.1)  //取值为下舍最接近的值</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.sin(10)  //返回角度x 的正弦</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.cos(10)  //返回角度x 的余弦</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.min()  //最小值</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.max()//最大值</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Math.random()  //0-1（不包括1） 随机数</br>
+     Math 常量</br>
+    &nbsp;&nbsp;&nbsp;&nbsp;Math.PI   //返回圆周率</br>
+     返回指定随机数 包含min,max</br>
+</body>
+</html>
+<script>
+    // Math 函数
+        // Math.PI 圆周率
+        // Math.round(7.5) //返回x为四舍五入的最接近的值的整数
+        // Math.pow(5,2) //返回值是 5 的2 次幂
+        // Math.sqrt(84) //返回84的平方根
+        // Math.abs(-5)  //取绝对值
+        // Math.ceil(1.1)  //值为 上舍最接近的值
+        // Math.floor(0.1)  //取值为下舍最接近的值
+        // Math.sin(10)  //返回角度x 的正弦
+        // Math.cos(10)  //返回角度x 的余弦
+        // Math.min()  //最小值
+        // Math.max()//最大值
+        // Math.random()  //0-1（不包括1） 随机数
+    // Math 常量
+        // Math.PI   //返回圆周率
+    // 返回指定随机数 包含min,max
+    function getRandomInteger(min,max){
+        return Math.floor(Math.random()*(max-min+1))+min;
+    }
+    var a=0;
+    var b=0
+    for(let i=0;i<10000000;i++){
+        if(getRandomInteger(0,1)==0){
+            a++
+        }else{
+            b++
+        }
+    }
+    console.log(a,b)
+</script>

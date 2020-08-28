@@ -1,0 +1,67 @@
+<template>
+    <div class="container">
+        <web-view bindmessage="bindmessage" :src="webviewUrl"></web-view>
+    </div>
+</template>
+
+<script>
+import wepy from '@wepy/core';
+import Api from 'Api';
+import appConfig from 'Appconfig';
+import * as common from 'Common';
+import mixinsIndex from 'Mixinsindex';
+import mixinShare from 'Mixinsshare';
+import { login } from '@/services/api/apiRequest';
+
+wepy.page({
+    mixins: [mixinsIndex, mixinShare],
+    data: {
+        loginInfo: '',
+        webviewUrl: '',
+    },
+    computed: {},
+    methods: {
+        bindmessage(e){
+            let data = e.detail.data[e.detail.data.length-1]||'';
+            if( data ){
+                console.log('bindmessage',data)
+                for( name in data ) {
+                    appConfig[name] = data[name]
+                    console.log('appConfig[name]',appConfig)
+                }
+            }
+        },
+        setWevivewUrl(){
+            let parameter = "token="+this.loginInfo.token+"&appid="+appConfig.appid;
+            if( this.link.indexOf("?")!=-1 ){
+                this.webviewUrl = this.link+"&"+parameter;
+            }else{
+                this.webviewUrl = this.link+"?"+parameter;
+            }
+        }
+    },
+    onLoad(opt) {
+        this.loginInfo = wx.getStorageSync(appConfig.envVersion+'LoginInfo')||'';
+        this.link = decodeURIComponent(opt.link||'');
+        if( !this.loginInfo ){
+            login().then((res)=>{
+                this.loginInfo = res;
+                this.setWevivewUrl();
+            });
+        }else{
+            this.setWevivewUrl();
+        }    
+    }
+});
+</script>
+<style lang="less">
+ 
+</style>
+<config>
+{
+    usingComponents: {
+        
+    }
+}
+</config>
+

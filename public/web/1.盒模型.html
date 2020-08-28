@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/../css/demo.css">
+    <style>
+        *{margin: 0;padding: 0;list-style: none;}
+        .box1{
+            width: 100px;height: 100px;
+            background: red;
+            padding: 20px;margin: 20px;
+            box-sizing: content-box;
+        }
+        .box3{
+            width: 100px;height: 100px;
+            background: red;
+            padding: 20px;margin: 20px;
+            box-sizing: border-box;
+        }
+        .box2{
+            width: 100%;height: 100%;background: yellow;
+        }
+        .red{
+            color:red;
+        }
+        .back{
+            width:200px;height:200px;
+        }
+    </style>
+</head>
+<body>
+    <p>标准和模型</p>
+    <p>标准盒子模型的宝库范围：padding margin border content 并且宽高只包含content,不包含其他部分</p>
+    <p>.box1{
+        width: 100px;height: 100px;
+        background: red;
+        padding: 20px;margin: 20px;
+        <span class="red">box-sizing: content-box;</span>
+        
+    }
+    .box2{
+        width: 100%;height: 100%;background: yellow;
+    }</p>
+    <!-- 标准和模型 -->
+    <!-- 标准盒子模型的宝库范围：padding margin border content 并且宽高只包含content,不包含其他部分 -->
+    <div class="box1">
+        <div class="box2">11111</div>
+    </div>
+    <p>怪异盒子模型</p>
+    <p>怪异盒子模型的保安返回 padding margin border content, 其中宽高包含padding border</p>
+    <p>
+        .box3{
+            width: 100px;height: 100px;
+            background: red;
+            padding: 20px;margin: 20px;
+            <span class="red">box-sizing: border-box;</span>
+        }
+        .box2{
+            width: 100%;height: 100%;background: yellow;
+        }</p>
+    <!-- 怪异盒子模型 -->
+    <!-- 怪异盒子模型的保安返回 padding margin border content, 其中宽高包含pading border -->
+    <div class="box3">
+        <div class="box2">11111</div>
+    </div>
+</body>
+</html>

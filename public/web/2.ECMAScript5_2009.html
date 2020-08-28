@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/../css/demo.css">
+    <style>
+        .red{
+            color:red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ECMAScript5 2009新定义</h1>
+    <p>"use strict" 严格模式：不可以使用未定义的变量，一些旧的浏览器不理解会抛出错误</p>
+    <p>use strict 只是一个字符串表达式</p>
+    <P>
+        String.trim() 删除字符串两端的空格字符串</br>
+        Array.isArray()  检查对象是否为数组  </br>
+        Array.forEach()  为每个数组元素条用一次函数</br>
+        Array.map()     重新编辑数据，返回新的数组</br>
+        Array.filter()  return 返回复合条件的数据 </br>
+        Array.reduce()  用于计算数组数据指定元素的和 </br>
+        Array.reducRight()  计算总和</br>
+        Array.every()   检查所有元素是否复合条件  返回blooer</br>
+        Array.some()   检查所有数组元素 判读是否存在复合条件的数据</br>
+        Array.indexOf() 检查数组中是否存在  返回对应的下标 否则返回 -1 </br>
+        Array.lastIndexOf() 同上 从末尾算起</br>
+        JSON.parse()  将文本字符串 转对象格式</br>
+        JSON.stringfy( )  将JSON对象转为字符串</br>
+        <!--  -->
+        Date.now() 返回毫秒数 同 Date().getTime()</br>
+        <!--  -->
+        ES5 允许使用获取 设置对象属性的方法 定义</br>
+        
+    </P>
+    <p>
+         var person = {</br>
+             firstName: "Bill",</br>
+             lastName: "Gates",</br>
+             language: "NO",</br>
+         };</br>
+        
+         更改属性：(添加或更改对象属性)</br>
+         <span class="red">Object.defineProperty</span>(person, "language", {</br>
+             value: "EN",</br>
+             writable: true,//是否可写</br>
+             enumerable: true,//是否可枚举</br>
+             configurable: false,//描述属性是否可以被删除 默认false</br>
+         });</br>
+         同上 更改多个属性
+         <span class="red">Object.defineProperties()</span>
+    </p>
+    <!--  -->
+    <!-- <p>Function扩展</p> -->
+    <P>
+        bind() 将函数内的this绑定为Obj并将函数返回</br>
+        bind call apply 都能指定函数中的this,</br>
+            call apply 时立即调用韩式</br>
+            bind  是将函数返回</br>
+        
+    </p>
+    <p>
+        // funciton </br>
+        var obj = {</br>
+            username:'kobe'</br>
+        }</br>
+        // function foo(){</br>
+        //     // this 指向windows</br>
+        //     console.log(this)</br>
+        // }</br>
+        // ...rest 返回参数数组</br>
+        function foo(...data){</br>
+            // this 指向windows</br>
+            console.log(this,data)</br>
+        }</br>
+        // foo()</br>
+        // 此时this指向obj</br>
+        // foo.call(obj)</br>
+        // foo.apply(obj)</br>
+        // 穿参直接冲地二个参数传入</br>
+        // call 单个参数传入</br>
+        foo.call(obj,11,22)</br>
+        // apply 传递数组参数</br>
+        foo.apply(obj,[33,44])</br>
+        // bind 的特点是绑定完成this不会立即执行，而是返回一个函数</br>
+        var bar = foo.bind(obj,55,66)</br>
+        console.log(bar)</br>
+        bar()</br>
+    </p>
+</body>
+
+</html>
+<script>
+    // "use strict"  严格模式
+    // 不可以使用未定义的变量，
+    // 旧浏览器如果不理解他们就不会抛出错误
+    // "use strict" 只是一个字符串表达式
+    // String.trim()删除字符串两端的空包字符串
+    // Array.isArray() 检查对象是否为数组
+    // Array.forEach() 为每个数组元素调用一次函数
+    // Array.map()     重新编辑数据，返回新的数组
+    // Array.filter()  return符合条件的数据
+    // Array.reduce()  计算指定子数据的和
+    // Array.reduceRight()  计算总和
+    // Array.every()   这个例子检查是否所有值都超过 18： 
+    // var numbers = [45, 4, 9, 16, 25];
+    // var allOver18 = numbers.every(myFunction);
+    // console.log(allOver18)
+    // function myFunction(value) {
+    //     return value > 18;
+    // }
+    // Array.some()    检查是 否 有值超过 18：
+    // var numbers = [45, 4, 9, 16, 25];
+    // var allOver18 = numbers.some(myFunction);
+    // console.log(allOver18)
+    // function myFunction(value) {
+    // return value > 18;
+    // }
+    // Array.indexOf() 检索数组中的某个算是值并返回其位置
+    // Array.lastIndexOf() 从数组尾部开始查询
+    // JSON.parse() 将文本字符串转为JavaScript对象格式
+    // JSON.stringify() 将遵循JSON表示法的字符串
+    // Date.now() 返回毫秒数
+    // Date.getTime() 结果相同
+    // ES5 允许使用类似于获取或设置属性的语义定义对象法法
+    // 创建对象
+    // var person = {
+    //     firstName:"aaaa",
+    //     lashName:"zzzzzz",
+    //     get fullName(){
+    //         return this.firstName+' '+ this.lashName;
+    //     }
+    // }
+    // console.log(person.fullName)
+    // var person = {
+    //     firstName: "Bill",
+    //     lastName: "Gates",
+    //     language: "NO",
+    //     get lang() {
+    //         return this.language;
+    //     },
+    //     set lang(value) {
+    //         this.language = value;
+    //     }
+    // }
+    // person.lang = "en";
+    // console.log(person.lang)
+    // 创建对象：
+    // var person = {
+    //     firstName: "Bill",
+    //     lastName: "Gates",
+    //     language: "NO",
+    // };
+
+    // 更改属性：(添加或更改对象属性)
+    // Object.defineProperty(person, "language", {
+    //     value: "EN",
+    //     writable: true,//是否可写
+    //     enumerable: true,//是否可枚举
+    //     configurable: false,//描述属性是否可以被删除 默认false
+
+    // });
+    // person.language = '2222222'
+    // // 枚举属性
+    // var txt = "";
+    // for (var x in person) {
+    //     txt += person[x] + "<br>";
+    // }
+    // console.log(txt)
+    // var obj = {};
+
+    // 添加或者修改多个属性
+    // Object.defineProperties(obj, {
+    //     name: {
+    //         enumerable: true,
+    //         configurable: true,
+    //         get: function () {
+    //             return this.__name;
+    //         },
+    //         set: function (newVal) {
+    //             this.__name = 'definePropertyTest';
+    //         }
+    //     },
+    //     age: {
+    //         enumerable: true,
+    //         configurable: true,
+    //         get: function () {
+    //             return this.__age;
+    //         },
+    //         set: function (newVal) {
+    //             this.__age = '18';
+    //         }
+    //     },
+
+    // });
+    // obj.name = 'definePropertyTest1';
+
+    // console.log(obj.name)
+    // var object=1;
+    // Object.keys(obj)
+    // for (const key in object) {
+    //     if (object.hasOwnProperty(key)) {
+    //         const element = object[key];
+    //         console.log('-----')
+    //     }
+    // }
+
+    // var obj = { name: "getOwnPropertyDescriptor" }
+    // // 返回指定对象上一个自由属性对应的属性描述值
+    // console.log(Object.getOwnPropertyDescriptor(obj, "name") )
+    // console.log(Object.getOwnPropertyDescriptor(obj, "ccc") )
+    // 访问原型
+    // console.log(Object.getPrototypeOf(obj))
+    // funciton 
+    var obj = {
+        username:'kobe'
+    }
+    // function foo(){
+    //     // this 指向windows
+    //     console.log(this)
+    // }
+    // ...rest 返回参数数组
+    function foo(...data){
+        // this 指向windows
+        console.log(this,data)
+    }
+    // foo()
+    // 此时this指向obj
+    // foo.call(obj)
+    // foo.apply(obj)
+    // 穿参直接冲地二个参数传入
+    // call 单个参数传入
+    foo.call(obj,11,22)
+    // apply 传递数组参数
+    foo.apply(obj,[33,44])
+    // bind 的特点是绑定完成this不会立即执行，而是返回一个函数
+    var bar = foo.bind(obj,55,66)
+    console.log(bar)
+    bar()
+</script>

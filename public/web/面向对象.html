@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    function fromateNumbers(number,mark){
+        var separator = mark||",";
+        // 根据小数点分割成数组
+        var arrNumber = number &&number.toString().split('.');
+        if(arrNumber&&arrNumber.length){
+            
+        }
+    }
+    // document.querySelector('body').innerHTML = Math.random()
+    // console.log(document.querySelector('body').innerHTML) 
+    // var time = new Date().valueOf()
+    // while(new Date().valueOf() - time < 2000) {}
+
+    // var obj = {}
+    // // console.log(obj)
+    // // console.log(obj.__proto__)
+    // // console.log(obj.prototype)
+    // // console.log(obj.constructor)
+    // function Puppy(age) {
+    //     // this总是执行最后调用他的对象或者方法
+    //     // 此处this指向他的实例化对象 myP
+    //     this.puppyAge = age;
+    // }
+    // // var myP = new Puppy(10)
+    // // console.log(this)
+
+    // // 类的方法
+    // Puppy.prototype.say = function () {
+    //     console.log('wangwangwnag')
+    // }
+    // myP.__protp__ 指向Puppy.prototype 
+    // Puppty.prototype 指向Puppy.prototype.__proto__;
+    // Puppy.prototype.__proto__ 指向 Object.prototype
+    // null 这就是原型链
+    // console.log(myP)
+    // myP.say()
+    // cosntructor 是prototype的一个保留属性 指向函数本身  用于指向当前类的够着函数
+    // function Child(){}
+    // Child.prototype.__proto__ =new Puppy();
+    // Child.prototype.constructor = Child
+    // // 上面的方法只能让Child 访问到Puppy 原型链，但没有执行Puppy的构造函数
+    // var cP = new Child(20)
+    // console.log(cP)
+    // console.log(cP instanceof Child)
+    // console.log(cP instanceof Puppy)
+
+    // // console.log(cP)
+    // cP.say()
+
+    // console.log(cP.puppyAge)
+    // JS中的函数可以作为函数使用，也可以作为类使用
+    // 作为类使用 必须使用new 来实例化对象
+    // 为了让函数更具有类的功能，函数都具有prototype属性
+    // 为了让实例化出来的对能够访问到prototype上的属性和方法,实例对象——__proto__指向了类的prototype.所以orototype势函数的属性，不是对象的属性，对象拥有的__proto__是用来查找prototyp的
+</script>

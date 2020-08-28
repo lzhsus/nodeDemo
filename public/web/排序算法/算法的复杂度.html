@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间复杂度和空间复杂度合称为算法的复杂度</title>
+</head>
+
+<body>
+    <div>
+        <label for="">时间复杂度</label>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;时间：执行当前算法所消耗的时间</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;空间：执行当前算法所要占用的内存空间</p>
+        <p>时间复杂度：<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;全程是渐进时间复杂度，表示算法的执行时间与数据规模之间的增长关系</p>
+        <p>空间复杂度：<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;全程就是渐进空间复杂度，表示算法的存储空间与数据规模之间的增长关系！</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;也就是说，算法的执行效率由执行时间、存储空间两个方面决定。复杂度分析就是用来分析算法执行效率与数据规模之间的关系，包括时间复杂和空间复杂度。</p>
+        <p>---------------------</p>
+        <label for="">大O表示法</label>
+        <p>---------------------</p>
+        <p>
+            时间频度：<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;一个算法中的语句执行次数成为 语句拼频度或者 时间频度。记录为T(n)
+            n称为问题的规模，当n不断变化时,时间频度T(n)也会不但变化！
+        </p>
+        <p>时间复杂度：</p>
+        <p>时间频度不同,但是时间复杂度可能相同</p>
+        <p>例如：
+            T(n)=n2+3n+4 与 T(n)=4n2+2n+1
+            1:
+            T(n)=4n2+12n+16
+            2:
+            T(n)=4n2+2n+1
+        </p>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    // var x=91,y=100;
+    // var n=0
+    // while (y>0) {
+    //     n++
+    //     if(x>100){
+    //         x=x-10;
+    //         y--;
+    //     }else{
+    //         x++
+    //     }
+    //     console.log(n)
+    // }
+    // var n=10
+    // var x=1;
+    // var i;
+    // for (i = 1; i < n; i++) {
+    //     console.log('1:',i)
+    // }
+    // for (j = 1; j < i; j++) {
+    //     console.log('2:',j)
+    // }
+    // for (k = 1; k <= j; k++) {
+    //     console.log('3:',k)
+    // }
+    // x++;
+    // jvascripe 是没有块级作用域的
+    // var bb = 1
+    // function aa(bb) {
+    //     bb = 2
+    //     console.log('--', bb)
+    //     console.log('--666*', window.bb)
+    // }
+    // console.log(bb)
+    // aa(bb)
+    // console.log('--/**', bb)
+    // console.log('--666*', window.bb)
+    function t(flag) {
+        if (flag) {
+            s = "ifscope";  //
+            for (var i = 0; i < 2; i++)
+                ;
+        }
+        console.log(i);
+    }
+    t(true);
+    console.log(s)
+</script>

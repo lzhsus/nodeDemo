@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+
+    var str = '123';
+
+    var arr = [1, 2, 34, 5, 6, 8, 5, 52, 22, 4, 6]
+
+    var newArr = arr.filter((value, index, arr) => {
+        return value >= 50;
+    })
+
+    var newArr2 = arr.map((value, index, array) => {
+        // console.log(value,index,array)
+
+    })
+    var newArr3 = arr.reduce((total, num,index,arr) => {
+        // console.log(total, num,index,arr)
+        return total + num;
+    })
+    // console.log(newArr3)
+
+// push 向尾部添加数据
+// pop 删除数组尾部的数据
+// shift 删除数组头部的元素
+// unshift 添加数据到数组的最前面
+// indexOf()  找出某个元素在数组中的索引
+// splice(index,1)  通过索引删除数组中指定位置的数据以及删除的长度
+// slice() 复制一个数组  深拷贝
+// 描述
+/**
+数组是一种类型列表对象，他的原型中提供了遍历和修改元素的相关操作。JavaScript数组的长度和元素类型都是非固定的。因为数组的长度可以随时发生改变
+
+**/
+// 所有的数组实例都会从Array.prototype继承属性和方法，
+// 修改Array原型会影响所有的数组实例
+// 
+Array.prototype.constructor
+// 所有的数组实力都继承这个属性,他对值就是array 它表明所有的数组都是由于Array构造出来的
+Array.prototype.length
+// 上面说了 Array.prototype也是个数组，所以也有length属性这个值为0，因为他是个空数组
+// if(arr.includes(52)){
+//     console.log(true)
+// }else{
+//     console.log(false)
+// }
+arr.find(items=>{
+    // console.log('---',items)
+})
+
+
+var b=[1,2,3,4,5];
+console.log(JSON.stringify(b.copyWithin(0,1)));
+
+</script>

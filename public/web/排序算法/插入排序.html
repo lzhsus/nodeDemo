@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script>
+    function insertionSort(arr) {
+        var len = arr.length;
+        var preIndex, current;
+        for (var i = 1; i < len; i++) {
+            preIndex = i - 1;
+            current = arr[i];
+            // 如果上一个大于当前
+            while (preIndex >= 0 && arr[preIndex] > current) {
+                // 那么当前就等于上一个
+                arr[preIndex + 1] = arr[preIndex];
+                preIndex--;
+            }
+            // 那么上一个就等于 当前
+            arr[preIndex + 1] = current;
+        }
+        return arr;
+    }
+
+
+    var arr = [1, 9, 5, 66, 522, 555, 663, 7451, 5454, 2, 88, 45, 63]
+    // console.log(insertionSort(arr))
+    // arr.splice(1,1)
+    // console.log(arr)
+    var a = [1, 2, 2, 3, 5, 3, 9, 2]
+    // function removeWithoutCopy(arr, item) {
+    //     if (arr.indexOf(item) == -1) return arr;
+    //     arr.splice(arr.indexOf(item), 1)
+    //     return removeWithoutCopy(arr, item)
+    // }
+    // console.log(removeWithoutCopy(a, 2))
+    function truncate(arr) {
+        if (arr.length <= 1) return [];
+        var newArr = []
+        for (let i = 0; i < arr.length; i++) {
+            newArr.push(arr[i])
+        }
+        // newArr.pop()
+        console.log(newArr)
+        return newArr;
+    }
+    // console.log(truncate(a))
+    function duplicates(arr) {
+        var a = [], b = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (a.indexOf(arr[i]) == -1) {
+                a.push(arr[i])
+            } else {
+                b.push(arr[i])
+            }
+        }
+        return b;
+    }
+    // console.log(duplicates(a));
+    // 7:20-8:20 -40-90-60 10:00;
+    // 龙溪路 末班车  10：39   39+1554;
+    // 龙溪路--陕西南  15分钟;
+    // 陕西南路-富锦路  10:56;
+        
+    
+
+</script>

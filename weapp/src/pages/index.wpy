@@ -1,0 +1,68 @@
+<template>
+    <div class="container" id="index">
+        1111
+
+    </div>
+</template>
+
+<config>
+{
+    usingComponents: {
+
+    }
+}
+</config>
+<script>
+import wepy from '@wepy/core';
+// 配置
+import appConfig from 'Appconfig';
+import appData from '../common/app_data';
+// 公用
+import { mapState, mapActions } from '@wepy/x';
+import store from '../store';
+import mixinsIndex from 'Mixinsindex';
+import mixinShare from 'Mixinsshare';
+import * as common from 'Common';
+import eventHub from '../common/eventHub';
+// 所有API管理
+import Api from 'Api';
+import {countTime,countTimeNum} from '@/services/countTime'
+import moment from 'moment';
+// 日志
+import Log from "Log"
+
+wepy.page({
+    store,
+    mixins: [mixinsIndex, mixinShare],
+    data: {
+    },
+    computed: {
+        ...mapState([]),
+    },
+    methods: {
+        getTestFunc(){
+            Api.set_test({
+                m:15239371927,
+                t:{
+                    a:"adfasdfsa",
+                    b:true
+                }
+            }).then(res=>{
+                console.log('res',res)
+            })
+        }
+    },
+    onLoad(opt) {  
+        this.getTestFunc()
+    },
+    
+    onShow(){
+        
+    }
+});
+</script>
+
+<style lang="less">
+
+
+</style>
