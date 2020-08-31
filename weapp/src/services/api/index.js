@@ -9,9 +9,11 @@ let Api = globalApi;
 Api.test = function(data, opt={}){
     return apiRequest('miniapp/api/test', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }
-Api.set_test = function(data, opt={}){
-    return apiRequest('miniapp/api/set_test', data, { ...{method:'POST',isShowLoading:true, isShowError:true} ,...opt });
+Api.userinfo_log = function(data, opt={}){
+    return apiRequest('miniapp/api/userinfo_log', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }
 
-
+Api.campaign = function(data, opt={}){
+    return apiRequest('miniapp/api/campaign', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
 export default Api;

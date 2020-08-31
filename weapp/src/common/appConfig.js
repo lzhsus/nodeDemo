@@ -6,7 +6,7 @@ export default{
         serverPath:'http://127.0.0.1:3000/',
     },
     envVersion: 'dev',
-    ossPath: '',
+    ossPath: 'http://127.0.0.1:3000/',
     appid: 'wxf99aeedcb92d7b0e',
     scene: '',
     tabPath: [],

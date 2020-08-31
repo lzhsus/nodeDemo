@@ -34,12 +34,15 @@ let wxUploadFile = (file, ossKey)=> {
             url: ossKey.host, 
             filePath: file,
             name: 'file',
+            header:{
+                dir:ossKey.dir
+            },
             formData: {
                 OSSAccessKeyId: ossKey.accessid,
                 callback: ossKey.callback,
                 policy: ossKey.policy,
                 signature: ossKey.signature,
-                key: ossKey.dir+file.replace('wxfile://', '').replace('http://tmp/', ''),
+                key: ossKey.dir + file.replace('wxfile://', '').replace('http://tmp/', ''),
                 success_action_status: '200',
                 secure: true
             },

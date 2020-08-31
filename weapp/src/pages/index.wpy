@@ -1,8 +1,14 @@
 <template>
-    <div class="container" id="index">
-        1111
+  <div class="container" id="index">
+    <buttom type class="pir-box" @tap="updata()">上传文件</buttom>
 
+    <buttom type class="pir-box" @tap="updata02()">上传图片</buttom>
+    <div>
+        <block v-for="(item,index) in list">
+            <img class="img100" :src="item.url" mode="widthFix" />
+        </block>
     </div>
+  </div>
 </template>
 
 <config>
@@ -23,46 +29,84 @@ import store from '../store';
 import mixinsIndex from 'Mixinsindex';
 import mixinShare from 'Mixinsshare';
 import * as common from 'Common';
-import eventHub from '../common/eventHub';
+import eventHub from '../common/eventHub';
+import { uploadFile } from '../services/uploadFile';
+
 // 所有API管理
 import Api from 'Api';
-import {countTime,countTimeNum} from '@/services/countTime'
+import { countTime, countTimeNum } from '@/services/countTime';
 import moment from 'moment';
 // 日志
-import Log from "Log"
+import Log from 'Log';
 
 wepy.page({
-    store,
-    mixins: [mixinsIndex, mixinShare],
-    data: {
-    },
-    computed: {
-        ...mapState([]),
-    },
-    methods: {
-        getTestFunc(){
-            Api.set_test({
-                m:15239371927,
-                t:{
-                    a:"adfasdfsa",
-                    b:true
-                }
-            }).then(res=>{
-                console.log('res',res)
-            })
+  store,
+  mixins: [mixinsIndex, mixinShare],
+  data: {
+    page: 1,
+    pageEnd:false,
+    list:[]
+  },
+  computed: {
+    ...mapState([])
+  },
+  methods: {
+    getTestFunc() {
+      Api.userinfo_log({
+        m: 15239371927,
+        t: {
+          a: 'adfasdfsa',
+          b: true
         }
+      }).then(res => {
+        console.log('res', res);
+      });
     },
-    onLoad(opt) {  
-        this.getTestFunc()
+    updata() {
+      this.getcampaign();
     },
-    
-    onShow(){
-        
+    updata02() {
+      wx.chooseImage({
+        count: 2,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: async res => {
+          // tempFilePath可以作为img标签的src属性显示图片
+          const tempFilePaths = res.tempFilePaths;
+          let files = await uploadFile(tempFilePaths);
+          console.log('-----', files);
+        }
+      });
+    },
+    getcampaign() {
+      Api.campaign({
+        page: this.page
+      }).then(res => {
+        if (res['success']) {
+            res = res.result
+            var list = res.list||{}
+            list = list.map(obj=>{
+                console.log(obj['url'])
+                obj['url'] = appConfig.ossPath + obj['url']
+                return obj
+            })
+            console.log(list)
+            this.list = list
+            this.page++;
+        } else {
+          wx.showModal({
+            content: res.msg,
+            showCancel: false
+          });
+        }
+      });
     }
+  },
+  onLoad(opt) {},
+
+  onShow() {}
 });
 </script>
 
 <style lang="less">
-
-
 </style>

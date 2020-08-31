@@ -3,14 +3,15 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 const createError = require('http-errors');
-const bodyParse = require('body-parser')
+const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser') ;
 const cors = require('cors');
 const logger = require('morgan');
 
 app.use(cookieParser()) ;
 // 注册 解析表单的body-parser
-app.use(bodyParse.urlencoded({extended:false})) ;
+app.use(bodyParser.json());//数据JSON类型
+app.use(bodyParser.urlencoded({ extended: false }));//解析post请求数据
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -45,10 +46,8 @@ app.use(function (err, req, res, next) {
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
-
 	// render the error page
     res.status(err.status || 500);
-    
 	res.render('error');
 });
 module.exports = app;

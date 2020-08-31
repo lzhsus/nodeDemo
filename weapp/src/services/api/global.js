@@ -5,13 +5,9 @@ import apiRequest from "./apiRequest";
 
 
 let globalApi = {}; 
-globalApi.login = function(data){
-    let header = {
-        'appid2': appConfig.appid2,
-    }
-    return request(appConfig[appConfig.envVersion].serverPath+'weixinopen/api/miniapp/login?appid2='+appConfig.appid2, data, 'POST', header)
-} 
-
+globalApi.login = function(data, opt={}){
+    return request('miniapp/api/login', data,'POST',{});
+}
 //扫描日志
 globalApi.scan = function(data, opt={}){
     return apiRequest(appConfig[appConfig.envVersion].serverPath+'weixinopen/api/miniapp/scan-qrcode?appid2='+appConfig.appid2, data, { ...{method:'POST',isShowLoading:true, isShowError:true} ,...opt });

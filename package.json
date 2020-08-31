@@ -19,10 +19,12 @@
     "http": "^0.0.1-security",
     "http-errors": "^1.8.0",
     "morgan": "^1.10.0",
+    "multiparty": "^4.2.2",
     "opn": "^6.0.0",
     "os": "^0.1.1",
     "pm2": "^4.4.1",
     "querystring": "^0.2.0",
+    "request": "^2.88.2",
     "url": "^0.11.0",
     "vim": "^0.1.0",
     "webpack": "^4.44.1"
