@@ -1,0 +1,134 @@
+<template>
+  <div class="campaign-wrapper" id="list">
+      <div class="campaign-weapp-content" wx:if="{{pageShow=='index'}}">
+          
+        <block v-for="(item,index) in list">
+            <img class="img100" :src="item.url" mode="widthFix" />
+        </block>
+      </div>
+  </div>
+</template>
+
+<config>
+{
+    usingComponents: {
+
+    },
+    onReachBottomDistance: 100,
+    enablePullDownRefresh: true
+}
+</config>
+<script>
+import wepy from '@wepy/core';
+// 配置
+import appConfig from 'Appconfig';
+import appData from '../common/app_data';
+// 公用
+import { mapState, mapActions } from '@wepy/x';
+import store from '../store';
+import mixinsIndex from 'Mixinsindex';
+import mixinShare from 'Mixinsshare';
+import * as common from 'Common';
+import eventHub from '../common/eventHub';
+import { uploadFile } from '../services/uploadFile';
+
+// 所有API管理
+import Api from 'Api';
+import { countTime, countTimeNum } from '@/services/countTime';
+import moment from 'moment';
+// 日志
+import Log from 'Log';
+
+wepy.page({
+    store,
+    mixins: [mixinsIndex, mixinShare],
+    data: {
+        pageShow:'',
+        page: 1,
+        pageEnd:false,
+        list:[]
+    },
+    computed: {
+        ...mapState([])
+    },
+    methods: {
+        getTestFunc() {
+            Api.userinfo_log().then(res => {
+                console.log('res', res);
+            });
+        },
+        updata() {
+            this.getcampaign();
+        },
+        updata02() {
+            wx.chooseImage({
+                count: 2,
+                sizeType: ['original', 'compressed'],
+                sourceType: ['album', 'camera'],
+                success: async res => {
+                    // tempFilePath可以作为img标签的src属性显示图片
+                    const tempFilePaths = res.tempFilePaths;
+                    let files = await uploadFile(tempFilePaths,'text');
+                    console.log('-----', files);
+                }
+            });
+        },
+        getcampaign() {
+            Api.campaign({
+                page: this.page
+            }).then(res => {
+                if (res['success']) {
+                    res = res.result
+                    var list = res.list||{};
+                    if( this.page <=1 ) {
+                        this.list = [];
+                    }
+                    this.list = this.list.concat(list.map(item=>{
+                        if(item['url']){
+                            item['url'] = appConfig.ossPath + item['url']
+                        }
+                        return item;
+                    }))
+
+                    if( res.current_page>=res.last_page ) this.pageEnd = true;
+                    this.page++;
+                } else {
+                    wx.showModal({
+                        content: res.msg,
+                        showCancel: false
+                    });
+                }
+                this.pageShow = 'index';
+                if( appConfig.stopPullDownRefresh ) {
+                    wx.stopPullDownRefresh();
+                    appConfig.stopPullDownRefresh = false;
+                }
+            });
+        }
+    },
+    onLoad(opt) {
+        this.getcampaign()
+    },
+
+    onShow() {},
+    
+    // 上拉监控
+    onPullDownRefresh(){
+        this.page = 1
+        this.pageEnd = false
+        appConfig.stopPullDownRefresh = true;
+        this.getcampaign()
+    },
+    // 到底监控
+    onReachBottom(){
+        if( this.pageEnd ) return;
+        this.getcampaign()
+    }
+});
+</script>
+
+<style lang="less">
+#list{
+
+}
+</style>

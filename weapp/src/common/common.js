@@ -1,12 +1,58 @@
 import Api from 'Api';
 import appConfig from 'Appconfig';
 import { uploadFile } from '@/services/uploadFile';
+import { resolve } from 'url';
+import { rejects } from 'assert';
 let rightWrongAudio =[]; //对错音乐
 // 深度拷贝
 export const depthCopy = function (data){
     return JSON.parse(JSON.stringify(data));
 }
-
+function getImageInfo(item){
+    return new Promise((resolve,reject)=>{
+        // if(item['success']){
+        //     resolve(item)
+        // }else{
+            wx.getImageInfo({
+                src: item.url,
+                success (res) {
+                    resolve(Object.assign(item,{
+                        success:true,
+                        width:res.width,
+                        height:res.height,
+                        url:res.path
+                    }))
+                },
+                fail(res){
+                    resolve(Object.assign(item,{
+                        success:false,
+                        width:0,
+                        height:0
+                    }))
+                },
+                complete(res){
+    
+                }
+            })
+        // }
+    })
+}
+// 计算图片的宽高
+export const imageInfo = function(list){
+    return new Promise((resolve,reject)=>{   
+        let promiseAll = []
+        list.forEach((obj,index)=>{
+            
+            promiseAll.push(getImageInfo(obj))
+        })
+        
+        Promise.all(promiseAll).then(res=>{
+            resolve(res)
+        }).catch(err=>{
+            reject(false)
+        })
+    })
+}
 // 资源路径拼接
 export const getUrlPath = function (url){
     if( !url ) return '';

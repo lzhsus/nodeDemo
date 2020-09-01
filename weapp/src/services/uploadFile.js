@@ -1,8 +1,8 @@
 import Api from 'Api';
-let uploadFile = async (file)=> {
+let uploadFile = async (file,dir)=> {
     return new Promise(function (resolve, reject) { 
         Api.ossSign({
-            dir: 'uploadFile'
+            dir: dir||'uploadFile'
         }).then((res)=>{
             if( res.success ){
                 let ossKey = res.result            
@@ -39,6 +39,9 @@ let wxUploadFile = (file, ossKey)=> {
             },
             formData: {
                 OSSAccessKeyId: ossKey.accessid,
+                token:ossKey.token,
+                appid:ossKey.appid,
+                openid:ossKey.openid,
                 callback: ossKey.callback,
                 policy: ossKey.policy,
                 signature: ossKey.signature,

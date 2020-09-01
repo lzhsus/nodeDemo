@@ -62,7 +62,9 @@ wepy.app({
 {
     pages: [
       	'pages/index',
-      	'pages/webview'
+      	'pages/webview',
+        'pages/list',
+        'pages/my'
     ],
     window: {
 		backgroundTextStyle: 'light',
@@ -70,6 +72,18 @@ wepy.app({
 		navigationBarTitleText: 'nodeDemo',
 		navigationBarTextStyle: 'white'
 	},
+    "tabBar": {
+        "list": [{
+            "pagePath": "pages/index",
+            "text": "首页"
+        },{
+            "pagePath": "pages/list",
+            "text": "趣分享"
+        }, {
+            "pagePath": "pages/my",
+            "text": "我的"
+        }]
+    },
 	navigateToMiniProgramAppIdList: [
 
 	],

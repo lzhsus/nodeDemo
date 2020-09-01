@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const common = require('../libs/common.js');
 const getData = require('./get');
-const updataJsonDB = require('./updataJsonDB');
 const Ut = require("../common/utils");
 const config = require("../common/config");
 const url = require("url");
@@ -58,7 +56,7 @@ router.use(async (req, res, next) => {
 // 获取文件列表
 router.get('/web/files', async function (req, res) {
     try {
-        const data = await common.dive(__dirname + '/../public/web')
+        const data = await Ut.dirFilesPath(__dirname + '/../public/web')
         // 等待操作结果返回，然后打印结果
         Ut.requestSuccess({result:data},res)
     } catch (e) {
@@ -95,7 +93,7 @@ router.post('/miniapp/api/login', async function (req, res) {
                 expires_in:JSON.parse(r2).expires_in,
                 access_token:JSON.parse(r2).access_token
             })
-            await updataJsonDB(__dirname + '/../public/data/userInfo.json', params, res);
+            await Ut.updataJsonDB(__dirname + '/../public/data/userInfo.json', params, res,{});
         } catch (error) { }
         Ut.requestSuccess({result:{token:JSON.parse(r2).access_token,openid:JSON.parse(r1).openid}},res)
     } catch (err) {
@@ -115,10 +113,12 @@ router.get('/miniapp/api/userinfo_log', async function (req, res,next) {
  */
 router.get('/miniapp/api/campaign', async function (req, res,next) {
     var query  = url.parse(req.url,true).query||{};
-    console.log('query',query)
-    let data = await getData(__dirname + '/../public/data/campaign.json',query,res)
+    console.log('global',global['config'])
+    let data = await getData(__dirname + '/../public/data/campaign.json',Object.assign(query,{
+        sort:1
+    }),res)
     let total = data.total;
-    const per_page = 3;
+    const per_page = 15;
     let last_page = Math.ceil(total/per_page);
     let current_page = query.page
     // current_page当前页  last_page 
@@ -132,6 +132,13 @@ router.get('/miniapp/api/campaign', async function (req, res,next) {
  */
 router.get('/oss/api/file/info', async function (req, res,next) {
     var query  = url.parse(req.url,true).query||{};
+    let headers = req.headers||{};
+    var token,appid,openid;
+    if(headers&&headers['authorization']){
+        token = headers.authorization.replace('Bearer ','');
+        appid = headers.appid||'';
+        openid = headers.openid||'';
+    }
     let host = path.resolve(__dirname + '/../public/status/' + (query.dir||'dir'))
     fs.exists(host,async function(exists){
         if(!exists){
@@ -140,11 +147,15 @@ router.get('/oss/api/file/info', async function (req, res,next) {
     })
     Ut.requestSuccess({result:{
         host:"http://127.0.0.1:3000/images",
-        dir:query.dir||'dir',
+        dir:query.dir||'dir'+'/',
+        token:token,
+        appid:appid,
+        openid:openid
     }},res)
 })
+// 上传图片
 router.post('/images', async function (req, res,next) {
-    let headers = req.headers||{}
+    let headers = req.headers||{};
     //生成multiparty对象，并配置上传目标路径
     var form = new multiparty.Form({ uploadDir: './public/status/' + headers['dir'] });
     form.parse(req,async function(err, fields, files) {
@@ -156,7 +167,11 @@ router.post('/images', async function (req, res,next) {
                 url = url.replace(new RegExp('\\\\','g'),"/");
                 // obj['url'] = obj['url'].replace(/\\\\/g,"/");
             }
-            await updataJsonDB(__dirname + '/../public/data/campaign.json', {url:url}, res);
+            await Ut.updataJsonDB(__dirname + '/../public/data/campaign.json', {
+                url:url,
+                openid:fields['openid'][0],
+                appid:fields['appid'][0]
+            }, res,{isOpenid:true});
             Ut.requestSuccess({result:{code:200,url:url}},res)
         }
     });

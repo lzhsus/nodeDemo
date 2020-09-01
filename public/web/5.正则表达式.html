@@ -20,6 +20,55 @@
     // g 修饰符  全集查找
     // m 修饰符  换行查找
     // 
-    var str="2018ff是ssdd6203addcca"
-    console.log(str.replace(/\\uxxxxi/,'_'))
+    // var str="2018ff是ssdd6203addcca"
+    // console.log(str.replace(/\\uxxxxi/,'_'))
+    var str = "ab123c123123def";
+    // 匹配0-9的数据
+    var patt1 = /[0-9]+/;
+    // document.write(str.match(patt1));
+    // ?通配符 匹配0个 或者1个字符
+    // *通配符 匹配0个 获得者多个
+    // +       表示前面必须出现1此 或者多次
+    // *       表示前面可以出现0此 1次 或者多次
+    // ?       表示前面最多可以出现1次  或者0次
+    // -       表示一个区间
+    // [...]   表示匹配【】中所有的字符串
+    // [^...]   表示匹配【】中之外的全部字符串
+    // [A-Za-z]  表示匹配所有英文字母
+    // (\n,\r)    匹配除换行符之外的任何单个字符
+    // [\s\S]    表示匹配所有
+    // \w        匹配字母 数字 下划线 等价于[A-Za-z0-9_]
+    // \cx      //x A-Za-z
+    // \f       //匹配一个换页符  等价于\x0c和\cL
+    // \n       //匹配一个换行符  等价于\x0a和\cJ;
+    // \r       //匹配一个回车符  等价于\xod和\cM;
+    // \t       //匹配一个制表符  等价于\x09和\cl;
+    // \v       //匹配一个垂直制表符 等价于\x0b和\cK
+    // \s       //匹配任何空白字符 包括空格 制表符 换页符等 等价于[\f\n\r\t\v]
+                    // 注意  Unicode正则表达式会匹配全局空格符
+    // \S       //匹配任何非空包字符  等价于 [^\f\n\r\t\v]
+
+    var patt2 = /[^aeiou]/gi;   
+
+    var patt3 = /[A-Za-z]/g
+    var patt3 = /[a-z]/gi;    //表示匹配所有英文字母
+
+    var patt4 = /./g
+    var patt4 = /[^\n\r]/g;  //匹配除换行符之外的任何单个字符
+
+    var patt5 = /[\n\r]/g;   //匹配除换行符
+    
+    var patt6 = /[\s]/g;   //匹配所有空白符，包括换行符
+    var patt6 = /[\S]/g;   //匹配所有 非 空白符，包括换行符
+
+    var patt7 = /\w{3,9}/g;      //匹配字母 数字 下划线 等价于[A-Za-z0-9_]
+    var patt7 = /[A-Za-z0-9_]{6,9}/g
+
+    // 非打印字符
+    var p8 = /\cM/g;    //匹配一个由M指明的控制字符 M匹配Control-M 或者回车；必须为A-Za-z 否则为愿意c
+    
+    var p9 = /[b|aa|(\o\o)]/g
+    var str2 = 'google runoo_b taobao i OK \n \r\r\r_';
+    var p10 = /[1][0-9]{10}/g
+    document.write('10239371927'.match(p10));
 </script>
