@@ -1,8 +1,7 @@
 import Api from 'Api';
 import appConfig from 'Appconfig';
 import { uploadFile } from '@/services/uploadFile';
-import { resolve } from 'url';
-import { rejects } from 'assert';
+import moment from "moment"
 let rightWrongAudio =[]; //对错音乐
 // 深度拷贝
 export const depthCopy = function (data){
@@ -52,6 +51,79 @@ export const imageInfo = function(list){
             reject(false)
         })
     })
+}
+/**
+ * 瀑布流
+ * @param {*} leftHight 
+ * @param {*} rightHight 
+ * @param {*} leftList 
+ * @param {*} rightList 
+ * @param {*} allData 
+ */
+export const setImagesHeight = function(leftH,rightH,leftData,rightData,allData){
+     return new Promise(async (resolve,reject)=>{
+         allData = await imageInfo(allData);
+         for (let i = 0; i < allData.length; i++) {
+             var currentItemHeight = parseInt(Math.round(allData[i].height * 345 / allData[i].width));
+                 allData[i].height2 = currentItemHeight + "rpx";//因为xml文件中直接引用的该值作为高度，所以添加对应单位
+             if (leftH == rightH || leftH < rightH) {//判断左右两侧当前的累计高度，来确定item应该放置在左边还是右边
+                 leftData.push(allData[i]);
+                 leftH += currentItemHeight;
+             } else {
+                 rightData.push(allData[i]);
+                 rightH += currentItemHeight;
+             }
+         }
+         resolve({
+             leftHight:leftH,
+             rightHight:rightH,
+             leftList:leftData,
+             rightList:rightData
+         })
+     })
+ }
+/***
+ * Data 
+ * 一个日期  遍历出当月天数
+ */
+export const getMonthDay = function(date){
+    date = date?moment(date).format("YYYY-MM-DD"):moment().format("YYYY-MM-DD");
+    // 判断当月第一天是周几
+    const week = moment(moment().format("YYYY-MM")+'-01').format('d');
+    // 判断闰年
+    const year = date.substr(0,4);
+    const m = Number(date.substr(5,2))-1;
+    const d = Number(date.substr(8,2));
+    if(isLeapYear(year)){
+        var Day = [31,28,31,30,31,30,31,31,30,31,30,31];
+    }else{
+        var Day = [31,29,31,30,31,30,31,31,30,31,30,31];
+    }
+    return setArr(Day[m],week,d)
+}
+function setArr(len,week,d){
+    var arr=[];
+    var status = -1;
+    for(let i=1;i<=len;i++){
+        // 标记当天
+        if(status == 1) status = 0;
+        if(d == i) status = 1;
+        arr.push({id:i,day:i,status:status});
+    }
+    // 判断是周几
+    if(week<7){
+        for(let i=0;i<d-1;i++){
+            arr.unshift({id:-1,day:''});
+        }
+    }
+    return arr;
+}
+function isLeapYear(year){
+    if(year%4==0&&year%100!=0||year%400==0){
+        return true;
+    }else{
+        return false;
+    }
 }
 // 资源路径拼接
 export const getUrlPath = function (url){

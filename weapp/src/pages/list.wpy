@@ -1,33 +1,27 @@
 <template>
-  <div class="campaign-weapp" id="list">
-      <div class="campaign-weapp-content" wx:if="{{pageShow=='index'}}">
-          <!-- <ul class="list-main">
-            <block v-for="(item,index) in list">
-                <li class="item">
-                    <img class="img100" :src="item.url" mode="widthFix" />
-                </li>
-            </block>
-          </ul> -->
-        <view class='content'>
-            <view class='left'>
-                <block wx:for="{{leftList}}" wx:key="index">
-                    <image class='pic' style='height:{{item.height2}}' src='{{item.url}}'></image>
+    <div class="campaign-weapp" id="list">
+        <div class="campaign-weapp-content" wx:if="{{pageShow=='index'}}">
+            <div class="left">
+                <block v-for="(item,index) in leftList">
+                    <img @tap="previewImage(item)" class="pic" style="height:{{item.height2}}" src="{{item.url}}" />
                 </block>
-            </view>
-            <view class='right'>
-                <block wx:for="{{rightList}}" wx:key="index">
-                    <image class='pic' style='height:{{item.height2}}' src='{{item.url}}'></image>
+            </div>
+            <div class="right">
+                <block v-for="(item,index) in rightList">
+                    <img @tap="previewImage(item)" class="pic" style="height:{{item.height2}}" src="{{item.url}}" />
                 </block>
-            </view>
-        </view>
-      </div>
-  </div>
+            </div>
+        </div>
+        <loadmore wx:if="{{pageEnd}}">
+            <div slot="content">暂无更多数据...</div>
+        </loadmore>
+    </div>
 </template>
 
 <config>
 {
     usingComponents: {
-
+        "loadmore":"../components/loadmore"
     },
     onReachBottomDistance: 100,
     enablePullDownRefresh: true
@@ -71,31 +65,20 @@ wepy.page({
         ...mapState([])
     },
     methods: {
-        getTestFunc() {
-            Api.userinfo_log().then(res => {
-                console.log('res', res);
-            });
-        },
-        updata() {
-            this.getcampaign();
-        },
-        updata02() {
-            wx.chooseImage({
-                count: 9,
-                sizeType: ['original', 'compressed'],
-                sourceType: ['album', 'camera'],
-                success: async res => {
-                    // tempFilePath可以作为img标签的src属性显示图片
-                    const tempFilePaths = res.tempFilePaths;
-                    let files = await uploadFile(tempFilePaths,'text');
-                    console.log('-----', files);
-                }
-            });
+        previewImage(item){
+            wx.previewImage({
+                current: item['url'], // 当前显示图片的http链接
+                urls:[item['url']]
+            })
         },
         getcampaign() {
+            wx.showLoading({
+                title: '加载中',
+                mask: true,
+            });
             Api.campaign({
                 page: this.page
-            }).then(res => {
+            },{isShowLoading:false}).then(async res => {
                 if (res['success']) {
                     res = res.result
                     var list = res.list||{};
@@ -108,7 +91,13 @@ wepy.page({
                         }
                         return item;
                     }))
-                    this.setImagesHeight()
+                    let newImages = await common.setImagesHeight(this.leftHight,this.rightHight,this.leftList,this.rightList,this.list)
+                    
+                    this.leftHight = newImages.leftHight;
+                    this.rightHight = newImages.rightHight;
+                    this.leftList = newImages.leftList;
+                    this.rightList = newImages.rightList;
+
                     if( res.current_page>=res.last_page ) this.pageEnd = true;
                     this.page++;
                 } else {
@@ -117,43 +106,13 @@ wepy.page({
                         showCancel: false
                     });
                 }
+                wx.hideLoading()
                 this.pageShow = 'index';
                 if( appConfig.stopPullDownRefresh ) {
                     wx.stopPullDownRefresh();
                     appConfig.stopPullDownRefresh = false;
                 }
             });
-        },
-       async setImagesHeight(){
-            var leftH = this.leftHight;
-            var rightH = this.rightHight;
-            var leftData = this.leftList;
-            var rightData = this.rightList;
-            // 计算图片的宽高并且返回
-            var allData  = this.list
-            wx.showLoading({
-                content:"加载中..."
-            })
-
-            allData = await common.imageInfo(allData)
-            wx.hideLoading()
-
-            for (let i = 0; i < allData.length; i++) {
-                var currentItemHeight = parseInt(Math.round(allData[i].height * 340 / allData[i].width));
-                    allData[i].height2 = currentItemHeight + "rpx";//因为xml文件中直接引用的该值作为高度，所以添加对应单位
-                if (leftH == rightH || leftH < rightH) {//判断左右两侧当前的累计高度，来确定item应该放置在左边还是右边
-                    leftData.push(allData[i]);
-                    leftH += currentItemHeight;
-                } else {
-                    rightData.push(allData[i]);
-                    rightH += currentItemHeight;
-                }
-            }
-            
-            this.leftHight = leftH
-            this.rightHight = rightH
-            this.leftList = leftData
-            this.rightList = rightData
         }
     },
     onLoad(opt) {
@@ -179,45 +138,20 @@ wepy.page({
 
 <style lang="less">
 page{
-    background: rgb(247, 247, 247);
-}
-page{
-  width: 100%;
-  margin: 0;
-  background: #F2F2F2;
-}
-.content{
-  display: flex;
-  flex-direction: row;
-  margin: 20rpx;
-  overflow: hidden;
+    background:#F2F2F2;
 }
 
-.left{
-  width: 345rpx;
-}
-
-.right{
-  width: 345rpx;
-  margin-left: 20rpx;
-}
-
-.pic{
-  border-radius: 10rpx;
-  width: 345rpx;
-}
 #list{
-    .list-main{
-        width: 710rpx;margin: 20rpx;
-        display: flex;justify-content: flex-start;align-items: flex-start;flex:1;
-        flex-wrap: wrap;
-        .item{
-            width: 340rpx;border-radius: 12rpx;overflow: hidden;background: #fff;
-            box-shadow: 0 0 20rpx rgba(138, 141, 141, 0.5);
-            margin-bottom: 20rpx;
-            &:nth-child(2n+1){
-                margin-right: 30rpx;
-            }
+    .campaign-weapp-content{
+        display: flex;flex-direction: row;margin: 20rpx;overflow: hidden;
+        .left{
+            width: 345rpx;
+        }
+        .right{
+            width: 345rpx;margin-left: 20rpx;
+        }
+        .pic{
+            width:100%;border-radius: 10rpx;
         }
     }
 }

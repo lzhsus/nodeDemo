@@ -1,0 +1,34 @@
+<template>
+<div class="loadmore">
+<slot name="content">正在加载更多…</slot> 
+</div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { mapState, mapActions } from '@wepy/x';
+import store from '@/store';
+import Api from 'Api';
+import appConfig from 'Appconfig';
+import * as common from 'Common';
+wepy.component({
+    store,
+    data: {
+        
+    },
+    options: {
+        multipleSlots: true // 在组件定义时的选项中启用多slot支持
+    },
+    computed: {
+        ...mapState([]),
+    },
+    methods: {
+
+    },
+});
+</script>
+
+<style lang='less'>
+    .loadmore{
+        font-size: 12px;text-align: center;padding: 20rpx;
+    }
+</style>

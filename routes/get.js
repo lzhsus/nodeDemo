@@ -27,10 +27,17 @@ module.exports = function(url, params={},res){
                 }
                 result.reverse()
             }
+            // 验证openid
+            if(params['isOpenid']){
+                result = result.filter(res=>{
+                    return res['openid'] == params['openid']
+                })
+            }
             result = result.map(res=>{
                 var obj = res;
                 obj['create_time'] = moment(obj['create_time']).format("YYYY:MM:DD HH:mm:ss");
                 obj['updata_time'] = moment(obj['updata_time']).format("YYYY:MM:DD HH:mm:ss");
+                // if(obj['openid']) delete obj['openid'];
                 // delete obj['session_key']
                 return obj
             })

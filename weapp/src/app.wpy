@@ -64,7 +64,9 @@ wepy.app({
       	'pages/index',
       	'pages/webview',
         'pages/list',
-        'pages/my'
+        'pages/my',
+        'pages/sigin',
+        'pages/siginlog'
     ],
     window: {
 		backgroundTextStyle: 'light',

@@ -7,6 +7,7 @@ const url = require("url");
 const fs = require("fs");
 const path = require("path");
 var multiparty = require("multiparty");
+const moment = require("moment");
 
 /**
  * 验证前端传过来的appid 是否匹配
@@ -88,7 +89,7 @@ router.post('/miniapp/api/login', async function (req, res) {
 
         try {
             let params = Object.assign(JSON.parse(r1), {
-                id: 'weixin_id',
+                p_id: 'weixin_id',
                 appid:config['appid'],
                 expires_in:JSON.parse(r2).expires_in,
                 access_token:JSON.parse(r2).access_token
@@ -104,7 +105,6 @@ router.post('/miniapp/api/login', async function (req, res) {
  * 获取用户流水数据
  */
 router.get('/miniapp/api/userinfo_log', async function (req, res,next) {
-    let body = req.body || {};
     let data = await getData(__dirname + '/../public/data/userInfo.json',{},res)
     Ut.requestSuccess({result:{list:data.result}},res)
 });
@@ -146,7 +146,7 @@ router.get('/oss/api/file/info', async function (req, res,next) {
         }
     })
     Ut.requestSuccess({result:{
-        host:"http://127.0.0.1:3000/images",
+        host:"http://192.168.0.112:3000/images",
         dir:query.dir||'dir'+'/',
         token:token,
         appid:appid,
@@ -176,5 +176,59 @@ router.post('/images', async function (req, res,next) {
         }
     });
 })
+// 签到
+router.post('/miniapp/api/sigin', async function (req, res) {
+    try {
+        let body = req.body||{};    
+        let headers = req.headers||{};
+        let params = Object.assign(body, {
+            p_id: 'id',
+            appid:config['appid'],
+            openid:headers['openid'],
+            sigin_time:moment().format("YYYY-MM-DD")
+        })
+        await Ut.updataJsonDB(__dirname + '/../public/data/sigin.json', params, res,{isOpenid:true});
+        Ut.requestSuccess({result:{}},res)
+    } catch (err) {
+        Ut.requestErr({err:err},res)
+    }
+});
+// 获取当月签到列表
+router.get('/miniapp/api/sigin/list', async function (req, res,next) {
+    var query  = url.parse(req.url,true).query||{};
+    let headers = req.headers||{};
 
+    let data = await getData(__dirname + '/../public/data/sigin.json',Object.assign(headers,{
+        sort:0,
+        isOpenid:true
+    }),res)
+    const month = query['month']||moment().format("YYYY-MM-DD");
+
+    let list = data.result.filter((res,i)=>{
+        return res['sigin_time'].indexOf(month.substr(0,7))!=-1;
+    })
+    Ut.requestSuccess({result:{list:list}},res)
+});
+// 签到全部签到流水 返回数据 自2020-09-01开始
+router.get('/miniapp/api/sigin/list/log', async function (req, res,next) {
+    var query  = url.parse(req.url,true).query||{};
+    let headers = req.headers||{};
+
+    let data = await getData(__dirname + '/../public/data/sigin.json',Object.assign(headers,{
+        sort:0,
+        isOpenid:true
+    }),res)
+    const month = query['month']||moment().format("YYYY-MM-DD");
+    // 全部日期
+    if(query['type']==1){
+        var list = data.result.filter((res,i)=>{
+            return res['sigin_time'].indexOf(month.substr(0,7))!=-1;
+        })
+    }else{
+        var list = data.result.filter((res,i)=>{
+            return true;
+        })
+    }
+    Ut.requestSuccess({result:{list:list}},res)
+});
 module.exports = router;

@@ -3,20 +3,24 @@ const url = require("url");
 const fs = require("fs");
 const path = require("path");
 class Ut {
+    constructor(height, width) {
+        this.area = height * width;
+    }
     /**
      * promise化request
      * @param {object} opts
      * @return {Promise<[]>}
      */
     static promiseReq(opts = {},res) {
+        const _this = this;
         return new Promise((resolve, reject) => {
             request(opts, (e, r, d) => {
                 if (e) {
-                    requestErr(e,res)
+                    _this.requestErr(e,res)
                     return reject(e);
                 }
                 if (r.statusCode != 200) {
-                    requestErr(e,res)
+                    _this.requestErr(e,res)
                     return reject(e);
                 }
                 return resolve(d);
@@ -118,11 +122,12 @@ class Ut {
      * @param {*} query 
      */
     static updataJsonDB(url, params,res,query){
+        const _this = this;
         return new Promise((resolev, reject) => {
             //现将json文件读出来
             fs.readFile(url, function (err, data) {
                 if (err) {
-                    requestErr({err:err},res);
+                    _this.requestErr({err:err},res);
                     resolev({ success: false })
                     return
                 }
@@ -131,12 +136,24 @@ class Ut {
                 // 检查改openid 是否存在
                 var index = -1;
                 for(let i=0;i<person['data'].length;i++){
-                    if(person['data'][i].openid == params.openid){
+                    if(person['data'][i]['openid'] == params['openid']){
                         index = i;
                     }
                 }
+                // 检查是否签到成功
+                if(params['sigin_time']){
+                    let isSigin = person['data'].some(res=>{
+                        return res['openid']==params['openid']&&res['sigin_time']==params['sigin_time']
+                    })
+                    if(isSigin){
+                        _this.requestErr({err:"当天已完成签到，不可重复签到！",code:0},res);
+                        resolev({ success: false })
+                        return
+                    }
+                }
+                console.log('---------------------',index,query['isOpenid'])
                 if(index!=-1&&!query['isOpenid']){
-                    if( params['id'] ) delete params['id'];
+                    if( params['p_id'] ) delete params['p_id'];
                     person.data[index] = Object.assign(person.data[index],params);
                     person.data[index].updata_time = new Date();
                 }else{
@@ -145,9 +162,9 @@ class Ut {
                     }else{
                         person.total_num = 1;
                     }
-                    if(params['id']){
-                        params[params['id']] = person.total_num;
-                        delete params['id'];
+                    if(params['p_id']){
+                        params[params['p_id']] = person.total_num;
+                        delete params['p_id'];
                     }
                     params.updata_time = new Date();
                     params.create_time = new Date();
@@ -158,7 +175,7 @@ class Ut {
                 var str = JSON.stringify(person);//因为nodejs的写入文件只认识字符串或者二进制数，所以把json对象转换成字符串重新写入json文件中
                 fs.writeFile(url, str, function (err) {
                     if (err) {
-                        requestErr({err:err},res);
+                        _this.requestErr({err:err},res);
                         resolev({ success: false })
                         return
                     }

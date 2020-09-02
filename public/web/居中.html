@@ -19,7 +19,7 @@
 
     getFiles()
     function getFiles() {
-        $.get('http://127.0.0.1:3000/web/files', (res) => {
+        $.get('http://192.168.0.112:3000/web/files', (res) => {
             res = JSON.parse(res)
             var list = res.result
             console.log(list)

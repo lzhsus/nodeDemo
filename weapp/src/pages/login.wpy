@@ -1,0 +1,63 @@
+<template>
+  <div class="container" id="login">
+        <head :pagesTitle="pagesTitle" :sourcePages="sourcePages"/>
+        
+  </div>
+</template>
+
+<config>
+{
+    usingComponents: {
+        "head":"../components/head"
+    },
+    navigationStyle: "custom"
+}
+</config>
+<script>
+import wepy from '@wepy/core';
+// 配置
+import appConfig from 'Appconfig';
+import appData from '../common/app_data';
+// 公用
+import { mapState, mapActions } from '@wepy/x';
+import store from '../store';
+import mixinsIndex from 'Mixinsindex';
+import mixinShare from 'Mixinsshare';
+import * as common from 'Common';
+import eventHub from '../common/eventHub';
+import { uploadFile } from '../services/uploadFile';
+
+// 所有API管理
+import Api from 'Api';
+import { countTime, countTimeNum } from '@/services/countTime';
+import moment from 'moment';
+// 日志
+import Log from 'Log';
+
+wepy.page({
+    store,
+    mixins: [mixinsIndex, mixinShare],
+    data: {
+        sourcePages:'login',
+        pagesTitle:"注册",
+        page: 1,
+        pageEnd:false,
+        list:[]
+    },
+    computed: {
+        ...mapState([])
+    },
+    methods: {
+
+    },
+    onLoad(opt) {},
+
+    onShow() {}
+});
+</script>
+
+<style lang="less">
+#login{
+
+}
+</style>
