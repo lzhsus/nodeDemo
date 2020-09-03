@@ -1,14 +1,9 @@
 <template>
-  <div class="container" id="index">
-    <buttom type class="pir-box" @tap="updata()">上传文件</buttom>
+    <div class="container" id="index">
+        <div class="weapper" v-if="pageShow=='index'">
 
-    <buttom type class="pir-box" @tap="updata02()">上传图片</buttom>
-    <div>
-        <block v-for="(item,index) in list">
-            <img class="img100" :src="item.url" mode="widthFix" />
-        </block>
+        </div>
     </div>
-  </div>
 </template>
 
 <config>
@@ -40,71 +35,24 @@ import moment from 'moment';
 import Log from 'Log';
 
 wepy.page({
-  store,
-  mixins: [mixinsIndex, mixinShare],
-  data: {
-    page: 1,
-    pageEnd:false,
-    list:[]
-  },
-  computed: {
-    ...mapState([])
-  },
-  methods: {
-    getTestFunc() {
-      Api.userinfo_log({
-        m: 15239371927,
-        t: {
-          a: 'adfasdfsa',
-          b: true
-        }
-      }).then(res => {
-        console.log('res', res);
-      });
+    store,
+    mixins: [mixinsIndex, mixinShare],
+    data: {
+        pageShow:''
     },
-    updata() {
-      this.getcampaign();
+    computed: {
+        ...mapState(['userProfile'])
     },
-    updata02() {
-      wx.chooseImage({
-        count: 9,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
-        success: async res => {
-          // tempFilePath可以作为img标签的src属性显示图片
-          const tempFilePaths = res.tempFilePaths;
-          let files = await uploadFile(tempFilePaths,'text');
-          console.log('-----', files);
-        }
-      });
-    },
-    getcampaign() {
-      Api.campaign({
-        page: this.page
-      }).then(res => {
-        if (res['success']) {
-            res = res.result
-            var list = res.list||{}
-            list = list.map(obj=>{
-                console.log(obj['url'])
-                obj['url'] = appConfig.ossPath + obj['url']
-                return obj
-            })
-            console.log(list)
-            this.list = list
-            this.page++;
-        } else {
-          wx.showModal({
-            content: res.msg,
-            showCancel: false
-          });
-        }
-      });
-    }
-  },
-  onLoad(opt) {},
+    methods: {
 
-  onShow() {}
+    },
+   async onLoad(opt) {
+        let userProfile = await this.getuserProfile();
+        this.pageShow = 'index';
+        console.log(this.userProfile)
+    },
+
+    onShow() {}
 });
 </script>
 

@@ -15,6 +15,21 @@
         <loadmore wx:if="{{pageEnd}}">
             <div slot="content">暂无更多数据...</div>
         </loadmore>
+        <!-- 查看图片 -->
+        <div class="pop" v-if="itemInfoShow">
+            <div class="pop-content">
+                <div class="close-icon" @tap="closeIconBtn()"></div>
+                <div class="img-box">
+                    <swiper>
+                        <block v-for="(item,index) in itemInfo['list']">
+                            <swiper-item>
+                                <img class="img1002" :src="item['url']" mode="aspectFit" />
+                            </swiper-item>
+                        </block>
+                    </swiper>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -59,19 +74,38 @@ wepy.page({
         leftList:[],
         rightList:[],
         leftHight: 0,
-        rightHight: 0
+        rightHight: 0,
+        itemInfoShow:false,
+        itemInfo:{
+            list:[{
+                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
+            },{
+                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
+            },{
+                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
+            },{
+                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
+            },{
+                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
+            }]
+        }
     },
     computed: {
         ...mapState([])
     },
     methods: {
+        closeIconBtn(){
+            this.itemInfoShow = false;
+        },
         previewImage(item){
+            this.itemInfo = item;
+            this.itemInfoShow = true;
             wx.previewImage({
                 current: item['url'], // 当前显示图片的http链接
                 urls:[item['url']]
             })
         },
-        getcampaign() {
+        getCampaign() {
             wx.showLoading({
                 title: '加载中',
                 mask: true,
@@ -116,7 +150,7 @@ wepy.page({
         }
     },
     onLoad(opt) {
-        this.getcampaign()
+        this.getCampaign()
     },
 
     onShow() {},
@@ -126,12 +160,12 @@ wepy.page({
         this.page = 1
         this.pageEnd = false
         appConfig.stopPullDownRefresh = true;
-        this.getcampaign()
+        this.getCampaign()
     },
     // 到底监控
     onReachBottom(){
         if( this.pageEnd ) return;
-        this.getcampaign()
+        this.getCampaign()
     }
 });
 </script>
@@ -140,7 +174,27 @@ wepy.page({
 page{
     background:#F2F2F2;
 }
-
+.pop{
+    position: fixed;top: 0;left: 0;width: 100%;height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    .pop-content{
+        position: relative;top:50%;left: 50%;transform: translate(-50%,-50%);
+        width: 640rpx;min-height: 800rpx;
+        background: #fff;border-radius: 12px;
+        box-shadow: 0 0 20rpx rgba(255, 255, 255, 0.5);overflow: hidden;
+        padding-top: 40px;box-sizing:border-box;
+        .close-icon{
+            position: absolute;top: 0;right: 0;width: 80rpx;height: 80rpx;
+            background: red;
+        }
+        .img-box{
+            width: 100%;height: 100%;padding: 20rpx;box-sizing: border-box;
+            .swiper-img{
+                width: 0;height: 0;
+            }
+        }
+    }
+}
 #list{
     .campaign-weapp-content{
         display: flex;flex-direction: row;margin: 20rpx;overflow: hidden;

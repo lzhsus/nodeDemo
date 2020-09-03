@@ -83,7 +83,7 @@ wepy.page({
         list:[]
     },
     computed: {
-        ...mapState([])
+        ...mapState(['userProfile'])
     },
     methods: {
         navigationSiginBtn(){
@@ -96,7 +96,9 @@ wepy.page({
 
     },
 
-    onShow() {},
+    onShow() {
+        
+    },
 
 });
 </script>

@@ -4,7 +4,7 @@
         <div class="wrapper" v-if="pageShow=='index'">
             <div class="sigin-box">
                 <div class="title">
-                    <span>签到记录（9月）</span><span class="more" @tap="lookSiginLogMoreBtn()">查看更多...</span>
+                    <span>{{siginInfo['desc']}}</span><span class="more" @tap="lookSiginLogMoreBtn()">查看更多...</span>
                 </div>
                 <div class="main">
                     <block v-for="(item,index) in siginTitle">
@@ -21,7 +21,8 @@
                     </block>
                 </div>
             </div>
-
+            <!-- 其他广告活动 -->
+            
         </div>
   </div>
 </template>
@@ -66,6 +67,7 @@ wepy.page({
         page: 1,
         pageEnd:false,
         list:[],
+        siginInfo:{},
         siginTitle:['日','一','二','三','四','五','六'],
         siginDays:[]
     },
@@ -114,6 +116,7 @@ wepy.page({
                         item['day'] = item['sigin_time'].substr(8,2)
                         return item;
                     })
+                    this.siginInfo = res;
                 }else{
                     wx.showModal({
                         content:res.msg,
@@ -130,7 +133,6 @@ wepy.page({
                     }
                     return item;
                 });
-                console.log(JSON.stringify(this.siginDays))
                 this.pageShow = 'index';
             })
         }
@@ -148,7 +150,7 @@ wepy.page({
     0%{
         font-size: 12px;
     }100%{
-        font-size: 18px;
+        font-size: 14px;
         color: #000;
     }
 }
@@ -178,7 +180,7 @@ wepy.page({
                         font-size: 16px;color: rgb(82, 81, 81);
                     }
                     &.await{
-                        animation: fontMove 0.6s infinite;
+                        animation: fontMove 0.3s infinite;
                         animation-direction:alternate;
                     }
                     &.active{

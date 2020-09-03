@@ -1,10 +1,23 @@
 <template>
-  <div class="container" id="sigin">
-        <head :pagesTitle="pagesTitle" :sourcePages="sourcePages"/>
-        <div class="wrapper" v-if="pageShow=='index'">
-
+<div class="container" id="sigin">
+<head :pagesTitle="pagesTitle" :sourcePages="sourcePages"/>
+<div class="wrapper" v-if="pageShow=='index'">
+    <div class="title">
+        <span class="th1">来源/用途</span>
+        <span class="th2">积分</span>
+        <span class="th3">获得日期</span>
+        <!-- 更换 -->
+        <div class="sigin-change" @tap="siginLogChange()"></div>
+    </div>
+    <block v-for="(item,index) in siginLogList">
+        <div class="item">
+            <span class="td1" :class="{'res':!item.point_desc}">{{item.point_desc||'未签到'}}</span>
+            <span class="td2">{{item.points||0}}</span>
+            <span class="td3">{{item.create_time||''}}</span>
         </div>
-  </div>
+    </block>
+</div>
+</div>
 </template>
 
 <config>
@@ -44,17 +57,25 @@ wepy.page({
         pagesTitle:"签到日志",
 
         pageShow:'',
+        siginLogList:[]
     },
     computed: {
         ...mapState([])
     },
     methods: {
+        siginLogChange(){
+            this.getsiginListLog(1)
+        },
         getsiginListLog(type){
             Api.siginListLog({
                 type:type||0
             }).then(res=>{
                 if(res['success']){
-
+                    res = res['result']||{};
+                    let list = res['list']||[];
+                    this.siginLogList = list.map(res=>{
+                        return res;
+                    })
                 }else{
                     wx.showModal({
                         content:res.msg,
@@ -76,7 +97,53 @@ wepy.page({
 <style lang="less">
 #sigin{
     .wrapper{
-
+        font-size: 12px;color:#333;border-top: 24rpx solid #f5f5f5;padding-bottom: 20rpx;box-sizing:border-box;
+        .title{
+            display: flex;justify-content: space-around;padding: 20rpx 0;background: #fff;
+            position: relative;
+            .sigin-change{
+                position: absolute;top:12rpx;right: 20rpx;
+                width: 20px;height: 20px;
+                background: url(http://192.168.0.112:3000/static/sigin-log-change-icon.png) center center no-repeat;
+                background-size: 100% auto;
+            }
+            text{
+                display: block;
+            }
+            .th1{
+                width: 256rpx;padding-left:34rpx;
+            }
+            .th2{
+                width: 100rpx;
+            }
+            .th3{
+                width: 250rpx;
+            }
+            .th4{
+                width: 150rpx;
+                text-align: center;
+            }
+        }
+        .item{
+            display: flex;justify-content: space-around;padding-top:10rpx;
+            text{
+                padding:15rpx 0;display: block;
+            }
+            .td1{
+                width: 256rpx;padding-left:34rpx;
+                &.res{ color: red; }
+            }
+            .td2{
+                width: 100rpx;
+            }
+            .td3{
+                width: 250rpx;
+            }
+            .td4{
+                width: 150rpx;
+                text-align: center;
+            }
+        }
     }
 }
 </style>

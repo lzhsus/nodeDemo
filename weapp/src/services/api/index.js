@@ -12,7 +12,11 @@ Api.test = function(data, opt={}){
 Api.userinfo_log = function(data, opt={}){
     return apiRequest('miniapp/api/userinfo_log', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }
-
+// 获取用户信息
+Api.userProfile = function(data, opt={}){
+    return apiRequest('miniapp/api/user/profile', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
+// 获取社区列表
 Api.campaign = function(data, opt={}){
     return apiRequest('miniapp/api/campaign', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }

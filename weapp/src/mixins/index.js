@@ -4,13 +4,31 @@ import appConfig from 'Appconfig';
 import appData from '../common/app_data';
 import * as common from 'Common';
 import store from '../store';
+import { resolve } from 'url';
 
 export default {
     data: {
 
     },
     methods: {
-        
+       getuserProfile(){
+           return new Promise(async (resolve,reject)=>{
+                let userProfile = await Api.userProfile()
+                if(!userProfile['success']){
+                    wx.showModeul({
+                        content:res['msg'],
+                        showCancel:false
+                    })
+                    reject();
+                    return;
+                }
+                userProfile = userProfile['result']||{}
+                this.$store.state.userProfile = userProfile||{};
+                resolve({ 
+                    success:true
+                });
+           })
+        }
     },
     onLoad(opt) {
         let q = opt['q']?decodeURIComponent(opt.q):'';

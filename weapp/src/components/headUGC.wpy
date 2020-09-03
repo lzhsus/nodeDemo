@@ -1,0 +1,115 @@
+<template>
+<div id="header" style="height:{{headHeight}}px;width: 100%;flex-shrink:0;">
+    <div class="header-fixed" style="height:{{headHeight}}px;position: fixed;width: 100%;left:0;top:0;background:#fff;z-index: 9999;display:flex;color:#fff;background-image: linear-gradient(to top right,#74c8f9, #79fcca);">
+        <div class="header-btn" hover-class="back-hover" v-if="backShow" @tap="navigationBackBtn()">
+            <div class="back-page" v-if="backShow==1" style="display: inline-block;width: 11px;height: 11px;z-index: 2;border-bottom: 2px solid #fff;border-left: 2px solid #fff;transform: rotate(45deg);left:18px;bottom: 18px;position: absolute;"></div>
+            <div class="back-home" v-if="backShow==2" style="background: url('http://192.168.0.112:3000/static/icon-1.png') no-repeat;width:20px;height: 20px;position: absolute;left:13px;bottom: 14px;background-size: 100% auto;"></div>
+        </div>
+        <div class="header-text" style="height:{{headHeight}}px;font-size:13px;text-align: left;display: block;width: 100%;display: flex;align-items:flex-end;justify-content: center;">
+            <span class="text" style="display: block;padding:0 0 14px 0;">{{pagesTitle||'nodeDemo'}}</span>
+        </div>
+    </div>
+</div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { mapState, mapActions } from '@wepy/x';
+import store from '@/store';
+import Api from 'Api';
+import appConfig from 'Appconfig';
+import * as common from 'Common';
+wepy.component({
+    store,
+    props:{
+		sourcePages: String,
+		pagesTitle: String,
+    },
+    data: {
+		backShow: 1,
+		backShow: false,
+		_getCurrentPagesLen: 0,
+		isIphoneX: false,
+        isAndroid: false,
+        headHeight:66
+    },
+    options: {
+        multipleSlots: true // 在组件定义时的选项中启用多slot支持
+    },
+    computed: {
+        ...mapState([]),
+    },
+    methods: {
+        navigationBackBtn(){
+			if( this.backShow == 1 ){
+				wx.navigateBack({
+					delta: (this._getCurrentPagesLen-1)
+				})
+			}else{
+				wx.reLaunch({
+					url: '/pages/index',
+				});
+			}
+        }
+    },
+    ready(){
+        wx.getSystemInfo({ 
+            success: (res)=> {	
+                console.log(res.model,res.system)
+                if(res.system.indexOf('Android')!=-1){
+                    this.headHeight = 70
+                }
+                if( res.model.indexOf('iPhone X')!=-1 ){
+                    this.headHeight = 88
+                }					
+            }						
+        }) 
+        if( ['my'].indexOf(this.sourcePages)==-1 ) {  
+            let _getCurrentPages = getCurrentPages()
+            let _getCurrentPagesLen = _getCurrentPages.length
+            this._getCurrentPages = _getCurrentPages
+            // this._getCurrentPagesLen=_getCurrentPages.length
+            console.log('_getCurrentPages',_getCurrentPages,_getCurrentPagesLen)
+            if( _getCurrentPagesLen>1 ){
+                this.backShow = 1
+            }else{
+                this.backShow = 2
+            }
+        }
+    },
+});
+</script>
+
+<style lang="less">
+#header{
+    width: 100%;flex-shrink:0;
+	.header-fixed{
+        position: fixed;width: 100%;left:0;top:0;background:#fff;z-index: 9999;display:flex;color:#000;
+        background-image: linear-gradient(#74c8f9, #79fcca);
+
+	} 
+	.header-btn{
+		width: 35px;flex-shrink:0;position: relative;
+		&:before{
+			position: absolute;left: 3px;bottom: 4px;width:40px;height: 40px;content: '';border-radius: 50%;
+		}	
+		.back-page {
+			display: inline-block;width: 11px;height: 11px;z-index: 2;
+			border-bottom: 2px solid #000;border-left: 2px solid #000;transform: rotate(45deg);left:18px;bottom: 14px;position: absolute;
+		}
+		.back-home{
+			background: url('http://192.168.0.112:3000/static/icon-1.png') no-repeat;width:20px;height: 20px;position: absolute;left:13px;bottom: 14px;background-size: 100% auto;
+		}
+		&.back-hover{
+			&:before{
+				background: #797979;
+			}
+		}			
+	}
+	.header-text{
+        font-size:16px;text-align: left;display: block;width: 100%;display: flex;align-items:flex-end;justify-content: center;
+		.text{
+			display: block;padding:0 0 12px 14px;
+		}
+	}
+}
+</style>

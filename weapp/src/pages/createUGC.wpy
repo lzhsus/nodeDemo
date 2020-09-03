@@ -1,0 +1,119 @@
+<template>
+  <div class="container" id="createUGC">
+        <head :pagesTitle="pagesTitle" :sourcePages="sourcePages"/>
+        <div class="weapper">
+            <!--  -->
+            <div class="img-box">
+                <div class="img-title">选择图片：</div>
+                <div class="img-main">
+                    <block v-for="(item,index) in imgList">
+                        <div class="item" :class="{'active':!item['url']}" @tap="choosePictrueBtn(item,index)">
+                            <img :src="item['url']" mode="widthFix" />
+                        </div>
+                    </block>
+                </div>
+            </div>
+        </div>
+  </div>
+</template>
+
+<config>
+{
+    usingComponents: {
+        "head":"../components/headUGC"
+    },
+    navigationStyle: "custom"
+}
+</config>
+<script>
+import wepy from '@wepy/core';
+// 配置
+import appConfig from 'Appconfig';
+import appData from '../common/app_data';
+// 公用
+import { mapState, mapActions } from '@wepy/x';
+import store from '../store';
+import mixinsIndex from 'Mixinsindex';
+import mixinShare from 'Mixinsshare';
+import * as common from 'Common';
+import eventHub from '../common/eventHub';
+import { uploadFile } from '../services/uploadFile';
+
+// 所有API管理
+import Api from 'Api';
+import { countTime, countTimeNum } from '@/services/countTime';
+import moment from 'moment';
+// 日志
+import Log from 'Log';
+
+wepy.page({
+    store,
+    mixins: [mixinsIndex, mixinShare],
+    data: {
+        sourcePages:'createUGC',
+        pagesTitle:"发表文章",
+        page: 1,
+        pageEnd:false,
+        list:[],
+        imgList:[{}]
+    },
+    computed: {
+        ...mapState([])
+    },
+    methods: {
+        choosePictrueBtn(item,index){
+            wx.chooseImage({
+                count: 9,
+                sizeType: ['original', 'compressed'],
+                sourceType: ['album', 'camera'],
+                success (res) {
+                    // tempFilePath可以作为img标签的src属性显示图片
+                    const tempFilePaths = res.tempFilePaths
+                }
+            })
+        }
+    },
+    onLoad(opt) {},
+
+    onShow() {}
+});
+</script>
+
+<style lang="less">
+#createUGC{
+    .img-box{
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        background:#fff;width: 710rpx;margin: 20rpx;overflow: hidden;
+        .img-title{
+            width:100%;height:30px;display:flex;justify-content:flex-start;align-items: center;
+            font-size:16px;color:#000;font-weight:bold;
+            padding:0 20rpx;box-sizing:border-box;
+        }
+        .img-main{
+            
+            padding: 12rpx 12rpx 0 12rpx;box-sizing: border-box;border-radius: 12rpx;
+            display: flex;justify-content:flex-start;align-items: flex-start;
+            flex-wrap: wrap;
+            .item{
+                width: 220rpx;height: 220rpx;
+                border: 1px dashed #999;box-sizing:border-box;
+                margin-bottom: 13rpx;
+                &.active{
+                    position: relative;
+                    &::after{
+                        content: '------';display: block;
+                        position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);color: rgb(219, 218, 218);
+                    }
+                    &::before{
+                        content: '------';display: block;
+                        position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%) rotate(-90deg);color: rgb(219, 218, 218);
+                    }
+                }
+                &:nth-child(3n-1){
+                    margin:0 13rpx;
+                }
+            }
+        }
+    }
+}
+</style>

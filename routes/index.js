@@ -8,6 +8,7 @@ const fs = require("fs");
 const path = require("path");
 var multiparty = require("multiparty");
 const moment = require("moment");
+const common = require('../libs/common');
 
 /**
  * 验证前端传过来的appid 是否匹配
@@ -185,6 +186,8 @@ router.post('/miniapp/api/sigin', async function (req, res) {
             p_id: 'id',
             appid:config['appid'],
             openid:headers['openid'],
+            point_desc:"签到",
+            points:1,
             sigin_time:moment().format("YYYY-MM-DD")
         })
         await Ut.updataJsonDB(__dirname + '/../public/data/sigin.json', params, res,{isOpenid:true});
@@ -193,11 +196,48 @@ router.post('/miniapp/api/sigin', async function (req, res) {
         Ut.requestErr({err:err},res)
     }
 });
+// 创建 更新 下架活动页
+router.post('/miniapp/api/sigin/activity/updata', async function (req, res,next) {
+    var query  = url.parse(req.url,true).query||{};
+    let headers = req.headers||{};
+    let data = await getData(__dirname + '/../public/data/siginactivity.json',Object.assign(headers,{
+        sort:0,
+        isOpenid:true
+    }),res)
+    const month = query['month']||moment().format("YYYY-MM-DD");
+
+    let list = data.result.filter((res,i)=>{
+        return res['sigin_time'].indexOf(month.substr(0,7))!=-1;
+    })
+    Ut.requestSuccess({result:{
+        list:list,
+        current_time:month,
+        desc:moment().format("YYYY年MM月")+'签到记录'
+    }},res)
+});
+// 签到页活动
+router.get('/miniapp/api/sigin/activity', async function (req, res,next) {
+    var query  = url.parse(req.url,true).query||{};
+    let headers = req.headers||{};
+    let data = await getData(__dirname + '/../public/data/siginactivity.json',Object.assign(headers,{
+        sort:0,
+        isOpenid:true
+    }),res)
+    const month = query['month']||moment().format("YYYY-MM-DD");
+
+    let list = data.result.filter((res,i)=>{
+        return res['sigin_time'].indexOf(month.substr(0,7))!=-1;
+    })
+    Ut.requestSuccess({result:{
+        list:list,
+        current_time:month,
+        desc:moment().format("YYYY年MM月")+'签到记录'
+    }},res)
+});
 // 获取当月签到列表
 router.get('/miniapp/api/sigin/list', async function (req, res,next) {
     var query  = url.parse(req.url,true).query||{};
     let headers = req.headers||{};
-
     let data = await getData(__dirname + '/../public/data/sigin.json',Object.assign(headers,{
         sort:0,
         isOpenid:true
@@ -207,7 +247,11 @@ router.get('/miniapp/api/sigin/list', async function (req, res,next) {
     let list = data.result.filter((res,i)=>{
         return res['sigin_time'].indexOf(month.substr(0,7))!=-1;
     })
-    Ut.requestSuccess({result:{list:list}},res)
+    Ut.requestSuccess({result:{
+        list:list,
+        current_time:month,
+        desc:moment().format("YYYY年MM月")+'签到记录'
+    }},res)
 });
 // 签到全部签到流水 返回数据 自2020-09-01开始
 router.get('/miniapp/api/sigin/list/log', async function (req, res,next) {
@@ -218,11 +262,19 @@ router.get('/miniapp/api/sigin/list/log', async function (req, res,next) {
         sort:0,
         isOpenid:true
     }),res)
-    const month = query['month']||moment().format("YYYY-MM-DD");
     // 全部日期
     if(query['type']==1){
-        var list = data.result.filter((res,i)=>{
-            return res['sigin_time'].indexOf(month.substr(0,7))!=-1;
+        const day1 = '2020-09-01';
+        const day2 = moment().format("YYYY-MM-DD");
+        var list = common.getBetweenDates(day1,day2).map(res=>{
+            var obj = {};
+            for(let i=0;i<data['result'].length;i++){
+                if(data['result'][i]['sigin_time']==res){
+                    obj = data['result'][i]
+                    break
+                }
+            }
+            return obj;
         })
     }else{
         var list = data.result.filter((res,i)=>{
@@ -231,4 +283,33 @@ router.get('/miniapp/api/sigin/list/log', async function (req, res,next) {
     }
     Ut.requestSuccess({result:{list:list}},res)
 });
+// 获取用户信息
+router.get('/miniapp/api/user/profile', async function (req, res,next) {
+    var query  = url.parse(req.url,true).query||{};
+    let headers = req.headers||{};
+    // 获取用户数
+    let data = await getData(__dirname + '/../public/data/userInfo.json',Object.assign(headers,{
+        sort:0,
+        type:"Object",
+        isOpenid:true
+    }),res)
+    let list = data.result.map((res,i)=>{
+        var obj = res;
+        delete obj['access_token'];
+        delete obj['session_key'];
+        delete obj['expires_in'];
+        delete obj['appid'];
+        return obj;
+    })
+    // 获取用户会员数据
+    let data2 = await getData(__dirname + '/../public/data/userMember.json',Object.assign(headers,{
+        sort:0,
+        type:"Object",
+        isOpenid:true
+    }),res)
+    Ut.requestSuccess({result:Object.assign(list[0],{
+        isMember:data2.result.length
+    })},res)
+});
 module.exports = router;
+
