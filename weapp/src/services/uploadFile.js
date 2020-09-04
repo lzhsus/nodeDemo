@@ -3,26 +3,36 @@ let uploadFile = async (file,dir)=> {
     return new Promise(function (resolve, reject) { 
         Api.ossSign({
             dir: dir||'uploadFile'
-        }).then((res)=>{
+        }).then(async (res)=>{
             if( res.success ){
                 let ossKey = res.result            
                 let promiseAll = []
-                file.forEach((obj,index)=>{
-                    promiseAll.push(wxUploadFile(file[index], ossKey))
-                })
-                Promise.all(promiseAll).then((fileURL)=> {
-                    resolve(fileURL)
-                }).catch(error=>{
-                    wx.hideLoading()
-                    resolve(false)
-                })
+                for(let i=0;i<file.length;i++){
+                    if(file[i]['url']&&!file[i]['success']){
+                        let url = await wxUploadFile(file[i]['url'], ossKey).catch(error=>{
+                                    wx.showModal({
+                                        content: '资源上传失败，请重新上传！',
+                                        showCancel: false
+                                    })
+                                    reject(error)
+                                    wx.hideLoading()
+                                })
+                        if(url.indexOf('http://tmp/')!=-1&&url.indexOf('wxfile://')!=-1){
+                            file[i]['url'] = url;
+                            file[i]['success'] = true;
+                        }
+                        promiseAll.push(file[i])
+                    }else{
+                        promiseAll.push(file[i])
+                    }
+                }
+                resolve(promiseAll)
             }else{
                 wx.showModal({
                     content: res.msg,
                     showCancel: false
-                })
-                wx.hideLoading()
-                resolve(false)
+                });
+                wx.hideLoading();
             }
         })  
     })
@@ -50,15 +60,15 @@ let wxUploadFile = (file, ossKey)=> {
                 secure: true
             },
             success: (res)=> {
-                if ( res.statusCode!=200 ) {
-                    reject(false)
+                if ( res.statusCode!=200 ) {         
+                    resolve(file)
                     return
                 }
                 let url = JSON.parse(res.data).result.url                
                 resolve(url)
             },
-            fail: (error)=> {
-                reject(false)
+            fail: (error)=> {     
+                reject(error)
             }
         })
     })    

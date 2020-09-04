@@ -11,7 +11,9 @@
                     <img @tap="previewImage(item)" class="pic" style="height:{{item.height2}}" src="{{item.url}}" />
                 </block>
             </div>
+            <div class="create-img" catchtap="createContentBtn"></div>
         </div>
+        <!-- 发布图片 -->
         <loadmore wx:if="{{pageEnd}}">
             <div slot="content">暂无更多数据...</div>
         </loadmore>
@@ -97,6 +99,11 @@ wepy.page({
         closeIconBtn(){
             this.itemInfoShow = false;
         },
+        createContentBtn(){
+            wx.navigateTo({
+                url:"/pages/createUGC"
+            })
+        },
         previewImage(item){
             this.itemInfo = item;
             this.itemInfoShow = true;
@@ -125,7 +132,12 @@ wepy.page({
                         }
                         return item;
                     }))
-                    let newImages = await common.setImagesHeight(this.leftHight,this.rightHight,this.leftList,this.rightList,this.list)
+                    var newImages={}
+                    if(this.page<=1){
+                        newImages = await common.setImagesHeight(0,0,[],[],this.list)
+                    }else{
+                        newImages = await common.setImagesHeight(this.leftHight,this.rightHight,this.leftList,this.rightList,this.list)
+                    }
                     
                     this.leftHight = newImages.leftHight;
                     this.rightHight = newImages.rightHight;
@@ -198,6 +210,21 @@ page{
 #list{
     .campaign-weapp-content{
         display: flex;flex-direction: row;margin: 20rpx;overflow: hidden;
+        .create-img{
+            position: fixed;bottom: 30rpx;right: 30rpx;
+            width: 110rpx;height: 110rpx;border:1px dashed #999;
+            background: #eee;
+            &::after{
+                content: '------';display: block;
+                position:absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);
+                font-size: 12px;color: #999;white-space:nowrap;margin-top: -1px;
+            }
+            &::before{
+                content: '------';display: block;
+                position:absolute;top: 50%;left: 50%;transform: translate(-50%,-50%) rotate(-90deg);
+                font-size: 12px;color: #999;white-space:nowrap;margin-left: -1px;
+            }
+        }
         .left{
             width: 345rpx;
         }
