@@ -129,6 +129,22 @@ router.get('/miniapp/api/campaign', async function (req, res,next) {
     Ut.requestSuccess({result:{list:list,last_page:Number(last_page),current_page:Number(current_page)}},res)
 });
 /**
+ * 上传文章
+ */
+router.post('/miniapp/api/campaign/add', async function (req, res,next) {
+    var query  = url.parse(req.url,true).query||{};
+    let body = req.body||{};    
+    let headers = req.headers||{};
+    
+    await Ut.updataJsonDB(__dirname + '/../public/data/campaign.json', Object.assign(body,{
+        openid:headers['openid'],
+        appid:headers['appid'],
+        p_id:'id'
+    }), res,{isOpenid:true});
+
+    Ut.requestSuccess({result:''},res)
+});
+/**
  * 活动oss
  */
 router.get('/oss/api/file/info', async function (req, res,next) {
@@ -168,11 +184,13 @@ router.post('/images', async function (req, res,next) {
                 url = url.replace(new RegExp('\\\\','g'),"/");
                 // obj['url'] = obj['url'].replace(/\\\\/g,"/");
             }
+            // 
             await Ut.updataJsonDB(__dirname + '/../public/data/campaign.json', {
                 url:url,
                 openid:fields['openid'][0],
                 appid:fields['appid'][0]
             }, res,{isOpenid:true});
+
             Ut.requestSuccess({result:{code:200,url:url}},res)
         }
     });

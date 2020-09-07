@@ -1,4 +1,5 @@
 import Api from 'Api';
+import appConfig from 'Appconfig';
 let uploadFile = async (file,dir)=> {
     return new Promise(function (resolve, reject) { 
         Api.ossSign({
@@ -17,8 +18,8 @@ let uploadFile = async (file,dir)=> {
                                     reject(error)
                                     wx.hideLoading()
                                 })
-                        if(url.indexOf('http://tmp/')!=-1&&url.indexOf('wxfile://')!=-1){
-                            file[i]['url'] = url;
+                        if(url.indexOf('http://tmp/')==-1&&url.indexOf('wxfile://')==-1){
+                            file[i]['path'] = url ;
                             file[i]['success'] = true;
                         }
                         promiseAll.push(file[i])

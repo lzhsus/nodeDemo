@@ -127,8 +127,14 @@ wepy.page({
                         this.list = [];
                     }
                     this.list = this.list.concat(list.map(item=>{
+                        // 随机提出一张图片放在最外层
+                        if(!item['url']){
+                            item['imgs'] = item['imgs']||item['list']||[];
+                            var index = ~~(Math.random()*item['imgs'].length);
+                            item['url'] = item['imgs'][index]['path'];
+                        }
                         if(item['url']){
-                            item['url'] = appConfig.ossPath + item['url']
+                            item['url'] = appConfig.ossPath + item['url'];
                         }
                         return item;
                     }))
@@ -159,14 +165,21 @@ wepy.page({
                     appConfig.stopPullDownRefresh = false;
                 }
             });
-        }
+        },
     },
     onLoad(opt) {
         this.getCampaign()
     },
 
-    onShow() {},
-    
+    onShow() {
+        if(appConfig&&appConfig.submitUGCSuccess){
+            appConfig.submitUGCSuccess = false;
+            this.page = 1
+            this.pageEnd = false
+            appConfig.stopPullDownRefresh = true;
+            this.getCampaign()
+        }
+    },
     // 上拉监控
     onPullDownRefresh(){
         this.page = 1

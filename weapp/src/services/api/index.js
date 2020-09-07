@@ -20,6 +20,10 @@ Api.userProfile = function(data, opt={}){
 Api.campaign = function(data, opt={}){
     return apiRequest('miniapp/api/campaign', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }
+// 创建社区文章
+Api.campaignAdd = function(data, opt={}){
+    return apiRequest('miniapp/api/campaign/add', data, { ...{method:'POST',isShowLoading:true, isShowError:true} ,...opt });
+}
 // 签到
 Api.sigin = function(data, opt={}){
     return apiRequest('miniapp/api/sigin', data, { ...{method:'POST',isShowLoading:true, isShowError:true} ,...opt });

@@ -96,19 +96,25 @@ wepy.page({
                 })
                 return
             }
-            let files = await uploadFile(this.imgList,'ugc-' + moment().format("YYYYMMDD"));
-        
-            console.log('--------',files)
-            console.log(files.length,this.imgList.length)
-            this.imgList = this.imgList.map((obj,index)=>{
-                for(let i=0;i<files.length;i++){
-                    if(index == files['index']){
-                        obj['url'] = appConfig.ossPath + files[i]['url']
-                    }
+            wx.showLoading({
+                title: '加载中',
+                mask: true,
+            });
+            await uploadFile(this.imgList,'ugc-' + moment().format("YYYYMMDD"));
+            // 本地地址更改为oss地址
+            this.imgList = this.imgList.map(item=>{
+                if(item['success']&&item['path']){
+                    item['url'] = appConfig.ossPath + item['path'];
                 }
-                return obj;
+                return item;
             })
-            if(files.length<this.imgList.length){
+            // 检查是否存在 原始的本地图片地址
+            let isFailure = this.imgList.some(obj=>{
+                return obj['url'].indexOf('http://tmp/')!=-1||obj['url'].indexOf('wxfile://')!=-1;
+            })
+            wx.hideLoading();
+
+            if(isFailure){
                 wx.showModal({
                     content:"部分资源上传失败，立即重新上传！",
                     success:res=>{
@@ -117,12 +123,29 @@ wepy.page({
                         }
                     }
                 })
+                return
             }
-            wx.showModal({
-                content:"提交成功！",
-                showCancel:false
+            Api.campaignAdd({
+                imgs:this.imgList,
+                content:"",
+            }).then(res=>{
+                if(res['success']){
+                    appConfig.submitUGCSuccess = true;
+                    wx.showToast({
+                        title: '提交成功！',
+                        icon: 'success',
+                        duration: 1000
+                    })
+                    setTimeout(res=>{
+                        wx.navigateBack()
+                    },600)
+                }else{
+                    wx.showModal({
+                        content:res.msg,
+                        showCancel:false
+                    })
+                }
             })
-            console.log(this.imgList)
         }
     },
     onLoad(opt) {},

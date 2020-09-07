@@ -30,7 +30,7 @@ globalApi.createQrcode = function(data, opt={}){
 
 //上传文件
 globalApi.ossSign = function(data, opt={}){
-    return apiRequest('oss/api/file/info', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+    return apiRequest('oss/api/file/info', data, { ...{method:'GET',isShowLoading:false, isShowError:true} ,...opt });
 }
 
 
