@@ -33,7 +33,7 @@ export default async function apiRequest(url, params={}, opt={}){
     // 请求接口
     res = await request(url, params, opt.method, header);
     // token 过期
-    if([41001].indexOf(Number(res.errcode))!=-1){
+    if([41001,42001].indexOf(Number(res.errcode))!=-1){
         wx.removeStorageSync('userInfo');
         console.log('opt.method',opt.method)
         res = await apiRequest(url, params, opt);

@@ -20,15 +20,21 @@
         <!-- 查看图片 -->
         <div class="pop" v-if="itemInfoShow">
             <div class="pop-content">
-                <div class="close-icon" @tap="closeIconBtn()"></div>
+                <div class="title">
+                    <span class="txt">详细内容</span>
+                    <div class="close-icon" @tap="closeIconBtn()"></div>
+                </div>
                 <div class="img-box">
                     <swiper>
-                        <block v-for="(item,index) in itemInfo['list']">
+                        <block v-for="(item,index) in itemInfo['imgs']">
                             <swiper-item>
                                 <img class="img1002" :src="item['url']" mode="aspectFit" />
                             </swiper-item>
                         </block>
                     </swiper>
+                </div>
+                <div class="main-box">
+
                 </div>
             </div>
         </div>
@@ -78,19 +84,7 @@ wepy.page({
         leftHight: 0,
         rightHight: 0,
         itemInfoShow:false,
-        itemInfo:{
-            list:[{
-                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
-            },{
-                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
-            },{
-                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
-            },{
-                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
-            },{
-                url: "http://192.168.0.112:3000/status/text/Jz8RmIekmJ5Wc8I1cd1atxFc.jpg"
-            }]
-        }
+        itemInfo:{}
     },
     computed: {
         ...mapState([])
@@ -107,10 +101,6 @@ wepy.page({
         previewImage(item){
             this.itemInfo = item;
             this.itemInfoShow = true;
-            wx.previewImage({
-                current: item['url'], // 当前显示图片的http链接
-                urls:[item['url']]
-            })
         },
         getCampaign() {
             wx.showLoading({
@@ -204,19 +194,28 @@ page{
     background: rgba(0, 0, 0, 0.8);
     .pop-content{
         position: relative;top:50%;left: 50%;transform: translate(-50%,-50%);
-        width: 640rpx;min-height: 800rpx;
-        background: #fff;border-radius: 12px;
+        width: 640rpx;min-height: 1000rpx;max-height: 1000rpx;
+        background: #fff;border-radius: 12rpx;
         box-shadow: 0 0 20rpx rgba(255, 255, 255, 0.5);overflow: hidden;
-        padding-top: 40px;box-sizing:border-box;
-        .close-icon{
-            position: absolute;top: 0;right: 0;width: 80rpx;height: 80rpx;
-            background: red;
+        .title{
+            width: 100%;height: 50px;text-align: center;line-height: 50px;
+            font-size: 20px;font-weight: bold;color: brown;position: relative;
+            border-bottom: 1px solid #eee;
+            .close-icon{
+                position: absolute;top: 0;right: 0;width: 80rpx;height: 80rpx;
+                background: red;
+            }
         }
         .img-box{
-            width: 100%;height: 100%;padding: 20rpx;box-sizing: border-box;
+            width: 600rpx;height: 100%;margin:30rpx auto;
+            border: 1px dashed #999;
+            border-radius:12rpx;overflow: hidden;
             .swiper-img{
                 width: 0;height: 0;
             }
+        }
+        .main-box{
+
         }
     }
 }

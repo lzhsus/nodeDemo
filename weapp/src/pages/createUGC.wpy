@@ -1,7 +1,7 @@
 <template>
   <div class="container" id="createUGC">
         <head :pagesTitle="pagesTitle" :sourcePages="sourcePages"/>
-        <div class="weapper">
+        <div class="weapper" v-if="pageShow=='index'">
             <div class="img-box">
                 <div class="img-title">选择图片：</div>
                 <div class="img-main">
@@ -11,6 +11,24 @@
                         </div>
                     </block>
                     <div v-if="imgList.length<9" class="item active" @tap="choosePictrueBtn(-1)"></div>
+                </div>
+            </div>
+            <div class="main-box">
+                <div class="item">
+                    <div class="lable">选择类别：</div>
+                    <div class="value">
+                        <picker bindchange="bindPickerChange" data-type="ugcSort" value="{{ugcSortIndex}}" range="{{ugcSort}}" range-key="name">
+                            <view class="picker" :class="{'active':ugcSortIndex!=-1}">{{ugcSortIndex==-1?'选择所属类别':ugcSort[ugcSortIndex]['name']}}</view>
+                        </picker>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="lable">内容信息：</div>
+                    <div class="value"></div>
+                    <div class="text-area">
+                          <textarea bindinput="bindTextAreaInput" placeholder="请输入内容描述...（不可少于20个字节）" placeholder-style="font-size:12px;" />
+
+                    </div>
                 </div>
             </div>
             <div class="submit-btn" @tap="submitBtn()">确认提交</div>
@@ -53,10 +71,14 @@ wepy.page({
     data: {
         sourcePages:'createUGC',
         pagesTitle:"发表文章",
+        pageShow:'',
         page: 1,
         pageEnd:false,
         list:[],
-        imgList:[]
+        imgList:[],
+        ugcSort:[],
+        ugcSortIndex:-1,
+        content:''
     },
     computed: {
         ...mapState([])
@@ -88,6 +110,19 @@ wepy.page({
                 }
             })
         },
+        bindPickerChange(e){
+            e = e.$wx||e;
+            const { type } = e.currentTarget.dataset;
+            const { value } = e.detail;
+            if(type == "ugcSort"){
+                this.ugcSortIndex = Number(value)
+            }
+        },
+        bindTextAreaInput(e){
+            e = e.$wx||e;
+            const { value } = e.detail;
+            this.content = value||'';
+        },
        async submitBtn(){
             if(!this.imgList.length){
                 wx.showModal({
@@ -96,10 +131,40 @@ wepy.page({
                 })
                 return
             }
+            if(this.ugcSortIndex==-1){
+                wx.showModal({
+                    content:"请先选择所属类别！",
+                    showCancel:false
+                })
+                return
+            }
+            if(common.getLength(this.content)<20){
+                wx.showModal({
+                    content:"内容信息不可少于20个字符",
+                    showCancel:false
+                })
+                return
+            }
             wx.showLoading({
                 title: '加载中',
                 mask: true,
             });
+            var res = await wx.cloud.callFunction({
+                // 云函数名称
+                name: 'msgSecCheck',
+                // 传给云函数的参数
+                data: {
+                    content:this.content,
+                },
+            });               
+            if( res.result&&res.result.code!=200 ){
+                wx.showModal({
+                    showCancel: false,
+                    content: res.result.msg,
+                })
+                wx.hideLoading();
+                return;
+            }
             await uploadFile(this.imgList,'ugc-' + moment().format("YYYYMMDD"));
             // 本地地址更改为oss地址
             this.imgList = this.imgList.map(item=>{
@@ -127,7 +192,8 @@ wepy.page({
             }
             Api.campaignAdd({
                 imgs:this.imgList,
-                content:"",
+                sortId:this.ugcSort[this.ugcSortIndex]['id'],
+                content:this.content,
             }).then(res=>{
                 if(res['success']){
                     appConfig.submitUGCSuccess = true;
@@ -148,7 +214,13 @@ wepy.page({
             })
         }
     },
-    onLoad(opt) {},
+    async onLoad(opt) {
+        let sort = await this.getCampaignUGCSort();
+        if(sort['success']){
+            this.ugcSort = sort['ugcSort']||[]
+        }
+        this.pageShow = 'index'
+    },
 
     onShow() {}
 });
@@ -190,6 +262,34 @@ wepy.page({
                 }
                 &:nth-child(3n-1){
                     margin:0 13rpx;
+                }
+            }
+        }
+    }
+    .main-box{
+        padding: 20rpx;box-sizing:border-box;
+        .item{
+            width: 100%;display: flex;justify-content: flex-start;align-items: center;
+            flex-wrap: wrap;
+            .lable{
+                min-width: 200rpx;max-width: 200rpx;text-align: right;height: 40px;line-height: 40px;
+                font-size: 14px;color: #000;font-weight: bold;margin-right: 20rpx;
+            }
+            .value{
+                width: 480rpx;text-align: left;height: 40px;line-height: 40px;
+                font-size: 12px;color: #000;
+                .picker{
+                    height: 40px;line-height: 40px;
+                    &.active{
+                        color: red;
+                    }
+                }
+            }
+            .text-area{
+                width:600rpx;height:300rpx;margin:0 auto;
+                border:1px dashed #eee;padding:20rpx;box-sizing:border-box;
+                textarea{
+                    display:block;width:100%;height:100%;
                 }
             }
         }

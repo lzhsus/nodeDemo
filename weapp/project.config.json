@@ -28,12 +28,14 @@
 		"userConfirmedUseCompilerModuleSwitch": true
 	},
 	"compileType": "miniprogram",
-	"appid": "wx9e0fca1e4124c7fb",
-	"projectname": "%E5%B7%A7%E8%99%8E%E6%B5%8B%E8%AF%952020",
+	"appid": "wxf99aeedcb92d7b0e",
+	"projectname": "Demo",
 	"miniprogramRoot": "dist/",
+	"cloudfunctionRoot": "cloudfunctions/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"libVersion": "2.11.3",
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,

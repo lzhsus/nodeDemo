@@ -53,7 +53,9 @@ wepy.app({
 		
 	},
 	onLaunch(options) {
-        
+		wx.cloud.init({
+			traceUser: true,
+		})
     },
 	onError(error){
         Log.error(error);

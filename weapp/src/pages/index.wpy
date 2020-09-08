@@ -1,7 +1,7 @@
 <template>
     <div class="container" id="index">
         <div class="weapper" v-if="pageShow=='index'">
-
+            <div @tap="cool()">选择图片</div>
         </div>
     </div>
 </template>
@@ -44,15 +44,38 @@ wepy.page({
         ...mapState(['userProfile'])
     },
     methods: {
+        cool(){
+            wx.chooseImage({
+                count: 9,
+                sizeType: ['original', 'compressed'],
+                sourceType: ['album', 'camera'],
+                success:async (res)=>{
+                    // tempFilePath可以作为img标签的src属性显示图片
+                    const tempFilePaths = res.tempFilePaths
+                    var imgList = []
+                    imgList = imgList.concat(tempFilePaths.map(res=>{
+                        var obj={}
+                        obj['url'] = res;
+                        return obj;
+                    }))
 
+                    let files = await uploadFile(imgList,'check-' + moment().format("YYYYMMDD"));
+                    console.log(files)
+
+                }
+            })
+        }
     },
    async onLoad(opt) {
         let userProfile = await this.getuserProfile();
         this.pageShow = 'index';
         console.log(this.userProfile)
+
     },
 
-    onShow() {}
+    onShow() {
+
+    }
 });
 </script>
 

@@ -20,6 +20,10 @@ Api.userProfile = function(data, opt={}){
 Api.campaign = function(data, opt={}){
     return apiRequest('miniapp/api/campaign', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }
+// 获取所属文章分类
+Api.campaignUGCSort = function(data, opt={}){
+    return apiRequest('miniapp/api/campaign/ugcsort', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
 // 创建社区文章
 Api.campaignAdd = function(data, opt={}){
     return apiRequest('miniapp/api/campaign/add', data, { ...{method:'POST',isShowLoading:true, isShowError:true} ,...opt });

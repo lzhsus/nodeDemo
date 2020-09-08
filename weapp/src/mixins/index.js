@@ -15,7 +15,7 @@ export default {
            return new Promise(async (resolve,reject)=>{
                 let userProfile = await Api.userProfile()
                 if(!userProfile['success']){
-                    wx.showModeul({
+                    wx.showModal({
                         content:res['msg'],
                         showCancel:false
                     })
@@ -28,6 +28,23 @@ export default {
                     success:true
                 });
            })
+        },
+        getCampaignUGCSort(){
+            return new Promise(async(resolev,reject)=>{
+                let sort = await Api.campaignUGCSort({});
+                if(!sort['success']){
+                    console.log(sort)
+                    wx.showModal({
+                        content:sort['msg'],
+                        showCancel:false
+                    })
+                    reject();
+                    return;
+                }
+                sort = sort['result']||{};
+                let ugcSortList = sort['list']||[];
+                resolev({success:true,ugcSort:ugcSortList})
+            })
         }
     },
     onLoad(opt) {

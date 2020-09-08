@@ -7,6 +7,35 @@ let rightWrongAudio =[]; //对错音乐
 export const depthCopy = function (data){
     return JSON.parse(JSON.stringify(data));
 }
+function getType(file){
+    var index1 = file.lastIndexOf(".");
+    var index2 = file.length;
+    var type=file.substring(index1,index2).toUpperCase();
+    return type;
+}
+// 图片压缩
+export const compressImage = async function (data) {
+    let arr = [];    
+    data.forEach(item=>{
+        arr.push(new Promise(function(resolve, reject) {
+            if(item.success){
+                resolve(item);
+            }else if(getType(item.url)=='.JPG'){
+                wx.compressImage({
+                    src: item.url, 
+                    quality: 40,
+                    success:(res)=>{
+                        item.url = res.tempFilePath;
+                        resolve(item);
+                    },
+                });
+            }else{
+                resolve(item);
+            }
+        }));
+    });   
+    return Promise.all(arr); 
+}
 function getImageInfo(item){
     return new Promise((resolve,reject)=>{
         // if(item['success']){

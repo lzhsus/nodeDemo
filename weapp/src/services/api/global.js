@@ -33,5 +33,15 @@ globalApi.ossSign = function(data, opt={}){
     return apiRequest('oss/api/file/info', data, { ...{method:'GET',isShowLoading:false, isShowError:true} ,...opt });
 }
 
+// 验证 文本 图片 视频 音频的安全性
+/**
+ * @param {*} type 
+ *  media >>视频音频
+ *  img   >>图片
+ *        >>文本
+ */
+globalApi.wxaSecurity = function(data, opt={}){
+    return apiRequest('miniapp/api/wxa/security', data, { ...{method:'POST',isShowLoading:false, isShowError:true} ,...opt });
+}
 
 export {globalApi}

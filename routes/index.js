@@ -9,6 +9,7 @@ const path = require("path");
 var multiparty = require("multiparty");
 const moment = require("moment");
 const common = require('../libs/common');
+const request = require('request');
 
 /**
  * 验证前端传过来的appid 是否匹配
@@ -114,7 +115,6 @@ router.get('/miniapp/api/userinfo_log', async function (req, res,next) {
  */
 router.get('/miniapp/api/campaign', async function (req, res,next) {
     var query  = url.parse(req.url,true).query||{};
-    console.log('global',global['config'])
     let data = await getData(__dirname + '/../public/data/campaign.json',Object.assign(query,{
         sort:1
     }),res)
@@ -128,6 +128,18 @@ router.get('/miniapp/api/campaign', async function (req, res,next) {
     })
     Ut.requestSuccess({result:{list:list,last_page:Number(last_page),current_page:Number(current_page)}},res)
 });
+router.get('/miniapp/api/campaign/ugcsort', async function (req, res,next) {
+    var query  = url.parse(req.url,true).query||{};
+    let data = await getData(__dirname + '/../public/data/ugcSort.json',Object.assign(query,{
+        sort:0
+    }),res)
+
+    let list = data.result.filter((res,i)=>{
+        return true;
+    })
+    Ut.requestSuccess({result:{list:list}},res)
+});
+// 
 /**
  * 上传文章
  */
@@ -139,7 +151,8 @@ router.post('/miniapp/api/campaign/add', async function (req, res,next) {
     await Ut.updataJsonDB(__dirname + '/../public/data/campaign.json', Object.assign(body,{
         openid:headers['openid'],
         appid:headers['appid'],
-        p_id:'id'
+        p_id:'id',
+        status:0,
     }), res,{isOpenid:true});
 
     Ut.requestSuccess({result:''},res)
@@ -218,6 +231,7 @@ router.post('/miniapp/api/sigin', async function (req, res) {
 router.post('/miniapp/api/sigin/activity/updata', async function (req, res,next) {
     var query  = url.parse(req.url,true).query||{};
     let headers = req.headers||{};
+    let body = req.body||{};    
     let data = await getData(__dirname + '/../public/data/siginactivity.json',Object.assign(headers,{
         sort:0,
         isOpenid:true
@@ -301,6 +315,68 @@ router.get('/miniapp/api/sigin/list/log', async function (req, res,next) {
     }
     Ut.requestSuccess({result:{list:list}},res)
 });
+// 检验文本 图片 视频音频 是否合法
+router.post('/miniapp/api/wxa/security', async function (req, res,next) {
+    var query  = url.parse(req.url,true).query||{};
+    let headers = req.headers||{};
+    let body = req.body||{};
+    let token = headers.authorization.replace('Bearer ','');
+    try {
+        var r1,data,opts;
+        if(body['type'] == 'img'){
+            data ={
+                media:request(config['serverPath'] + body['content']),
+                // media:request('https://shared.ydstatic.com/fanyi/fanyi-ad-place/online/images/logo_fanyiwang.png')
+            };
+            opts = {
+                url: `https://api.weixin.qq.com/wxa/img_sec_check?access_token=${token}`,
+                method:"POST",
+                formData: data,
+            }
+            r1 = await Ut.promiseReq(opts,res);
+            r1 = JSON.parse(r1);
+            console.log('r1',r1)
+            if(r1['errcode']==0){
+                Ut.requestSuccess({result:'',code:r1['errcode']},res)
+            }else if(r1['errcode']==40006){
+                Ut.requestErr({err:"图片大小超出限制！",code:r1['errcode']},res)
+            }else if(r1['errcode']==45002){
+                Ut.requestErr({err:"图片大小超出限制！",code:r1['errcode']},res)
+            }else{
+                Ut.requestErr({err:'内容含有违法违规内容',code:r1['errcode']},res)
+            }
+        }else if(body['type']=='media'){
+            opts = {
+                url: `https://api.weixin.qq.com/wxa/media_check_async?appid=${config['appid']}&secret=${config['secret']}&access_token=${token}`,
+                method:"POST",
+                media:""
+            }
+            r1 = await Ut.promiseReq(opts,res);
+        }else{
+            data ={
+                content:body['content']
+            };
+            opts = {
+                url: `https://api.weixin.qq.com/wxa/msg_sec_check?access_token=${token}`,
+                method:"POST",
+                body: JSON.stringify(data),
+                headers: {//设置请求头
+                    "content-type": "application/json",
+                },
+            }
+            r1 = await Ut.promiseReq(opts,res);
+            r1 = JSON.parse(r1);
+            if(r1['errcode']==0){
+                Ut.requestSuccess({result:'',code:200},res)
+            }else{
+                Ut.requestErr({err:'内容含有违法违规内容',code:87014},res)
+            }
+        }
+    } catch (err) {
+        Ut.requestErr({err:err},res)
+    }
+});
+
 // 获取用户信息
 router.get('/miniapp/api/user/profile', async function (req, res,next) {
     var query  = url.parse(req.url,true).query||{};
@@ -325,8 +401,16 @@ router.get('/miniapp/api/user/profile', async function (req, res,next) {
         type:"Object",
         isOpenid:true
     }),res)
+    // 获取用户管理员信息
+    let data3 = await getData(__dirname + '/../public/data/admin.json',Object.assign(headers,{
+        sort:0,
+        type:"Object",
+        isOpenid:true
+    }),res)
+
     Ut.requestSuccess({result:Object.assign(list[0],{
-        isMember:data2.result.length
+        isMember:data2.result.length,
+        isAdmin:data3.result.length,
     })},res)
 });
 module.exports = router;

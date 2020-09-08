@@ -1,7 +1,5 @@
 const request = require("request");
-const url = require("url");
 const fs = require("fs");
-const path = require("path");
 class Ut {
     constructor(height, width) {
         this.area = height * width;
@@ -151,7 +149,6 @@ class Ut {
                         return
                     }
                 }
-                console.log('---------------------',index,query['isOpenid'])
                 if(index!=-1&&!query['isOpenid']){
                     if( params['p_id'] ) delete params['p_id'];
                     person.data[index] = Object.assign(person.data[index],params);
