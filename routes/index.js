@@ -198,11 +198,11 @@ router.post('/images', async function (req, res,next) {
                 // obj['url'] = obj['url'].replace(/\\\\/g,"/");
             }
             // 
-            await Ut.updataJsonDB(__dirname + '/../public/data/campaign.json', {
-                url:url,
-                openid:fields['openid'][0],
-                appid:fields['appid'][0]
-            }, res,{isOpenid:true});
+            // await Ut.updataJsonDB(__dirname + '/../public/data/campaign.json', {
+            //     url:url,
+            //     openid:fields['openid'][0],
+            //     appid:fields['appid'][0]
+            // }, res,{isOpenid:true});
 
             Ut.requestSuccess({result:{code:200,url:url}},res)
         }

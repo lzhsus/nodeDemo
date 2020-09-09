@@ -123,9 +123,7 @@ wepy.page({
                             var index = ~~(Math.random()*item['imgs'].length);
                             item['url'] = item['imgs'][index]['path'];
                         }
-                        if(item['url']){
-                            item['url'] = appConfig.ossPath + item['url'];
-                        }
+                        item['url'] = appConfig.ossPath + item['url'];
                         return item;
                     }))
                     var newImages={}

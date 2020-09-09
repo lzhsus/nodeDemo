@@ -1,6 +1,6 @@
 import Api from 'Api';
 import appConfig from 'Appconfig';
-import * as common from '../../common/common';
+import * as common from '../common/common';
 let uploadFile = async (file,dir)=> {
     return new Promise(function (resolve, reject) { 
         Api.ossSign({
@@ -11,14 +11,16 @@ let uploadFile = async (file,dir)=> {
                 let promiseAll = []
                 // 文件压缩
                 console.log('未压缩----',JSON.stringify(file))
+                // 压缩图片
                 file = await common.compressImage(file);
+                // 压缩视频
+                file = await common.compressVideo(file)
                 console.log('压缩----',JSON.stringify(file))
 
                 for(let i=0;i<file.length;i++){
                     if(file[i]['url']&&!file[i]['success']){
-                        console.log('imgUrl',imgUrl)
                         // 验证图片的合法性
-                        let url = await wxUploadFile(imgUrl, ossKey).catch(error=>{
+                        let url = await wxUploadFile(file[i]['url'], ossKey).catch(error=>{
                                     wx.showModal({
                                         content: '资源上传失败，请重新上传！',
                                         showCancel: false
@@ -26,29 +28,35 @@ let uploadFile = async (file,dir)=> {
                                     reject(error)
                                     wx.hideLoading()
                                 })
-                        console.log('url',url)
-                        let isCheck = await Api.wxaSecurity({type:'img',content:url});
-                
-                        if(!isCheck['success']&&isCheck['errcode']==87014){
-                            wx.showModal({
-                                content: '存在图片资源违法，请检查！',
-                                showCancel: false
-                            })
-                            reject()
-                            wx.hideLoading()
-                        }else if(!isCheck['success']){
-                            wx.showModal({
-                                content:isCheck.msg,
-                                showCancel: false
-                            })
-                            reject()
-                            wx.hideLoading()
+                        if(file[i]['type'] == 'images'){
+                            let isCheck = await Api.wxaSecurity({type:'img',content:url});
+                            if(!isCheck['success']&&isCheck['errcode']==87014){
+                                wx.showModal({
+                                    content: '存在图片资源违法，请检查！',
+                                    showCancel: false
+                                })
+                                reject()
+                                wx.hideLoading()
+                            }else if(!isCheck['success']){
+                                wx.showModal({
+                                    content:isCheck.msg,
+                                    showCancel: false
+                                })
+                                reject()
+                                wx.hideLoading()
+                            }
+                            if(url.indexOf('http://tmp/')==-1&&url.indexOf('wxfile://')==-1){
+                                file[i]['path'] = url ;
+                                file[i]['success'] = true;
+                            }
+                            promiseAll.push(file[i])
+                        }else{
+                            if(url.indexOf('http://tmp/')==-1&&url.indexOf('wxfile://')==-1){
+                                file[i]['path'] = url ;
+                                file[i]['success'] = true;
+                            }
+                            promiseAll.push(file[i])
                         }
-                        if(url.indexOf('http://tmp/')==-1&&url.indexOf('wxfile://')==-1){
-                            file[i]['path'] = url ;
-                            file[i]['success'] = true;
-                        }
-                        promiseAll.push(file[i])
                     }else{
                         promiseAll.push(file[i])
                     }
@@ -65,7 +73,7 @@ let uploadFile = async (file,dir)=> {
     })
 }
 
-let wxUploadFile =async (file, ossKey)=> {
+let wxUploadFile = async (file, ossKey)=> {
     console.log(file)
     return new Promise(function (resolve, reject) {
         wx.uploadFile({
@@ -75,6 +83,7 @@ let wxUploadFile =async (file, ossKey)=> {
             header:{
                 dir:ossKey.dir
             },
+            timeout:600000,
             formData: {
                 OSSAccessKeyId: ossKey.accessid,
                 token:ossKey.token,
@@ -95,7 +104,8 @@ let wxUploadFile =async (file, ossKey)=> {
                 let url = JSON.parse(res.data).result.url        
                 resolve(url)
             },
-            fail: (error)=> {               
+            fail: (error)=> {  
+                console.log('upfile',error)             
                 reject(error)
             }
         })

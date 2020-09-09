@@ -88,7 +88,7 @@ wepy.page({
             var count = index!=-1?1:(9-this.imgList.length);
             wx.chooseImage({
                 count: count,
-                sizeType: ['original', 'compressed'],
+                sizeType: ['compressed'],
                 sourceType: ['album', 'camera'],
                 success:(res)=>{
                     // tempFilePath可以作为img标签的src属性显示图片
@@ -97,6 +97,7 @@ wepy.page({
                         this.imgList = this.imgList.concat(tempFilePaths.map(res=>{
                             var obj={}
                             obj['url'] = res;
+                            obj['type'] = "images";
                             return obj;
                         }))
                     }else{
@@ -149,22 +150,6 @@ wepy.page({
                 title: '加载中',
                 mask: true,
             });
-            var res = await wx.cloud.callFunction({
-                // 云函数名称
-                name: 'msgSecCheck',
-                // 传给云函数的参数
-                data: {
-                    content:this.content,
-                },
-            });               
-            if( res.result&&res.result.code!=200 ){
-                wx.showModal({
-                    showCancel: false,
-                    content: res.result.msg,
-                })
-                wx.hideLoading();
-                return;
-            }
             await uploadFile(this.imgList,'ugc-' + moment().format("YYYYMMDD"));
             // 本地地址更改为oss地址
             this.imgList = this.imgList.map(item=>{

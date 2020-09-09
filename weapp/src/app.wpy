@@ -72,7 +72,8 @@ wepy.app({
         'pages/my',
         'pages/sigin',
         'pages/siginlog',
-        'pages/createUGC'
+        'pages/createUGC',
+        'pages/doyin'
     ],
     window: {
 		backgroundTextStyle: 'light',
@@ -87,7 +88,10 @@ wepy.app({
         },{
             "pagePath": "pages/list",
             "text": "趣分享"
-        }, {
+        },{
+            "pagePath": "pages/doyin",
+            "text": "趣视频"
+        },{
             "pagePath": "pages/my",
             "text": "我的"
         }]

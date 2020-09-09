@@ -7,6 +7,63 @@ let rightWrongAudio =[]; //对错音乐
 export const depthCopy = function (data){
     return JSON.parse(JSON.stringify(data));
 }
+export const getVideoInfo = function(url){
+    return new Promise(async (resolve,reject)=>{
+        // let file = await downloadFile(url);
+        console.log(url)
+        wx.getVideoInfo({
+            src:url,
+            success:res=>{
+                if( res.errMsg=='getVideoInfo:ok'){
+                    resolve(res)
+                }else{
+                    resolve(false)
+                }
+            },
+            fail:err=>{
+                console.log('fail',err)
+                resolve(false)
+            }
+        })
+    })
+}
+// 视频压缩
+export const compressVideo =async function(data){
+    let arr = [];    
+    data.forEach(item=>{
+        arr.push(new Promise(async function(resolve, reject) {
+            if(item.type!="videos"||item.success){
+                resolve(item);
+            }else{
+                let res = await getVideoInfo(item.url)
+                console.log('1111',res)
+                if(res){
+                    let { bitrate,duration,errMsg,fps,height,orientation,size,type,width } = res;
+                    wx.compressVideo({
+                        src: item.url, 
+                        quality: "high",  //low低 medium中 high高
+                        bitrate:Number(bitrate)*0.6,
+                        fps:Number(fps),
+                        resolution:0.6,
+                        success:(res)=>{
+                            console.log('压缩成功：',res)
+                            resolve(Object.assign(item,{
+                                url:res.tempFilePath
+                            }));
+                        },
+                        fail:res=>{
+                            console.log('压缩失败：',res)
+                            resolve(item);
+                        }
+                    });
+                }else{
+                    resolve(item);
+                }
+            }
+        }));
+    });   
+    return Promise.all(arr); 
+}
 function getType(file){
     var index1 = file.lastIndexOf(".");
     var index2 = file.length;
@@ -18,15 +75,16 @@ export const compressImage = async function (data) {
     let arr = [];    
     data.forEach(item=>{
         arr.push(new Promise(function(resolve, reject) {
-            if(item.success){
+            if(item.type!="images"||item.success){
                 resolve(item);
             }else if(getType(item.url)=='.JPG'){
                 wx.compressImage({
                     src: item.url, 
                     quality: 40,
                     success:(res)=>{
-                        item.url = res.tempFilePath;
-                        resolve(item);
+                        resolve(Object.assign(item,{
+                            url:res.tempFilePath
+                        }));
                     },
                 });
             }else{
@@ -70,10 +128,8 @@ export const imageInfo = function(list){
     return new Promise((resolve,reject)=>{   
         let promiseAll = []
         list.forEach((obj,index)=>{
-            
             promiseAll.push(getImageInfo(obj))
         })
-        
         Promise.all(promiseAll).then(res=>{
             resolve(res)
         }).catch(err=>{
@@ -92,6 +148,7 @@ export const imageInfo = function(list){
 export const setImagesHeight = function(leftH,rightH,leftData,rightData,allData){
      return new Promise(async (resolve,reject)=>{
          allData = await imageInfo(allData);
+         console.log(allData)
          for (let i = 0; i < allData.length; i++) {
              var currentItemHeight = parseInt(Math.round(allData[i].height * 345 / allData[i].width));
                  allData[i].height2 = currentItemHeight + "rpx";//因为xml文件中直接引用的该值作为高度，所以添加对应单位

@@ -3,10 +3,10 @@ export default{
 
     }, 
     dev: {
-        serverPath:'http://192.168.0.112:3001/',
+        serverPath:'http://192.168.0.112:3000/',
     },
     envVersion: 'dev',
-    ossPath: 'http://192.168.0.112:3001/',
+    ossPath: 'http://192.168.0.112:3000/',
     appid: 'wxf99aeedcb92d7b0e',
     scene: '',
     tabPath: [],
