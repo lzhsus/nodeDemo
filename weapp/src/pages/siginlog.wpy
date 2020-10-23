@@ -57,18 +57,20 @@ wepy.page({
         pagesTitle:"签到日志",
 
         pageShow:'',
-        siginLogList:[]
+        siginLogList:[],
+        type:0
     },
     computed: {
         ...mapState([])
     },
     methods: {
         siginLogChange(){
-            this.getsiginListLog(1)
+            this.type = this.type==1?0:1;
+            this.getsiginListLog()
         },
-        getsiginListLog(type){
+        getsiginListLog(){
             Api.siginListLog({
-                type:type||0
+                type:this.type||0
             }).then(res=>{
                 if(res['success']){
                     res = res['result']||{};

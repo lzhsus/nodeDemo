@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="input">
+    <div id="btn01" style="width: 160px;height: 50px;text-align: center;line-height: 50px;border:1px solid red;">A</div>
+    <div id="btn02" style="width: 160px;height: 50px;text-align: center;line-height: 50px;border:1px solid red;">B</div>
+    <script>
+        // 输出10 个10 
+        // for(var i=0;i<10;i++){
+        //     setTimeout(res=>{ console.log(i) },0);
+        // }
+        function demo(){
+            var index = ''
+            for(var i=0;i<10;i++){
+                var c = i;
+                setTimeout(res=>{ 
+                    index = index + res
+                    console.log(index,res)
+                },0,i);
+            }
+        }
+        // demo()
+        var aShow = false;
+        document.getElementById('btn01').onclick=()=>{
+            setTimeout(res=>{
+                document.getElementById('input').value="AAAA"
+                aShow = true;
+                setTimeout(() => {
+                    document.getElementById('input').value="BBB"
+                }, 2000);
+            },3000)
+        }
+        var bShow = false;
+        document.getElementById('btn02').onclick=()=>{
+            bShow = true;
+            if(!aShow) return;
+            setTimeout(() => {
+                document.getElementById('input').value="BBB"
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

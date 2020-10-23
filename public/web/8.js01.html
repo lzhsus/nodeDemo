@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+栈先进入后出 栈是由编译器自动释放空间的 存放的函数的参数或者局部的变量
+堆随意存放 随意更改大小删除 由程序员人工删除 或者程序结束os自动收回
+   申请方式 栈是系统自动分配 堆是人为申请的
+   申请大小 栈的分配空间较小  堆的分配空间较大
+   申请效率 栈是自动分配申请较快 堆人为申请分配较慢
+   底层实现 栈是连续的空间 堆是不连续的空间
+数据类型检查
+ TypeOf字符串 是检测基本数据类型 的最佳工具
+ 
+</body>
+</html>
+<script>
+// var a={
+//     d:11111
+// }
+// console.log(a)
+// a.d = 222222
+// console.log(a)
+// let b = {
+//     c:235
+// }
+// console.log(b)
+// b.c=333
+// console.log(b)
+// b.c=123
+// console.log(b)
+// const f ={
+//     g:222222
+// }
+// console.log(f)
+// f.g=33333
+// console.log(f)
+// let a = 66;
+//  let b = a;
+//  console.log(++a,b+5);
+//  栈区中存储的变量 相互赋值 相互不影响
+//67 71
+// console.log(typeof undefined)
+// console.log(typeof noolean)
+// undefined
+function isArray(o){
+    return Array.isArray(o)
+    return Object.prototype.toString.call(o)== '[object Array]';
+}
+function isObject(o){
+    return Object.prototype.toString.call(o)== '[object Object]';
+}
+// console.log('isArray',isArray([212,2]))
+var a =[11]
+var c = a.valueOf();
+
+// console.log(c)
+function isNumber(o){
+    let c = o.valueOf();
+    let d = c.toString();
+    
+    return Number(d)
+}
+console.log(isNumber([12,36]))
+
+</script>

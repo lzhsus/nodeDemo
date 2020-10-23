@@ -7,7 +7,7 @@ module.exports = function(url, params={},res){
         //现将json文件读出来
         fs.readFile(url, function (err, data) {
             if (err) {
-                errFunc({err:err},res)
+                Ut.requestErr({err:err},res)
                 resolev({ success: false })
                 return
             }
@@ -31,6 +31,19 @@ module.exports = function(url, params={},res){
             if(params['isOpenid']){
                 result = result.filter(res=>{
                     return res['openid'] == params['openid']
+                })
+            }
+            // 提取粉丝
+            if(params['weixin_id']&&params['table']=='fans'){
+                result = result.filter(res=>{
+                    let userInfo = res['userInfo']||{};
+                    return userInfo['weixin_id'] == params['weixin_id'];
+                })
+            }
+            // 提取我的关注
+            if(params['weixin_id']&&params['table']=='attention'){
+                result = result.filter(res=>{
+                    return res['weixin_id'] == params['weixin_id'];
                 })
             }
             result = result.map(res=>{

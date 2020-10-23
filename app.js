@@ -37,4 +37,5 @@ app.all("*", function (req, res, next) {
 })
 
 app.use('/', require('./routes/index'));
+app.use('/', require('./routes/weixinopen/index'));
 module.exports = app;

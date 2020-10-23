@@ -5,10 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .box {
+            width: 100%;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .aaa{
+            display: flex;justify-content: flex-start;align-items: center;
+            width: 300px;
+        }
+        .d{
+            min-width: 100px;
+        }
+    </style>
 </head>
 
 <body>
     <a href="居中.html">......</a>
+
+    <div class="aaa">
+        <div class="d">2222222</div>
+        <div class="box">
+            发的浪费慷慨激昂收代理费阿斯顿发，发生的开放寒暑假大黄蜂爱上了朵法拉飒飒的反馈了进来看发生的
+        </div>
+    </div>
 </body>
 
 </html>
+<script>
+
+</script>

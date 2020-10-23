@@ -1,0 +1,72 @@
+<template>
+  <div class="container" id="fans">
+        <head :pagesTitle="pagesTitle" :sourcePages="sourcePages"/>
+        <div class="weapper" v-if="pageShow=='index'">
+            
+        </div>
+  </div>
+</template>
+
+<config>
+{
+    usingComponents: {
+        "head":"../components/headUGC"
+    },
+    navigationStyle: "custom"
+}
+</config>
+<script>
+import wepy from '@wepy/core';
+// 配置
+import appConfig from 'Appconfig';
+import appData from '../common/app_data';
+// 公用
+import { mapState, mapActions } from '@wepy/x';
+import store from '../store';
+import mixinsIndex from 'Mixinsindex';
+import mixinShare from 'Mixinsshare';
+import * as common from 'Common';
+import eventHub from '../common/eventHub';
+import { uploadFile } from '../services/uploadFile';
+
+// 所有API管理
+import Api from 'Api';
+import { countTime, countTimeNum } from '@/services/countTime';
+import moment from 'moment';
+// 日志
+import Log from 'Log';
+
+wepy.page({
+    store,
+    mixins: [mixinsIndex, mixinShare],
+    data: {
+        sourcePages:'doyin',
+        pagesTitle:"我的粉丝",
+        pageShow:'',
+        page: 1,
+        pageEnd:false,
+        list:[],
+        imgList:[],
+        ugcSort:[],
+        ugcSortIndex:-1,
+        content:''
+    },
+    computed: {
+        ...mapState([])
+    },
+    methods: {
+
+    },
+    async onLoad(opt) {
+
+    },
+
+    onShow() {}
+});
+</script>
+
+<style lang="less">
+#fans{
+    
+}
+</style>

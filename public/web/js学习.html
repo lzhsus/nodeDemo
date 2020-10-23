@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {}
+
+        li {
+            width: 300px;
+            height: 50px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script>
+        // 防抖
+        function debounce(func, ms = 1000) {
+            let timer;
+            return function (...args) {
+                console.log(args)
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(res => {
+                    func.apply(this, args)
+                }, ms)
+            }
+        }
+        // 测试
+        // const task = () => {
+        //     console.log('run task',this)
+        // }
+        // const debounceTask = debounce(task, 1000)
+        // window.addEventListener('scroll', debounceTask)
+        // 节流
+        function throttle(func, ms = 1000) {
+            let canRan = true;
+            return function (...args) {
+                if (!canRan) return;
+                canRan = false;
+                setTimeout(() => {
+                    func.apply(this, args)
+                    canRan = true;
+                }, ms)
+            }
+        }
+        // 测试
+        // const task = () => { console.log('run task02') }
+        // const throttleTask = throttle(task, 1000)
+        // window.addEventListener('scroll', throttleTask)
+        function myNew(Func, ...args) {
+            const instance = {};
+            console.log(Func.prototype)
+            if (Func.prototype) Object.setPrototypeOf(instance, Func.prototype);
+            console.log(instance)
+            const res = Func.apply(instance, args);
+            console.log(res)
+            if (typeof res === 'function' || (typeof res === 'object' && res != null)) return res;
+            return instance;
+        }
+        // function P(name){
+        //     this.name = name
+        // }
+        // P.prototype.say = function(){
+        //     console.log(`My name is ${this.name}`)
+        // }
+        // const me = myNew(P,'lzh')
+        // me.say()
+        // console.log(me)
+        Function.prototype.myBind = function (context = globalThis) {
+            const fn = this
+            const args = Array.from(arguments).slice(1);
+            const newFunc = function () {
+                const newArgs = args.concat(...arguments)
+                if (this instanceof newFunc) {
+                    // 通过 new 调用，绑定 this 为实例对象
+                    fn.apply(this, newArgs)
+                } else {
+                    // 通过普通函数形式调用，绑定 context
+                    fn.apply(context, newArgs)
+                }
+            }
+            // 支持 new 调用方式;
+            newFunc.prototype = Object.create(fn.prototype);
+            return newFunc;
+        }
+        // 测试
+        const me = {
+            name: 'Jack'
+        }
+        const other = {
+            name: 'Jackson'
+        }
+
+        function say() {
+            console.log(`My name is ${this.name || 'default'}`);
+        }
+
+        // const meSay = say.bind(me)
+        // meSay()
+        // const otherSay = say.myBind(me)
+        // otherSay()
+        // 方案 1
+        function recursionFlat(ary = []) {
+            const res = []
+            ary.forEach(item => {
+                if (Array.isArray(item)) {
+                    res.push(...recursionFlat(item))
+                } else {
+                    res.push(item)
+                }
+            })
+            return res
+        }
+
+        function test(ages) {
+            // console.log(...ages)
+        }
+        test([1, 2, 3])
+        // 方案 2
+        function reduceFlat(ary = []) {
+            return ary.reduce((res, item) => res.concat(Array.isArray(item) ? reduceFlat(item) : item), [])
+        }
+
+        // 测试
+        // const source = [1, 2, [3, 4, [5, 6]], '7']
+        // console.log(recursionFlat(source))
+        // console.log(reduceFlat(source))
+        function objectFlat(obj = {}) {
+            const res = {}
+
+            function flat(item, preKey = '') {
+                Object.entries(item).forEach(([key, val]) => {
+                    const newKey = preKey ? `${preKey}.${key}` : key
+                    if (val && typeof val === 'object') {
+                        flat(val, newKey)
+                    } else {
+                        res[newKey] = val
+                    }
+                })
+            }
+            flat(obj)
+            return res
+        }
+        // 测试
+        function objectFlatMy(obj={}){
+            const res = {}
+            function flat(item,preKey=''){
+                Object.entries(item).forEach(([key,val])=>{
+                    console.log(key,val)
+                })
+            }
+            flat(obj)
+            return res;
+        }
+        // 测试
+        const source = { a: { b: { c: 1, d: 2 }, e: 3 }, f: { g: 2 } };
+
+        console.log(objectFlatMy(source));
+    </script>
+</body>
+
+</html>

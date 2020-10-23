@@ -53,9 +53,10 @@ router.use(async (req, res, next) => {
             }
         }
     }else{
-        next() 
+        next()
     }
 })
+
 // 获取文件列表
 router.get('/web/files', async function (req, res) {
     try {
@@ -82,12 +83,6 @@ router.post('/miniapp/api/login', async function (req, res) {
         }
         let r1 = await Ut.promiseReq(opts,res);
         let r2 = await Ut.promiseReq(opts2,res);
-
-        // let opts3 = {
-        //     url: `https://api.weixin.qq.com/cgi-bin/user/info?access_token=${JSON.parse(r2).access_token}$openid=${JSON.parse(r1).openid}`
-        // }
-        // console.log('opts3',opts3)
-        // let r3 = await Ut.promiseReq(opts3,res);
 
         try {
             let params = Object.assign(JSON.parse(r1), {
@@ -147,12 +142,28 @@ router.post('/miniapp/api/campaign/add', async function (req, res,next) {
     var query  = url.parse(req.url,true).query||{};
     let body = req.body||{};    
     let headers = req.headers||{};
-    
+    // 获取用户数
+    let data = await getData(__dirname + '/../public/data/userInfo.json',Object.assign(headers,{
+        sort:0,
+        type:"Object",
+        isOpenid:true
+    }),res)
+    let list = data.result.map((res,i)=>{
+        var obj = res;
+        delete obj['access_token'];
+        delete obj['session_key'];
+        delete obj['expires_in'];
+        delete obj['appid'];
+        return obj;
+    })
+    let userInfo = list[0]||{};
+
     await Ut.updataJsonDB(__dirname + '/../public/data/campaign.json', Object.assign(body,{
         openid:headers['openid'],
         appid:headers['appid'],
         p_id:'id',
         status:0,
+        weixin_id:userInfo['weixin_id']
     }), res,{isOpenid:true});
 
     Ut.requestSuccess({result:''},res)
@@ -335,7 +346,6 @@ router.post('/miniapp/api/wxa/security', async function (req, res,next) {
             }
             r1 = await Ut.promiseReq(opts,res);
             r1 = JSON.parse(r1);
-            console.log('r1',r1)
             if(r1['errcode']==0){
                 Ut.requestSuccess({result:'',code:r1['errcode']},res)
             }else if(r1['errcode']==40006){
@@ -395,6 +405,7 @@ router.get('/miniapp/api/user/profile', async function (req, res,next) {
         delete obj['appid'];
         return obj;
     })
+    let userInfo = list[0]||{};
     // 获取用户会员数据
     let data2 = await getData(__dirname + '/../public/data/userMember.json',Object.assign(headers,{
         sort:0,
@@ -407,10 +418,28 @@ router.get('/miniapp/api/user/profile', async function (req, res,next) {
         type:"Object",
         isOpenid:true
     }),res)
-
-    Ut.requestSuccess({result:Object.assign(list[0],{
+    // 获取粉丝数
+    let data4 = await getData(__dirname + '/../public/data/attention.json',Object.assign(headers,{
+        sort:0,
+        type:"Object",
+        isOpenid:false,
+        table:"fans",
+        weixin_id:userInfo['weixin_id']
+    }),res)
+    // 获取我的关注attention
+    let data5 = await getData(__dirname + '/../public/data/attention.json',Object.assign(headers,{
+        sort:0,
+        type:"Object",
+        isOpenid:false,
+        table:"attention",
+        weixin_id:userInfo['weixin_id']
+    }),res)
+    Ut.requestSuccess({result:Object.assign(userInfo,{
         isMember:data2.result.length,
         isAdmin:data3.result.length,
+        fans:data4.result.length,
+        attention:data5.result.length,
+        is_need_get_user_info:userInfo.is_need_get_user_info!=0?1:0
     })},res)
 });
 module.exports = router;

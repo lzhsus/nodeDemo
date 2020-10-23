@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none
+        }
+
+        #divbox {
+            width: 1000px;
+        }
+
+        ul {
+            width: 1000px;
+            height: 300px;
+        }
+
+        ul li {
+            height: 300px;
+            float: left;
+            /*
+            width: 100px; */
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #666;
+            width: 100px;
+            height: 300px;
+            line-height: 300px;
+            text-align: center;
+            display: block;
+            background-color: #fff;
+            opacity: 0.3;
+        }
+
+        .pic1 {
+            background: url('1.png');
+        }
+
+        .pic2 {
+            background: url('2.png');
+        }
+
+        .pic3 {
+            background: url('3.png');
+        }
+
+        .pic4 {
+            background: url('4.png');
+        }
+
+        .active {
+            width: 700px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="divbox">
+        <ul>
+            <li class="pic1"><a href="javascript:;">床头明月光</a></li>
+            <li class="pic2"><a href="javascript:;">疑似地上霜</a></li>
+            <li class="pic3"><a href="javascript:;">举头望明月</a></li>
+            <li class="pic4"><a href="javascript:;">低头思故乡</a></li>
+        </ul>
+    </div>
+</body>
+<script>
+    var lis = document.getElementsByTagName('li'); //获取document中的所有li
+
+    /*animate动画*/
+    function ani(obj) {
+        timer = setInterval(function () { //设置定时器
+            var speed = 10;
+            if (parseInt(obj.style.width) < 700) { //如果传入的对象的宽小于700px
+                obj.style.width = parseInt(obj.style.width) + speed + 'px'; //让当前宽加speed
+                speed += 10; //每执行一次定时器，speed+10
+            } else {
+                return;
+            }
+        }, 20);
+        // 20 ms执行一次定时器
+    }
+
+    for (var i = 0; i < lis.length; i++) { //遍历li数组
+        lis[i].index = i; //循环把i的值赋值给li的index
+        var timer;
+        lis[i].onmouseover = function () {
+            for (var i = 0; i < lis.length; i++) {
+                lis[i].style.width = '100px'; //当鼠标移入到某个li时，遍历循环数组，把所有li的宽都设置为100px
+            }
+            ani(lis[this.index]); //使用ani方法，把鼠标移入的li的宽值变为700px
+
+        }
+        lis[i].onmouseout = function () {
+            lis[this.index].style.width = '100px'; //鼠标移出时，把当前li的宽设置回100px
+            clearInterval(timer); //清除定时器
+        }
+    }
+</script>
+
+</html>

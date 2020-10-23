@@ -16,10 +16,10 @@ export default async function apiRequest(url, params={}, opt={}){
     let res;
     let userInfo = wx.getStorageSync('userInfo');
     if(!userInfo){
-        if(!loginPromis){        
+        if(!loginPromis){  
             loginPromis = login();
         }
-        userInfo = await loginPromis;
+        userInfo = await loginPromis||{};
     }
     let header={
         'authorization':'Bearer ' + userInfo.token,

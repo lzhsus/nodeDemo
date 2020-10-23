@@ -31,7 +31,10 @@
                     </div>
                 </div>
             </div>
-            <div class="submit-btn" @tap="submitBtn()">确认提交</div>
+            <div class="submit-btn">确认提交
+                <button v-if="userProfile.is_need_get_user_info" class="transparent" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo"></button>
+                <button v-else class="transparent" @tap="submitBtn()"></button>
+            </div>
         </div>
   </div>
 </template>
@@ -57,6 +60,7 @@ import mixinShare from 'Mixinsshare';
 import * as common from 'Common';
 import eventHub from '../common/eventHub';
 import { uploadFile } from '../services/uploadFile';
+import getuserinfo from '../services/getuserinfo';
 
 // 所有API管理
 import Api from 'Api';
@@ -81,9 +85,16 @@ wepy.page({
         content:''
     },
     computed: {
-        ...mapState([])
+        ...mapState(['userProfile'])
     },
     methods: {
+		bindgetuserinfo(e){
+            e = e.$wx;
+			getuserinfo(e).then(res=>{
+                this.$store.state.userProfile.is_need_get_user_info = 0;
+                this.submitBtn();
+            })
+		},
         choosePictrueBtn(index){
             var count = index!=-1?1:(9-this.imgList.length);
             wx.chooseImage({
@@ -283,7 +294,7 @@ wepy.page({
         margin: 40rpx auto;width: 420rpx;height: 80rpx;border-radius: 12rpx;overflow: hidden;
         text-align: center;line-height: 80rpx;letter-spacing: 1px;
         font-size: 16px;font-weight: bold;color: #000;
-        background-image: linear-gradient(to top right, #d8f2ff, #06acff);
+        background-image: linear-gradient(to top right, #d8f2ff, #06acff);position: relative;
     }
 }
 </style>

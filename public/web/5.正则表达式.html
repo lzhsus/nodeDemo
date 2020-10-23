@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/../css/demo.css">
 </head>
+
 <body>
     i 修饰符 忽略大小写</br>
-    g 修饰符  全集查找</br>
-    m 修饰符  换行查找</br>
-    正则表达式常用的两个字符串 方法  search() replace()</br>
+    g 修饰符 全集查找</br>
+    m 修饰符 换行查找</br>
+    正则表达式常用的两个字符串 方法 search() replace()</br>
     &nbsp;&nbsp;&nbsp;&nbsp;search() 使用表达式搜索匹配 返回匹配的位置 </br>
     &nbsp;&nbsp;&nbsp;&nbsp;replace() 返回模式别替换出修改后的字符串 </br>
+
 </body>
+
 </html>
 <script>
     // i 修饰符 忽略大小写
@@ -45,30 +49,105 @@
     // \t       //匹配一个制表符  等价于\x09和\cl;
     // \v       //匹配一个垂直制表符 等价于\x0b和\cK
     // \s       //匹配任何空白字符 包括空格 制表符 换页符等 等价于[\f\n\r\t\v]
-                    // 注意  Unicode正则表达式会匹配全局空格符
+    // 注意  Unicode正则表达式会匹配全局空格符
     // \S       //匹配任何非空包字符  等价于 [^\f\n\r\t\v]
 
-    var patt2 = /[^aeiou]/gi;   
+    var patt2 = /[^aeiou]/gi;
 
     var patt3 = /[A-Za-z]/g
-    var patt3 = /[a-z]/gi;    //表示匹配所有英文字母
+    var patt3 = /[a-z]/gi; //表示匹配所有英文字母
 
     var patt4 = /./g
-    var patt4 = /[^\n\r]/g;  //匹配除换行符之外的任何单个字符
+    var patt4 = /[^\n\r]/g; //匹配除换行符之外的任何单个字符
 
-    var patt5 = /[\n\r]/g;   //匹配除换行符
-    
-    var patt6 = /[\s]/g;   //匹配所有空白符，包括换行符
-    var patt6 = /[\S]/g;   //匹配所有 非 空白符，包括换行符
+    var patt5 = /[\n\r]/g; //匹配除换行符
 
-    var patt7 = /\w{3,9}/g;      //匹配字母 数字 下划线 等价于[A-Za-z0-9_]
+    var patt6 = /[\s]/g; //匹配所有空白符，包括换行符
+    var patt6 = /[\S]/g; //匹配所有 非 空白符，包括换行符
+
+    var patt7 = /\w{3,9}/g; //匹配字母 数字 下划线 等价于[A-Za-z0-9_]
     var patt7 = /[A-Za-z0-9_]{6,9}/g
 
     // 非打印字符
-    var p8 = /\cM/g;    //匹配一个由M指明的控制字符 M匹配Control-M 或者回车；必须为A-Za-z 否则为愿意c
-    
+    var p8 = /\cM/g; //匹配一个由M指明的控制字符 M匹配Control-M 或者回车；必须为A-Za-z 否则为愿意c
+
     var p9 = /[b|aa|(\o\o)]/g
     var str2 = 'google runoo_b taobao i OK \n \r\r\r_';
     var p10 = /[1][0-9]{10}/g
     document.write('10239371927'.match(p10));
+</script>
+<script>
+    var str = "0xc743853543F999990xc743853543F990xc743853543F99";
+    var r = /0xc\d{9}F/gi;
+    var a = str.match(r)
+    var v = r.test(str)
+    var d = str.replace(r, '****');
+
+    // /
+    // console.log(d)
+    // console.log(a)
+    // console.log(v)
+    // console.log('----',str)
+    // var phone = '15239371927';
+    // function getIsPhone(p){
+    //     let reg = /^[1]\d{10}$/;
+    //     var a = reg.test(p)
+    //     console.log(a)
+    //     return a
+    // }
+    // console.log(getIsPhone())
+
+    // var reg = /^[\u4e00-\u9fa5a-zA-Z0-9]{1,8}$/
+    var str = "打扫房间卡迪夫";
+    console.log(check(str))
+
+     /**
+      * 匹配 中文 字母 数据 
+      * 1.全中文 4个
+      * 2.字母数组 8个
+      * 3.字母 数字 中文 8个
+      * @return 1 0 -1;
+      * */   
+    function check(str) {
+        let reg2 = /[\u4e00-\u9fa5]{0,}/g,//匹配中文字符 0~个
+            reg = /[a-zA-Z0-9]{0,8}/g,
+            reg3 = /[^\u4e00-\u9fa5a-zA-Z0-9]/g;  //匹配除去中文 数据 字母的其他 字 符
+        if (!(!!str)) return 0; //格式有误
+
+        function getLength(str, r) {
+            let arr = str.match(r);
+            if (arr == null) return 0;
+            var l = 0
+            for (let i = 0; i < arr.length; i++) {
+                l = l + arr[i].length
+            }
+            return l;
+        }
+        if (getLength(str, reg3)) return -1; //存在特殊字符
+        if (getLength(str, reg2)>4) return 0;
+        if (getLength(str, reg)> 8) return 0; //格式有误
+        if(getLength(str, reg2)+getLength(str, reg)>8) return 0;
+        return 1; //验证通过
+    }
+    // 验证 是一位手机号码
+    function isPhone(n){
+        return /^1\d{10}$/.test(n);
+    }
+    // 
+    function isIP(n){
+        if(n) return 0;
+        if(n.length==15){
+            
+        }else if(n.length==18){
+            // XXXXXX-XX XX-XX-XX 
+            return /(\d{6})((19|20)\d{2}(01|02|03|04|05|06|07|08|09|10|11|12)([012]\d{1}|(31)))(\d{3}[0-9X])/.test(n)
+        }
+        return 0;
+    }
+    // 410928---19951201----331 9X
+    // console.log(isPhone('15239371927'))
+    console.log(isIP(window.ip))
+    // console.log(str.match(reg2))
+
+    // console.log(a,reg.test(a))
 </script>

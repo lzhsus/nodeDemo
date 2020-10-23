@@ -15,6 +15,7 @@
 <script>
     var num = 1,countArr = [];
     function bubbleSort(arr) {
+        if(!Array.isArray(arr)) return [];
         var len = arr.length;
         for (var i = 0; i < len - 1; i++) {
             var count = 0;
@@ -24,6 +25,7 @@
                     var temp = arr[j + 1];        // 元素交换
                     arr[j + 1] = arr[j];
                     arr[j] = temp;
+                    // break
                 }
             }
             countArr[i] = count;
@@ -34,6 +36,7 @@
     
     bubbleSort(arr)
     console.log('--------',countArr)
+    console.log('--------',arr)
 
     for(let i=0;i<arr.length;i++){
 

@@ -24,12 +24,12 @@
                         <span class="num">66</span>
                         <span class="name">动态</span>
                     </div>
-                    <div class="item">
-                        <span class="num">66</span>
+                    <div class="item" @tap="myClickBtn(2)">
+                        <span class="num">{{userProfile['attention']}}</span>
                         <span class="name">关注</span>
                     </div>
-                    <div class="item">
-                        <span class="num">66</span>
+                    <div class="item" @tap="myClickBtn(3)">
+                        <span class="num">{{userProfile['fans']}}</span>
                         <span class="name">粉丝</span>
                     </div>
                 </div>
@@ -90,6 +90,23 @@ wepy.page({
             wx.navigateTo({
                 url:"/pages/sigin"
             })
+        },
+        myClickBtn(id){
+            id = Number(id);
+            switch (id) {
+                case 2:
+                    wx.navigateTo({
+                        url:"/pages/attention"
+                    })
+                    break;
+                case 3:
+                    wx.navigateTo({
+                        url:"/pages/fans"
+                    })
+                    break;
+                default:
+                    break;
+            }
         }
     },
     onLoad(opt) {

@@ -26,26 +26,42 @@
     // var time = new Date().valueOf()
     // while(new Date().valueOf() - time < 2000) {}
 
-    // var obj = {}
-    // // console.log(obj)
-    // // console.log(obj.__proto__)
-    // // console.log(obj.prototype)
-    // // console.log(obj.constructor)
-    // function Puppy(age) {
-    //     // this总是执行最后调用他的对象或者方法
-    //     // 此处this指向他的实例化对象 myP
-    //     this.puppyAge = age;
-    // }
-    // // var myP = new Puppy(10)
-    // // console.log(this)
+    var obj = {}
+    // console.log(obj)
+    // console.log(obj.__proto__)
+    // console.log(obj.prototype)
+    // console.log(obj.constructor)
+    function Puppy(age) {
+        // this总是执行最后调用他的对象或者方法
+        // 此处this指向他的实例化对象 myP
+        console.log(this)
+        this.puppyAge = age;
+    }
+    var myP = new Puppy(10)
+    console.log(this)
 
     // // 类的方法
-    // Puppy.prototype.say = function () {
-    //     console.log('wangwangwnag')
-    // }
+    Puppy.prototype.say = function () {
+        console.log('wangwangwnag')
+    }
+    console.log( myP.__proto__)
+    console.log( '--',myP.__proto__.constructor)
+    console.log( Puppy.prototype.constructor )
+    console.log( Puppy.prototype.__proto__ )
+    console.log( Object.prototype )
+    console.log('get',Object.getPrototypeOf(myP) == Puppy.prototype)
+    console.log('get',myP.__proto__ == Puppy.prototype)
+    /**
+    * 没有对象都有__proto__ 指向 prototype 原型对象
+    每个构造函数都有prototype原型对象
+    prototype 有个 constructor 属性 指向构造函数本身
+    作用？
+    __proto__指向构造函数的prototype从而实现了继承
+    prototpye相当于特定的类型，每个实例对象都可以访问的公共容器
+    */
     // myP.__protp__ 指向Puppy.prototype 
     // Puppty.prototype 指向Puppy.prototype.__proto__;
-    // Puppy.prototype.__proto__ 指向 Object.prototype
+    // Puppy.prototype.__proto__ 指向 
     // null 这就是原型链
     // console.log(myP)
     // myP.say()
@@ -66,5 +82,93 @@
     // JS中的函数可以作为函数使用，也可以作为类使用
     // 作为类使用 必须使用new 来实例化对象
     // 为了让函数更具有类的功能，函数都具有prototype属性
-    // 为了让实例化出来的对能够访问到prototype上的属性和方法,实例对象——__proto__指向了类的prototype.所以orototype势函数的属性，不是对象的属性，对象拥有的__proto__是用来查找prototyp的
+    // 为了让实例化出来的对能够访问到prototype上的属性和方法,
+    // 实例对象——__proto__指向了类的prototype.所以orototype势函数的属性
+    // ，不是对象的属性，对象拥有的__proto__是用来查找prototyp的
+    // 原型链
+    console.log('----------原型链---------start:')
+    var arr = [1,2,3,4,5]
+    console.log(arr.valueOf())
+    console.log(arr)
+    console.log(arr.__proto__)  //指向Array.prototyle  //原型对象
+    console.log(arr.__proto__)
+    console.log('111',arr.__proto__.__proto__) //指向Array.prototyle.__proto__
+    // 当试图访问一个对象是，不仅仅只在改对象上查找  还会搜索对象的原型 Array.prototyle 以及对象原型的原型
+    // 知道原型链的最顶端
+    // console.log('111',Object.prototype)
+    // console.log(Object.prototype.__proto__)
+    // arr >>> Array.prototype  >>>  Object.prototype >>> null
+    // 原型链就是诸城向上中 知道返回  或者返回underfind
+    console.log('----------原型链---------end:')
+    console.log('----------javascript-----start:')
+    // 继承 是指一个对象直接使用另一个对象的属性或者方法
+    function MyDemo(age){
+        this.age = age
+    }
+    // 方法定义中构造函数的原型上
+    MyDemo.prototype.getSay = function(){
+        console.log(`我的年龄是${this.age}`)
+    }
+    function MyDemo2(age,name){
+        MyDemo.call(this,age)
+        this.name = name;
+    }
+    MyDemo2.prototype = Object.create(MyDemo.prototype);
+    MyDemo2.prototype.isName = function(){
+        console.log(`你的名字是${this.name}`)
+    }
+    // 复制其他的类导致指向constructor 发生改变 需要重新指向自己
+    MyDemo2.prototype.constructor = MyDemo2;
+    var p1 = new MyDemo2(20,'zs')
+    console.log(p1)
+    console.log(p1.name)
+    console.log(p1.age)//继承了属性
+    p1.getSay()
+    p1.isName()
+    console.log(MyDemo2.prototype)
+    // 原型链上查询属性 消耗过大 对性能有印象 遍历对象属性是 每个可以枚举的属性都要遍历
+    // 检查是否是自己定义的属性 而不是原型链上的属性 必须使用hasOwnPrototype
+    console.log('hasOwnProperty',p1.hasOwnProperty('name'))
+    console.log('hasOwnProperty',p1.hasOwnProperty('age'))
+    console.log('hasOwnProperty',p1.hasOwnProperty('valueOf'))
+    console.log('p1',p1.valueOf())
+    console.log('----------javascript-----end:')
+    console.log('-----------闭包---------')
+    // 闭包就是能够读取其他函数内部变量的函数
+    // 函数a的内部函数b 被函数a外部的一个变量引用
+    // 函数封装的时候 使用定时器的时候
+    function a(){
+        var i=0;
+        console.log(i)
+        function b(){
+            i++
+            alert(i)
+        }
+        return b
+    }
+    var c = a()
+    // c()
+    // c()
+//    好的，i是函数a中的一个变量，它的值在函数b中被改变，
+// 函数b每执行一次，i的值就在原来的基础上累加 1 。因此，函数a中的i变量会一直保存在内存中。
+
+// 当我们需要在模块中定义一些变量，并希望这些变量一直保存在内存中但又不会 “污染” 全局的变量时，就可以用闭包来定义这个模块。
+// 当我们需要在模卡中定义一些变量，并希望这些变量一直不纯在内存中但又不会污染全局变量时候 就会用闭包来定义这个模卡
+// 可以读取函数内部的变量  这些变量的值一直保存在内存中
+var arr = new Array()
+for(var i=0;i<4;i++){
+    arr[i] = f1(i)
+}
+function f1(n){
+    function f2(){
+        alert(n)
+    }
+    return f2
+}
+arr[2]()
+arr[1]()
+arr[0]()
+arr[3]()
+console.log(n)
+console.log(arr)
 </script>

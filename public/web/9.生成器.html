@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    const createGenerator = function*(){
+        yield 'a'
+        yield 'b'
+        yield 'c'
+    }
+    const createAsyncGenerator = async function*(){
+        yield await new Promise((resove,reject)=>{resove('a')})
+        yield 'b'
+        yield 'c'
+    }
+    const main = () =>{
+        const generator = createGenerator();
+        const asyncGenerator = createAsyncGenerator();
+
+        console.log('generator:' + generator[Symbol.iterator])
+        console.log('generator:' + generator.next())
+        console.log('asyncGenerator:' + asyncGenerator[Symbol.iterator])
+        console.log('asyncGenerator:' + asyncGenerator.next())
+    }
+    main()
+
+</script>

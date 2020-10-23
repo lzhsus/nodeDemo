@@ -45,7 +45,6 @@ image[mode="widthFix"]{
 import wepy from '@wepy/core';
 import vuex from '@wepy/x';
 import Log from 'Log';
-var mta= require('./services/mta_analysis')
 wepy.use(vuex);
 
 wepy.app({
@@ -73,7 +72,9 @@ wepy.app({
         'pages/sigin',
         'pages/siginlog',
         'pages/createUGC',
-        'pages/doyin'
+        'pages/doyin',
+        'pages/fans',
+        'pages/attention'
     ],
     window: {
 		backgroundTextStyle: 'light',

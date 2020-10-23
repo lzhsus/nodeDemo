@@ -584,9 +584,18 @@ export const eventHubDelRepeat = function(eventHub,types){
  * @param {*} o 数组
  */
 export const isArray = function(o){
+    // ECMA Script5中定义 检查数组
+    return Array.isArray(o);
     return Object.prototype.toString.call(o)== '[object Array]';
 }
-
+/**
+ * 检查 数据类型
+ * @param {*} o 任意数据
+ * @returns [Array Object String Number Boolean Function Null Underfind Date RegExp Symbol] 
+ */
+export const isType = function(o){
+    return Object.prototype.toString.call(o).slice(8,-1);
+}
 /**
  * 重复添加数组
  */

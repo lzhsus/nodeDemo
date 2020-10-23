@@ -5,6 +5,14 @@
             <div @tap="choosevideos()" class="btn">选择视频</div>
             <div @tap="compressVideo()" class="btn">压缩视频</div>
             <video v-if="videoSrc" id="myVideo" src="{{videoSrc}}"></video>
+            <div class="btn">获取手机号码
+                <button class="transparent" open-type="getPhoneNumber" bindgetphonenumber="bindgetphonenumber"></button>
+            </div>
+            <div class="btn">获取用户信息
+                <button class="transparent" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo"></button>
+            </div>
+
+
         </div>
     </div>
 </template>
@@ -29,6 +37,7 @@ import mixinShare from 'Mixinsshare';
 import * as common from 'Common';
 import eventHub from '../common/eventHub';
 import { uploadFile } from '../services/uploadFile';
+import getuserinfo from '../services/getuserinfo';
 
 // 所有API管理
 import Api from 'Api';
@@ -36,7 +45,7 @@ import { countTime, countTimeNum } from '@/services/countTime';
 import moment from 'moment';
 // 日志
 import Log from 'Log';
-
+// import wxp from '../utils/wxp'
 wepy.page({
     store,
     mixins: [mixinsIndex, mixinShare],
@@ -48,6 +57,15 @@ wepy.page({
         ...mapState(['userProfile'])
     },
     methods: {
+        bindgetphonenumber(e){
+            console.log(e)
+        },
+		bindgetuserinfo(e){
+            e = e.$wx;
+			getuserinfo(e, (res)=>{       
+                console.log(res)
+			})
+		},
         cool(){
             wx.chooseImage({
                 count: 9,
@@ -110,7 +128,7 @@ wepy.page({
     },
 
     onShow() {
-
+        
     }
 });
 </script>
@@ -121,6 +139,6 @@ wepy.page({
     width:300rpx;height: 80rpx;text-align: center;line-height: 80rpx;
     border-radius: 12rpx;overflow: hidden;letter-spacing: 1px;
     font-size: 16px;font-weight: bold;color: #fff;font-weight: bold;
-    background: rgb(69, 156, 238);
+    background: rgb(69, 156, 238);position: relative;
 }
 </style>

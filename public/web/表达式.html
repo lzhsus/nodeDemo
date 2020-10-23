@@ -19,4 +19,22 @@
 
     // rgm test(str)  验证是否存在
 
+   async function fn1(){
+        var a = 111
+        console.log(3333)
+        // return
+        // return new Promise((resolve,reject)=>{
+        // console.log(3333)
+        //     resolve(a)
+        // })
+       return setTimeout(res=>{
+            console.log(999999)
+        },2000)
+    }
+    async function fn2(){
+        let v = await fn1();
+        console.log(35553)
+        console.log(v)
+    }
+    fn2()
 </script>
