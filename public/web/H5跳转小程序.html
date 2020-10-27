@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+</head>
+
+<body>
+    <script>
+        wx.config({
+            debug: true, // 调试时可开启
+            appId: 'wxe7bd80f710c7cb35',
+            timestamp: 202010261548, // 必填，填任意数字即可
+            nonceStr: 'nonceStr', // 必填，填任意非空字符串即可
+            signature: 'signature', // 必填，填任意非空字符串即可
+            jsApiList: [],
+            openTagList: ['wx-open-launch-weapp'], // 填入打开小程序的开放标签名
+        })
+    </script>
+
+    Hello World
+
+    <!-- 跳转小程序的开放标签。文档 https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_Open_Tag.html -->
+    <wx-open-launch-weapp id="weapp" weappid="wxe7bd80f710c7cb35" path="/pages/index/index">
+        <template>
+            <button
+                style="width: 200px; height: 45px; line-height: 45px; text-align: center; font-size: 17px; border-radius: 22.5px; color:cornflowerblue;">拉起小程序</button>
+        </template>
+    </wx-open-launch-weapp>
+
+</body>
+
+</html>
