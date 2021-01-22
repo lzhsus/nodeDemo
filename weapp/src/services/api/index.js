@@ -9,6 +9,13 @@ let Api = globalApi;
 Api.test = function(data, opt={}){
     return apiRequest('miniapp/api/test', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }
+Api.canvasGm = function(data, opt={}){
+    return apiRequest('node/canvas/gm', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
+Api.nodeCanvas = function(data, opt={}){
+    return apiRequest('miniapp/api/node/canvas', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
+
 Api.userinfo_log = function(data, opt={}){
     return apiRequest('miniapp/api/userinfo_log', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }

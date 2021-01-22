@@ -1,100 +1,102 @@
 {
-	"description": "A WePY project",
-	"setting": {
-		"urlCheck": true,
-		"es6": false,
-		"enhance": false,
-		"postcss": false,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": false,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": false,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": false,
-		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": true
-	},
-	"compileType": "miniprogram",
-	"appid": "wxf99aeedcb92d7b0e",
-	"projectname": "Demo",
-	"miniprogramRoot": "dist/",
-	"cloudfunctionRoot": "cloudfunctions/",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"libVersion": "2.11.3",
-	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": [
-				{
-					"id": 0,
-					"name": "pages/webview",
-					"pathName": "pages/webview",
-					"query": "link=http%3A%2F%2Fwww.baidu.com%2F",
-					"scene": null
-				},
-				{
-					"id": 1,
-					"name": "pages/answer",
-					"pathName": "pages/answer",
-					"query": "questionnaire_id=14&isAgain=1",
-					"scene": null
-				},
-				{
-					"id": 2,
-					"name": "pages/result",
-					"pathName": "pages/result",
-					"query": "questionnaire_id=17&qa_id=48&qa_questionnaire_id=20072016514199822285f155b1daadff",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/login",
-					"pathName": "pages/login",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "pages/index",
-					"pathName": "pages/index",
-					"query": "scene=yybs_202009_b",
-					"scene": null
-				}
-			]
-		}
-	}
+    "description": "A WePY project",
+    "setting": {
+        "urlCheck": true,
+        "es6": false,
+        "enhance": false,
+        "postcss": false,
+        "preloadBackgroundData": false,
+        "minified": true,
+        "newFeature": true,
+        "coverView": true,
+        "nodeModules": false,
+        "autoAudits": false,
+        "showShadowRootInWxmlPanel": false,
+        "scopeDataCheck": false,
+        "uglifyFileName": false,
+        "checkInvalidKey": true,
+        "checkSiteMap": false,
+        "uploadWithSourceMap": true,
+        "compileHotReLoad": false,
+        "useMultiFrameRuntime": false,
+        "useApiHook": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        },
+        "enableEngineNative": false,
+        "bundle": false,
+        "useIsolateContext": true,
+        "useCompilerModule": false,
+        "userConfirmedUseCompilerModuleSwitch": true,
+        "userConfirmedBundleSwitch": false,
+        "packNpmManually": false,
+        "packNpmRelationList": [],
+        "minifyWXSS": true
+    },
+    "compileType": "miniprogram",
+    "appid": "wxf99aeedcb92d7b0e",
+    "projectname": "Demo",
+    "miniprogramRoot": "dist/",
+    "cloudfunctionRoot": "cloudfunctions/",
+    "simulatorType": "wechat",
+    "simulatorPluginLibVersion": {},
+    "libVersion": "2.11.3",
+    "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+    "condition": {
+        "plugin": {
+            "list": []
+        },
+        "game": {
+            "list": []
+        },
+        "gamePlugin": {
+            "list": []
+        },
+        "miniprogram": {
+            "list": [
+                {
+                    "id": 0,
+                    "name": "pages/webview",
+                    "pathName": "pages/webview",
+                    "query": "link=http%3A%2F%2Fwww.baidu.com%2F",
+                    "scene": null
+                },
+                {
+                    "id": 1,
+                    "name": "pages/answer",
+                    "pathName": "pages/answer",
+                    "query": "questionnaire_id=14&isAgain=1",
+                    "scene": null
+                },
+                {
+                    "id": 2,
+                    "name": "pages/result",
+                    "pathName": "pages/result",
+                    "query": "questionnaire_id=17&qa_id=48&qa_questionnaire_id=20072016514199822285f155b1daadff",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "pages/login",
+                    "pathName": "pages/login",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 4,
+                    "name": "pages/index",
+                    "pathName": "pages/index",
+                    "query": "scene=yybs_202009_b",
+                    "scene": null
+                },
+                {
+                    "name": "pages/demo",
+                    "pathName": "pages/demo",
+                    "scene": null
+                }
+            ]
+        }
+    }
 }

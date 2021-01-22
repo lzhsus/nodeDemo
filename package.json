@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./bin/www.js",
-    "pm2":"pm2 start ./bin/www.js",
-    "pm2:restart":"pm2 restart ./bin/www.js",
-    "pm2:stop":"pm2 stop ./bin/www.js",
-    "pm2:del":"pm2 del ./bin/www.js"
+    "pm2": "pm2 start ./bin/www.js",
+    "pm2:restart": "pm2 restart ./bin/www.js",
+    "pm2:stop": "pm2 stop ./bin/www.js",
+    "pm2:del": "pm2 del ./bin/www.js"
   },
   "author": "",
   "license": "ISC",
@@ -32,5 +32,11 @@
     "url": "^0.11.0",
     "vim": "^0.1.0",
     "webpack": "^4.44.1"
+  },
+  "dependencies": {
+    "gm": "^1.23.1",
+    "graphicsmagick": "^0.0.1",
+    "imageinfo": "^1.0.4",
+    "imagemagick": "^0.1.3"
   }
 }

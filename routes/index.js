@@ -10,17 +10,20 @@ var multiparty = require("multiparty");
 const moment = require("moment");
 const common = require('../libs/common');
 const request = require('request');
+const nodeGm = require('./gm')
+const nodeCanvas = require('./node_canvas')
 
 /**
  * 验证前端传过来的appid 是否匹配
  */
 router.use(async (req, res, next) => {
     let headers = req.headers||{}
-    if(headers['appid']&&(config['appid'] != headers['appid'])){
-        Ut.requestErr({err:'appid不匹配！'},res)
-    }else{
-        next()
-    }
+    // if(headers['appid']&&(config['appid'] != headers['appid'])){
+    //     Ut.requestErr({err:'appid不匹配！'},res)
+    // }else{
+    //     next()
+    // }
+    next()
 })
 /**
  * 验证token是否过去
@@ -266,6 +269,7 @@ router.get('/miniapp/api/sigin/activity', async function (req, res,next) {
         sort:0,
         isOpenid:true
     }),res)
+    
     const month = query['month']||moment().format("YYYY-MM-DD");
 
     let list = data.result.filter((res,i)=>{
@@ -442,5 +446,9 @@ router.get('/miniapp/api/user/profile', async function (req, res,next) {
         is_need_get_user_info:userInfo.is_need_get_user_info!=0?1:0
     })},res)
 });
+
+// router.get("/node/canvas/gm",nodeGm)
+router.get("/miniapp/api/node/canvas",nodeCanvas)
+
 module.exports = router;
 

@@ -13,6 +13,9 @@ module.exports = function(url, params={},res){
             }
             let str = data.toString();//将二进制的数据转换为字符串
             var result = (JSON.parse(str))['data'];
+            if(params['wuling']){
+                resolev(result||[])
+            }
             // 排序 最新时间在最强
             if(params['sort']==1){
                 var news = '';

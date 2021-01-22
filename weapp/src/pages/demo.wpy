@@ -1,0 +1,116 @@
+<template>
+  <div class="container" id="demo">
+        <div class="btn" @click="createHaibao">合成图片</div>
+        <div class="title">总结{{Info.totel}}条数据</div>
+        <div class="title2">长白山<span class="span01">{{Info.successTypeNum1}}条数据成功</span>,<span class="span02">{{Info.loseTypeNum1}}条数据失败</span></div>
+        <div class="title2">三亚<span class="span01">{{Info.successTypeNum2}}条数据成功</span>,<span class="span02">{{Info.loseTypeNum2}}条数据失败</span></div>
+        <div class="weapper">
+            <div class="result">
+                <span class="lable">{{successList.length}}条成功:</span>
+                <div class="list">
+                    <div wx:for="{{successList}}" wx:key="index">
+                        {{item.name}}
+                    </div>
+                </div>
+            </div>
+            <div class="result">
+                <span class="lable">{{loseList.length}}条失败:</span>
+                <div class="list">
+                    <div wx:for="{{loseList}}" wx:key="index">
+                        {{item.name}}
+                    </div>
+                </div>
+            </div>
+            <!-- <img wx:for="{{list}}" wx:key="index" src="{{item.img}}" class="img100" mode="widthFix" /> -->
+        </div>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core';
+// 配置
+import appConfig from 'Appconfig';
+import appData from '../common/app_data';
+// 公用
+import { mapState, mapActions } from '@wepy/x';
+import store from '../store';
+import mixinsIndex from 'Mixinsindex';
+import mixinShare from 'Mixinsshare';
+import * as common from 'Common';
+import eventHub from '../common/eventHub';
+import { uploadFile } from '../services/uploadFile';
+
+// 所有API管理
+import Api from 'Api';
+import { countTime, countTimeNum } from '@/services/countTime';
+import moment from 'moment';
+// 日志
+import Log from 'Log';
+
+wepy.page({
+    store,
+    mixins: [mixinsIndex, mixinShare],
+    data: {
+        sourcePages:'doyin',
+        img:'',
+        loseList:[],
+        successList:[],
+        Info:{}
+    },
+    computed: {
+        ...mapState([])
+    },
+    methods: {
+        createHaibao(){
+            Api.nodeCanvas().then(res=>{
+                console.log(res)
+                if(res.success){
+                    res = res.result||{}
+
+                    this.Info = res
+                    this.loseList = res.loseList
+                    this.successList = res.successList
+                }
+            })
+        }
+    },
+    async onLoad(opt) {
+    },
+
+    onShow() {}
+});
+</script>
+
+<style lang="less">
+#demo{
+    overflow: hidden;
+    .title{
+        padding: 20px;width: 100%;
+        box-sizing: border-box;
+        text-align:center;
+        font-size: 25px;font-weight: bold;
+    }
+    .title2{
+        box-sizing: border-box;
+        text-align:left;
+        font-size: 12px;font-weight: bold;
+        .span01{
+            color:red
+        }
+        .span02{
+            color:rgb(89, 0, 255)
+        }
+    }
+    .result{
+        width: 700px;margin: 20px auto;
+        display: flex;justify-content: stretch;align-items: flex-start;
+        .lable{
+            min-width: 120rpx;
+            text-align: right;font-size: 20px;color: #000;font-weight: bold;
+        }
+        .list{
+            
+        }
+    }
+}
+</style>

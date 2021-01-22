@@ -74,6 +74,7 @@ wepy.app({
         'pages/createUGC',
         'pages/doyin',
         'pages/fans',
+        'pages/demo',
         'pages/attention'
     ],
     window: {

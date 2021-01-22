@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load TensorFlow.js. This is required to use coco-ssd model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
+    <!-- Load the coco-ssd model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"> </script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <img id="img" src="./n1.png"/>
+
+    <script>
+        // Notice there is no 'import' statement. 'cocoSsd' and 'tf' is
+        // available on the index-page because of the script tag above.
+      
+        const img = document.getElementById('img');
+        load()
+        async function load(){
+            console.log(cocoSsd.load())
+            const coco = await cocoSsd.load()
+            console.log(coco)
+            cocoSsd.load().then(model => {
+                // detect objects in the image.
+                console.log('model',model)
+                model.detect(img).then(predictions => {
+                    console.log('Predictions: ', predictions);
+                });
+            });
+        }
+        // Load the model.
+      </script>
+</body>
+
+</html>

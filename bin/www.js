@@ -12,8 +12,8 @@ const os = require('os');
 /**
  * Get port from environment and store in Express.
  */
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+var port = normalizePort(process.env.PORT || '3002');
+app.set('port', '127.0.0.1:3002');
 
 /**
  * Create HTTP server.
@@ -24,7 +24,7 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port,'192.168.0.112',res=>{
+server.listen(port,res=>{
     var localhost = ''
     try {
       var network = os.networkInterfaces()

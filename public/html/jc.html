@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function intersecting(point1, point2, deviation = 10) {
+            let isTrue = false;
+            var A = [point1 - deviation,point1 + deviation];
+            var B = [point2 - deviation,point2 + deviation];
+            if(Math.max.apply(null, A)>Math.max.apply(null, B)){
+                if(Math.max.apply(null, B)>Math.min.apply(null, A)){
+                    isTrue = true;
+                }
+            }else{
+                if(Math.max.apply(null, A)>Math.min.apply(null, B)){
+                    isTrue = true;
+                }
+            }
+            return isTrue;
+        }
+    </script>
+</body>
+
+</html>

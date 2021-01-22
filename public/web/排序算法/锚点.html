@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css" mce_bogus="1">
+        p.test {
+            width: 400px;
+            margin: 5px auto;
+            border: 1px solid #ccc;
+        }
+
+        p.test strong {
+            font-size: 16px;
+            background: #fff;
+            border-bottom: 1px solid #aaa;
+            margin: 0;
+            display: block;
+            padding: 5px 0;
+            text-decoration: underline;
+            color: #059B9A;
+            cursor: pointer;
+        }
+
+        p.test p {
+            height: 400px;
+            background: #f1f1f1;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p class="test">
+        <a name="header_1" id="header_1"></a>
+        <strong onclick="javascript:scroller('header_4', 800);">
+            header_1 --> header_4
+        </strong>
+        <p style="width: 200px;height: 300px;background: red;margin-bottom: 20px;"></p>
+        <p style="width: 200px;height: 300px;background: red;margin-bottom: 20px;"></p>
+        <p style="width: 200px;height: 300px;background: red;margin-bottom: 20px;"></p>
+
+        <p style="width: 200px;height: 300px;background: red;margin-bottom: 20px;"></p>
+        <p style="width: 200px;height: 300px;background: red;margin-bottom: 20px;"></p>
+        <p style="width: 200px;height: 300px;background: red;margin-bottom: 20px;"></p>
+
+    </p>
+    <p class="test">
+        <a name="header_2" id="header_2"></a>
+        <strong onclick="javascript:scroller('header_5', 800);">
+            header_1 --> header_4
+        </strong>
+        <p></p>
+    </p>
+    <p class="test">
+        <a name="header_3" id="header_3"></a>
+        <strong onclick="javascript:scroller('header_6', 800);">
+            header_1 --> header_4
+        </strong>
+        <p></p>
+    </p>
+
+
+    <script type="text/javascript">
+        function intval(v) {
+            v = parseInt(v);
+            return isNaN(v) ? 0 : v;
+        } // ?取元素信息  
+        function getPos(e) {
+            var l = 0;
+            var t = 0;
+            var w = intval(e.style.width);
+            var h = intval(e.style.height);
+            var wb = e.offsetWidth;
+            var hb = e.offsetHeight;
+            while (e.offsetParent) {
+                l += e.offsetLeft + (e.currentStyle ? intval(e.currentStyle.borderLeftWidth) : 0);
+                t += e.offsetTop + (e.currentStyle ? intval(e.currentStyle.borderTopWidth) : 0);
+                e = e.offsetParent;
+            }
+            l += e.offsetLeft + (e.currentStyle ? intval(e.currentStyle.borderLeftWidth) : 0);
+            t += e.offsetTop + (e.currentStyle ? intval(e.currentStyle.borderTopWidth) : 0);
+            return {
+                x: l,
+                y: t,
+                w: w,
+                h: h,
+                wb: wb,
+                hb: hb
+            };
+        } // ?取??条信息  
+        function getScroll() {
+            var t, l, w, h;
+            if (document.documentElement && document.documentElement.scrollTop) {
+                t = document.documentElement.scrollTop;
+                l = document.documentElement.scrollLeft;
+                w = document.documentElement.scrollWidth;
+                h = document.documentElement.scrollHeight;
+            } else
+            if (document.body) {
+                t = document.body.scrollTop;
+                l = document.body.scrollLeft;
+                w = document.body.scrollWidth;
+                h = document.body.scrollHeight;
+            }
+            return {
+                t: t,
+                l: l,
+                w: w,
+                h: h
+            };
+        } // ?点(Anchor)?平滑跳?  
+        function scroller(el, duration) {
+            if (typeof el != 'object') {
+                el = document.getElementById(el);
+            }
+            if (!el)
+                return;
+            var z = this;
+            z.el = el;
+            z.p = getPos(el);
+            z.s = getScroll();
+            z.clear = function () {
+                window.clearInterval(z.timer);
+                z.timer = null
+            };
+            z.t = (new Date).getTime();
+            z.step = function () {
+                var t = (new Date).getTime();
+                var p = (t - z.t) / duration;
+                if (t >= duration + z.t) {
+                    z.clear();
+                    window.setTimeout(function () {
+                        z.scroll(z.p.y, z.p.x)
+                    }, 13);
+                } else {
+                    st = ((-Math.cos(p * Math.PI) / 2) + 0.5) * (z.p.y - z.s.t) + z.s.t;
+                    sl = ((-Math.cos(p * Math.PI) / 2) + 0.5) * (z.p.x - z.s.l) + z.s.l;
+                    z.scroll(st, sl);
+                }
+            };
+            z.scroll = function (t, l) {
+                window.scrollTo(l, t)
+            };
+            z.timer = window.setInterval(function () {
+                z.step();
+            }, 13);
+        }
+    </script>
+</body>
+
+</html>
