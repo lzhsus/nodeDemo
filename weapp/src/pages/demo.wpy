@@ -1,6 +1,11 @@
 <template>
   <div class="container" id="demo">
-        <div class="btn" @click="createHaibao">合成图片</div>
+        <div class="btn-show" @click="createHaibao">合成图片</div>
+        <div class="btn-show" @click="compressImage">compressImage</div>
+        <div class="btn-show" @click="webpImage">webpImage</div>
+        <div class="btn-show" @click="getVID">获取腾讯VID</div>
+        <div class="btn-show" @click="txtJsonClick">txtTOjson</div>
+        
         <div class="title">总结{{Info.totel}}条数据</div>
         <div class="title2">长白山<span class="span01">{{Info.successTypeNum1}}条数据成功</span>,<span class="span02">{{Info.loseTypeNum1}}条数据失败</span></div>
         <div class="title2">三亚<span class="span01">{{Info.successTypeNum2}}条数据成功</span>,<span class="span02">{{Info.loseTypeNum2}}条数据失败</span></div>
@@ -20,6 +25,9 @@
                         {{item.name}}
                     </div>
                 </div>
+            </div>
+            <div>
+                <!-- {{code}} -->
             </div>
             <!-- <img wx:for="{{list}}" wx:key="index" src="{{item.img}}" class="img100" mode="widthFix" /> -->
         </div>
@@ -55,12 +63,21 @@ wepy.page({
         img:'',
         loseList:[],
         successList:[],
-        Info:{}
+        Info:{},
+        code:[]
     },
     computed: {
         ...mapState([])
     },
     methods: {
+        getVID(){
+            Api.tx_vid().then(res=>{
+                if(res['success']){
+                    res = res.result||{}
+                    console.log('vid',res)
+                }
+            })
+        },
         createHaibao(){
             Api.nodeCanvas().then(res=>{
                 console.log(res)
@@ -72,6 +89,40 @@ wepy.page({
                     this.successList = res.successList
                 }
             })
+        },
+        compressImage(){
+            Api.compressImage().then(res=>{
+                console.log(res)
+                if(res.success){
+                    res = res.result||{}
+                }
+            })
+        },
+        txtJsonClick(){
+            Api.txt_json().then(res=>{
+                console.log(res)
+                if(res.success){
+                    res = res.result||{}
+                    let data = res.data||""
+                    // data = data.replace(/[\r\n]/g,",")
+                    // data = data.replace(/\"\"/g,"'")
+                    // data = data.replace(/\,\,/g,",").split(',')
+                    // console.log(JSON.stringify(data))
+                    // console.log(data)
+                    
+                    // this.code = data
+                }
+            })
+        },
+        
+        webpImage(){
+            Api.webpImage().then(res=>{
+                console.log(res)
+                if(res.success){
+                    res = res.result||{}
+                }
+            })
+            
         }
     },
     async onLoad(opt) {
@@ -82,8 +133,14 @@ wepy.page({
 </script>
 
 <style lang="less">
+.btn-show{
+    padding:12px 20px;
+    background:#cccccc;font-size:14px;
+    margin:12px;
+}
 #demo{
     overflow: hidden;
+    
     .title{
         padding: 20px;width: 100%;
         box-sizing: border-box;

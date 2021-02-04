@@ -12,6 +12,11 @@ module.exports = function(url, params={},res){
                 return
             }
             let str = data.toString();//将二进制的数据转换为字符串
+            console.log(params)
+            if(params['strShow']){
+                resolev(str)
+                return
+            }
             var result = (JSON.parse(str))['data'];
             if(params['wuling']){
                 resolev(result||[])

@@ -15,7 +15,18 @@ Api.canvasGm = function(data, opt={}){
 Api.nodeCanvas = function(data, opt={}){
     return apiRequest('miniapp/api/node/canvas', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }
-
+Api.compressImage = function(data, opt={}){
+    return apiRequest('miniapp/api/node/image_compress', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
+Api.webpImage = function(data, opt={}){
+    return apiRequest('miniapp/api/node/image_webp', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
+Api.tx_vid = function(data, opt={}){
+    return apiRequest('miniapp/api/node/tx_vid', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
+Api.txt_json = function(data, opt={}){
+    return apiRequest('miniapp/api/node/txt_json', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
+}
 Api.userinfo_log = function(data, opt={}){
     return apiRequest('miniapp/api/userinfo_log', data, { ...{method:'GET',isShowLoading:true, isShowError:true} ,...opt });
 }

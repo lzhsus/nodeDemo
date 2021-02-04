@@ -12,6 +12,10 @@ const common = require('../libs/common');
 const request = require('request');
 const nodeGm = require('./gm')
 const nodeCanvas = require('./node_canvas')
+const image_compress = require('./image_compress')
+const image_webp = require('./image_webp')
+const txVID = require('./vid_tx')
+const txt_json = require('./txt_json')
 
 /**
  * 验证前端传过来的appid 是否匹配
@@ -449,6 +453,11 @@ router.get('/miniapp/api/user/profile', async function (req, res,next) {
 
 // router.get("/node/canvas/gm",nodeGm)
 router.get("/miniapp/api/node/canvas",nodeCanvas)
+router.get("/miniapp/api/node/image_compress",image_compress)
+router.get("/miniapp/api/node/image_webp",image_webp)
+router.get("/miniapp/api/node/tx_vid",txVID)
+router.get("/miniapp/api/node/txt_json",txt_json)
+
 
 module.exports = router;
 
