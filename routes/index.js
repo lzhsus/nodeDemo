@@ -34,7 +34,7 @@ router.use(async (req, res, next) => {
  */
 router.use(async (req, res, next) => {
     let headers = req.headers||{}
-    if(headers&&headers['authorization']){
+    if(headers&&headers['authorization']&&!headers['isToken']){
         let token = headers.authorization.replace('Bearer ','');
         let appid = headers.appid||'';
         let openid = headers.openid||'';
