@@ -99,6 +99,7 @@ wepy.page({
             })
         },
         txtJsonClick(){
+            console.log(22)
             Api.txt_json().then(res=>{
                 console.log(res)
                 if(res.success){
