@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -7,6 +8,22 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser') ;
 const cors = require('cors');
 const logger = require('morgan');
+let mysql = require('mysql');
+var connection = mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'root',
+    database:'test',
+    port:3306
+})
+// 连接
+connection.connect(function (err) {
+    if (err) {
+        console.log('[query] - :' + err);
+        return;
+    }
+    console.log('[connection connect]  succeed!');
+});
 
 app.use(cookieParser()) ;
 // 注册 解析表单的body-parser

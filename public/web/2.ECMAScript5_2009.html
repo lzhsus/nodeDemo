@@ -103,7 +103,12 @@
     // Array.isArray() 检查对象是否为数组
     // Array.forEach() 为每个数组元素调用一次函数
     // Array.map()     重新编辑数据，返回新的数组
-    // Array.filter()  return符合条件的数据
+    // Array.filter()  return符合条件的数据 返回一个数组
+    var reduceArr = [2,3,4,5,6,7]
+    let newR = reduceArr.reduce(item=>{
+        return item<5
+    })
+    console.log("newR",newR)
     // Array.reduce()  计算指定子数据的和
     // Array.reduceRight()  计算总和
     // Array.every()   这个例子检查是否所有值都超过 18： 

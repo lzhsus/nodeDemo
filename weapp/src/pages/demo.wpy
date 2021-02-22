@@ -136,8 +136,9 @@ wepy.page({
 <style lang="less">
 .btn-show{
     padding:12px 20px;
-    background:#cccccc;font-size:14px;
-    margin:12px;
+    background:#cccccc;font-size:16px;
+    margin:12px;font-weight: bold;color: #fff;
+    border-radius: 4px;background:#409eff ;
 }
 #demo{
     overflow: hidden;
@@ -151,12 +152,12 @@ wepy.page({
     .title2{
         box-sizing: border-box;
         text-align:left;
-        font-size: 12px;font-weight: bold;
+        font-size: 16px;font-weight: bold;
         .span01{
-            color:red
+            color:red;margin: 0 2px;
         }
         .span02{
-            color:rgb(89, 0, 255)
+            color:rgb(89, 0, 255);margin: 0 2px;
         }
     }
     .result{
