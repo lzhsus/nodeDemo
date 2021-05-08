@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <title>txt: Accessibility API Example</title>
+    <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+    <script type="text/javascript" src="txt.js"></script>
+    <script type="text/javascript">
+        var canvas;
+        var stage;
+        var PIXEL_RATIO = (function () {
+            var ctx = document.createElement("canvas").getContext("2d"),
+                dpr = window.devicePixelRatio || 1,
+                bsr = ctx.webkitBackingStorePixelRatio ||
+                ctx.mozBackingStorePixelRatio ||
+                ctx.msBackingStorePixelRatio ||
+                ctx.oBackingStorePixelRatio ||
+                ctx.backingStorePixelRatio || 1;
+            return dpr / bsr;
+        })();
+        createHiDPICanvas = function (w, h, ratio) {
+            if (!ratio) {
+                ratio = PIXEL_RATIO;
+            }
+            var can = document.createElement("canvas");
+            can.width = w * ratio;
+            can.height = h * ratio;
+            can.style.width = w + "px";
+            can.style.height = h + "px";
+            can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+            return can;
+        }
+        function init() {
+            canvas = createHiDPICanvas(1000, 1000, 2);
+            document.body.appendChild(canvas);
+            stage = new createjs.Stage(canvas);
+            var text;
+            text = new txt.Text({
+                text: 'First poiretone',
+                font: '',
+                width: 400,
+                height: 400,
+                size: 100,
+                x: 0,
+                y: 0,
+                accessibilityPriority: 0,
+                accessibilityText: '<h1>First poiretone</h1>',
+                debug: true
+            });
+            stage.addChild(text);
+            stage.update();
+        }
+    </script>
+</head>
+
+<body onload="init()">
+
+    <canvas width="2000" height="2000" style="width: 1000px; height: 1000px;">
+        <h1>First poiretone</h1>
+        <h1>ANOTHER 1 poiretone</h1>
+        <h2>Second poiretone</h2>
+        <h3>Third poiretone</h3>
+        <p>poiretone default</p>
+        <p>another default poiretone</p>
+        <p>low 3 poiretone</p>
+        <p>low 5 poiretone</p>
+        <p>bottom 7 poiretone</p>
+    </canvas>
+</body>
+
+</html>

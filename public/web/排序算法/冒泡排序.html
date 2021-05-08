@@ -5,37 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
 </head>
 
 <body>
 
+    <script src="mp.js"></script>
 </body>
 
 </html>
-<script>
-    var num = 1,countArr = [];
-    function bubbleSort(arr) {
-        if(!Array.isArray(arr)) return [];
-        var len = arr.length;
-        for (var i = 0; i < len - 1; i++) {
-            var count = 0;
-            for (var j = 0; j < len - 1 - i; j++) {
-                count++
-                if (arr[j] > arr[j + 1]) {        // 相邻元素两两对比
-                    var temp = arr[j + 1];        // 元素交换
-                    arr[j + 1] = arr[j];
-                    arr[j] = temp;
-                    // break
-                }
-            }
-            countArr[i] = count;
-        }
-        return arr;
-    }
-    var arr = [1,9,5,66,522,555,663,7451,5454,2,88,45,63]
-    
-    console.time('method1的消耗的时间为');
-    bubbleSort(arr)
-    console.timeEnd('method1的消耗的时间为');
-    console.log('--------',arr)
-</script>

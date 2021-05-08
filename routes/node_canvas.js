@@ -21,9 +21,19 @@ var image = require("imageinfo"); //引用imageinfo模块
 const nodeGm = async function (req, res, next) {
     let data = []
     
-    let signPath = __dirname + `/../public/imgSigin/`;
+    let {time} = req.headers||{}
+
+    let signPath = __dirname + `/../public/imgSigin/${time}/`;
+    var checkDir = fs.existsSync(signPath);
+    if(!checkDir){
+        Ut.requestErr({err:'文件夹不存在',code:-1},res)
+        return
+    }
     let signPathList = fs.readdirSync(signPath);
-    console.log('signPathList',signPathList)
+    if(!signPathList||!signPathList.length){
+        Ut.requestErr({err:'文件为空',code:-1},res)
+        return
+    }
 
     let loseList = []
     let successList = []
@@ -36,7 +46,7 @@ const nodeGm = async function (req, res, next) {
             name:signPathList[i],
             type:signPathList[i].indexOf('_1_')!=-1?1:2
         }
-        let result222 = await createWuLingHaibao(item)||{};
+        let result222 = await createWuLingHaibao(item,time)||{};
         
         if(result222&&result222.success){
             successList.push(result222)
@@ -68,7 +78,7 @@ const nodeGm = async function (req, res, next) {
         }
     }, res)
 
-    function createWuLingHaibao(item){
+    function createWuLingHaibao(item,time){
         return new Promise(async (resolve2,reject)=>{
             const folderPath = __dirname + `/../public/img${item.type}/`;
             let fileList = fs.readdirSync(folderPath);
@@ -104,14 +114,19 @@ const nodeGm = async function (req, res, next) {
             
             // 
             if(item.type==1){
-                var path = `/output/${item.name}`;//路径从app.js级开始找--
+                var path = `/output/${time}/${item.name}`;//路径从app.js级开始找--
             }
             if(item.type==2){
-                var path = `/output/${item.name}`;//路径从app.js级开始找--
+                var path = `/output/${time}/${item.name}`;//路径从app.js级开始找--
             }
             var base64 = canvas.toDataURL('image/jpeg',0.8).replace(/^data:image\/\w+;base64,/, ""); //去掉图片base64码前面部分data:image/png;base64
             var dataBuffer = new Buffer.from(base64, 'base64'); //把base64码转成buffer对象，
-            var filePath = __dirname+'/../public/'+path
+            var filePath = __dirname+'/../public/'+path;
+            let file =__dirname+'/../public/'+ `/output/${time}/`
+            if(!fs.existsSync(file)){
+                fs.mkdirSync(file);
+            }
+
             fs.writeFile(filePath,dataBuffer,function(err){//用fs写入文件
                 let writeResult  = {}
                 if (!err){
@@ -130,7 +145,6 @@ const nodeGm = async function (req, res, next) {
             });
         })
         function load(name,mc,folderPath,ctx){
-            console.log('mc',mc)
             return new Promise((resolve,reject)=>{
                 loadImage(folderPath + name).then((image) => {
                     ctx.drawImage(image, mc.x, mc.y, mc.width*mc.singS, mc.height*mc.singS)

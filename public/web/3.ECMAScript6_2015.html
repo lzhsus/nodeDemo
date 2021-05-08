@@ -5,18 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/../css/demo.css">
+    <!-- <link rel="stylesheet" href="/../css/demo.css"> -->
 </head>
 
 <body>
-    es6新特性</br>
+    <!-- es6新特性</br>
     &nbsp;&nbsp;&nbsp;&nbsp;定义let const 幂**</br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let声明的变量只在所在的代码块内有效，切只能声明一次，不存在变量提升
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const 声明一个常量  只读属性 不可修改 声明必须初始化
     Symbol类型</br>
-        是一种新的原始数据类型Symbol，表示独一无二的数，最大的用户是用来定义对象的属性名
+        是一种新的原始数据类型Symbol，表示独一无二的数，最大的用户是用来定义对象的属性名 -->
     <!-- E -->
-    Number,Object,null,underfind,String,Booleanm,Symbol
+    <!-- Number,Object,null,underfind,String,Booleanm,Symbol
     字符串<br/>
         字符串Unicode 表示法（统一字符串标准）
         console.log("\u0061"); // a
@@ -30,7 +30,7 @@
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isNaN 判断是否为数字  NaN 返回true 其他返回false Number(参数)</br>
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箭头韩式 没有this 不适合定义对象方法</br>
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;没有变量提升，使用前要先定义</br>
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;函数声明尽量使用const 因为是常量</br>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;函数声明尽量使用const 因为是常量</br> -->
 </body>
 
 </html>
@@ -72,36 +72,108 @@
     //     return value > 18;
     // }
         // 新的数据属性
-        console.log(Number.EPSILON)
-        // 
-        console.log('最大安全的整数',Number.MAX_SAFE_INTEGER)
-        console.log('最小安全的整数',Number.MIN_SAFE_INTEGER)
-        console.log('最小的值：',Number.MIN_VALUE)
-        console.log('最大的值：',Number.MAX_VALUE)
-        console.log('无穷小：',Number.NEGATIVE_INFINITY)
-        console.log('无穷大：',Number.POSITIVE_INFINITY)
-        console.log('NaN：',Number.NaN)
-        // 判断是否为整数
-        console.log('判断是否为整数：12',Number.isInteger(12))
-        console.log('判断是否为整数：12.2',Number.isInteger(12.2))
-    // ES6 新的全局方法
-        // 如果参数为 Infinity  NaN返回false;否则返回true
-        console.log('isFinite:12',Number.isFinite(12))
-        console.log('isFinite:12.2',Number.isFinite(55663))
-        // 如果参数NaN 这全局isNaN() 返回true 否则返回false
-        // 相当于  Number("参数")
-        console.log('isNaN',isNaN(111))
-        console.log('isNaN',isNaN(.3))
-        console.log('isNaN',isNaN(1.3))
+    //     console.log(Number.EPSILON)
+    //     // 
+    //     console.log('最大安全的整数',Number.MAX_SAFE_INTEGER)
+    //     console.log('最小安全的整数',Number.MIN_SAFE_INTEGER)
+    //     console.log('最小的值：',Number.MIN_VALUE)
+    //     console.log('最大的值：',Number.MAX_VALUE)
+    //     console.log('无穷小：',Number.NEGATIVE_INFINITY)
+    //     console.log('无穷大：',Number.POSITIVE_INFINITY)
+    //     console.log('NaN：',Number.NaN)
+    //     // 判断是否为整数
+    //     console.log('判断是否为整数：12',Number.isInteger(12))
+    //     console.log('判断是否为整数：12.2',Number.isInteger(12.2))
+    // // ES6 新的全局方法
+    //     // 如果参数为 Infinity  NaN返回false;否则返回true
+    //     console.log('isFinite:12',Number.isFinite(12))
+    //     console.log('isFinite:12.2',Number.isFinite(55663))
+    //     // 如果参数NaN 这全局isNaN() 返回true 否则返回false
+    //     // 相当于  Number("参数")
+    //     console.log('isNaN',isNaN(111))
+    //     console.log('isNaN',isNaN(.3))
+    //     console.log('isNaN',isNaN(1.3))
 
-        console.log('isNaN',isNaN("1.3"))
-        console.log('isNaN',isNaN("1.3l"))
-        console.log('isNaN',isNaN("Hello"))
+    //     console.log('isNaN',isNaN("1.3"))
+    //     console.log('isNaN',isNaN("1.3l"))
+    //     console.log('isNaN',isNaN("Hello"))
         // 箭头函数
         // 箭头功能没有自己的this 它们不适合定义对象方法
         // 箭头函数功能未被提升，它们必须在使用前进行定义
         // 使用const 比使用var 更加安全，因为函数表达式始终是常量
     // 字符串遍历接口
-    var str = 'intone'
-    for(let key of)
+    // var str = 'intone'
+    // for(let key in value){
+
+    // }
+    // let arr = [1,2,3];
+    // function f(x,y,z){
+    //     console.log(x,y,z)
+    // }
+    // console.log('>>>',f(...arr))
+    // console.log('>>>',f(1,2,3))
+    // console.log('>>>',f.apply(null,arr))
+    let arr2 = [1,2,5,6,8,5,2,4,2,2]
+    // 新的数组构造 数据的值是位于的  没有重复
+    const s = new Set();
+    // arr2.forEach(x=>{
+    //     console.log(s.add(x))
+    // })
+
+    // Set.prototype.constructor 默认就是Set函数
+    // Set.prototype.size 返回Set 的数量
+    // Set.prototype.add(value)  添加某个子 返回Set函数
+    // Set.prototype.delete(value)  删除某个自 返回布尔值 表示是否删除成功
+    // Set.prototype.has(key) 返回布尔值 表示是否是Set成员
+    // Set.prototype.clear()  清空Set成员 灭有返回值
+    // Set.prototype.keys() 返回键名的遍历器
+    // Set.prototype.values() 返回键名的遍历器
+    // Set.prototype.entries() 返回键值对的遍历器
+    // Set.prototype.forEach() 使用回调函数变量全部数据
+    function dedupe(array){
+        return Array.from(new Set(array))
+    }
+    let set = new Set(arr2);
+    console.log('set',set)
+    for(let item of set.keys()){
+        console.log(item)
+    }
+    let arr3 = [{id:1,name:"lzs"},{id:2,name:"zz"},{id:2,name:"zz"},{id:2,name:"zz"},{id:2,name:"zz"}]
+    // let sum = arr3.reduce(function(pre,cur,index,arr){
+    //     console.log('pre',pre)
+        
+    //     return pre+cur.id;
+    // },0)
+    // console.log("sum>>>>",sum)
+    Array.prototype.myReduce = function(callback,initValue){
+        if(!callback) throw new TypeError('undefined is not a function');
+        if(typeof callback !=='function'){
+            throw new TypeError(callback + " is not a function")
+        }
+        let i= 0;
+        if(!initValue){
+            i = 1
+            initValue = this[0]
+        }
+        for(;i<this.length;i++){
+            initValue = callback(initValue,this[i],i,this)
+        }
+        return initValue;
+    }
+    let arr4 = ['a','c','d','a','d']
+    let arr5 = [1,2,3,4,5,6,7,8,9]
+    // let sum = arr2.myReduce(function(pre,cur,index,arr){
+    //     return pre + cur;
+    // },0)
+    let res4 = arr4.myReduce(function(prev,cur,index,arr){
+        if(prev.indexOf(cur)==-1){
+            prev.push(cur)
+        }
+        return prev;
+    },[])
+    // 
+    let res5 = arr5.find((value,index,arr)=>{
+        return value>=3
+    })
+    console.log("sum>>>>",res5)
 </script>

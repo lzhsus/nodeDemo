@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // console.log('>>>>',1111)
+        // var color = 'blue';
+        // console.log('>>>>',2222)
+        // // 方法 创建等待执行的列队
+        // function changeColor() {
+        //     console.log('>>>>',3333)
+        //     var anotherColor = 'red';
+        //     console.log('>>>>',44444)
+        //     // 方法  创建等待列队
+        //     function swapColors() {
+        //         console.log('>>>>',55555)
+        //         var tempColor = anotherColor;
+        //         anotherColor = color;
+        //         color = tempColor;
+        //         console.log('>>>>',66666)
+        //     }
+        //     console.log('>>>>',77777)
+        //     //执行列队等待 
+        //     swapColors();
+        //     console.log('>>>>',88888)
+        // }
+        // console.log('>>>>',99999)
+        // // 执行 列队的方法 其他等待单线程
+        // changeColor();
+        // console.log('>>>>',10000)
+
+        // console.log('>>>>',1111)
+        // function f1() {
+        //     console.log('>>>>',2222)
+        //     var n = 999;
+        //     console.log('>>>>',3333)
+        //     function f2() {
+        //         console.log('>>>>',4444)
+        //     }
+        //     console.log('>>>>',5555)
+        //     return f2;
+        // }
+        // console.log('>>>>',6666)
+        // var result = f1();
+        // console.log('>>>>',7777)
+        // result(); // 999
+        // console.log('>>>>',8888)
+        console.log('11111')
+        var name = "window";
+        console.log('22222')
+        var p = {
+            name: 'Perter',
+            getName: function () {
+                console.log('3333')
+                // 利用变量保存的方式保证其访问的是p对象
+                var self = this;
+                console.log('4444')
+                return function () {
+                    console.log('5555')
+                    return self.name;
+                }
+            }
+        }
+        console.log('6666')
+
+        var getName = p.getName();
+        console.log('7777')
+        var _name = getName();
+        console.log('88888')
+        console.log(_name);
+    </script>
+</body>
+
+</html>

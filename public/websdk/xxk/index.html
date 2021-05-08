@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
+    <meta charset="utf-8" />
+    <title>爆果消消看</title>
+    <link rel="stylesheet" type="text/css" href="css/xxk.css" />
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/createjs-2013.12.12.min.js"></script>
+    <script type="text/javascript" src="js/fx_methods.js"></script>
+    <script type="text/javascript" src="js/jquery-cookie.js"></script>
+    <script type="text/javascript">
+        var plane=plane||{};
+    </script>
+</head>
+<body>
+<div id="main">
+    <div id="container">
+        <canvas height="900" width="640" id="game" style="width:100%"></canvas>
+		<p class="u_p_m user"></p>
+        <ul class="game_score">
+	        <li class="na1"><span>1</span></li>
+		    <li class="na2"><span>7</span></li>
+		    <li class="na3"><span>8</span></li>
+		    <li class="na4"><span>5</span></li>
+	        <li class="na5"><span>7</span></li>
+	    </ul> 
+		<div class="e_body">
+		    <div id="daoju">
+               <ul>
+                <li class="daoju1" pid="9"><img src="res/e_prop_1.png" width="45"></li>
+                <li class="daoju2" pid="10"><img src="res/e_prop_2.png" width="45"></li>
+                <li class="daoju3" pid="11"><img src="res/e_prop_3.png" width="45"></li>
+               </ul>
+           </div>
+            <ul class="eliminate_pos game_score_curr">
+	            <li class="na1"><span>8</span></li>
+		        <li class="na2"><span>0</span></li>
+		        <li class="na3"><span>8</span></li>
+		        <li class="na4"><span>6</span></li>
+		        <li class="na5"><span>0</span></li>
+            </ul> 
+        </div>
+        <div id="time">
+            <div class="timeBg"></div>
+            <div class="progress">
+                <div class="bar"></div>
+            </div>
+            <div class="icon"></div>
+            <div class="time_t">60</div>
+        </div>
+         <div id="pauseBtn"></div>     
+    </div>
+</div>
+<div id="go">
+            <div class="bg"></div>
+            <div style="width:320px;height:480px;position:absolute;left:50%;margin-left: -160px;top:0">
+            <img class="apple"src="pic/match_ready_go_bg.png" width="90%">
+            <img class="go_txt"src="pic/go_txt.png" width="90%">
+            <img class="ready_txt"src="pic/ready_txt.png" width="90%">
+            </div>
+        </div>
+        <div id="gameOver">
+            <div class="bg"></div>
+            <div style="width:320px;height:480px;position:absolute;left:50%;margin-left: -160px;top:0">
+            <img class="apple"src="pic/match_time_over.png" width="90%">
+        </div>
+        </div> 
+        
+        <div id="pause">
+            <div class="bg"></div>
+            <div style="width:320px;height:480px;position:absolute;left:50%;margin-left: -160px;top:0">
+            <a href="#" class="btn backGame"></a>
+            <a href="http://www.baoguoqi.com/api/client_users/game_list" class="btn backList"></a>
+        </div>
+        </div>  
+</body>
+<script type="text/javascript" src="js/game.js"></script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var num = 0
+        function towNum(nums,target){
+            let targetMap = {};
+            for(let i=0;i<nums.length;i++){
+                num ++
+                let k = target - nums[i];
+                console.log(targetMap,targetMap[k],k)
+                if(targetMap[k]||targetMap[k]===0){
+                    return [targetMap[k],i]
+                }
+                targetMap[nums[i]] = i
+            }
+            return []
+        }
+        console.log(towNum([1,6,3,5,9],3))
+        console.log(num)
+    </script>
+</body>
+</html>

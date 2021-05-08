@@ -1,0 +1,2 @@
+/*--- 连连看背景 ---*/
+body {width:100%;height:100%;margin:0 auto; background:url(../pic/game_match_bg.png) no-repeat; -webkit-background-size:100% 100%;background-size:100% 100%;}

@@ -1,0 +1,332 @@
+@charset "utf-8";
+/*reset*/
+html {min-height:100%;}
+* {margin:0;padding:0;}
+header, footer, section, article, nav, figure, aside, canvas {display:block}
+ul, li {list-style:none}
+img {border:none;vertical-align:top;}
+a {text-decoration:none;color:#333;}
+body {
+ lin-height:1.4;
+ color:#333;-webkit-text-size-adjust:none;
+ font-size:12px;
+ font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3";
+ min-width:320px;
+ max-width:1024px;
+ min-height:100%;
+margin:0 auto;
+/*background-color:#0090d5;
+background-color:#f3f3f3;*/
+}
+h1,h2,h3,h4,h5,h6 {font-weight:normal;}
+select::-ms-value {
+ background:transparent;
+ color:#333
+}
+.pj_hd {position:relative;width:320px;height:39px;margin:0 auto;background:url(../images/header.png) no-repeat;-webkit-background-size:100% 39px;background-size:100% 39px;}
+.pj_hd a.hp {position:absolute;right:13px;top:10px;display:block;width:28px;height:25px;line-height:200em;overflow:hidden;}
+.pj_hd h1 {display:block;height:51px;font-size:14px;line-height:40px;text-align:right; margin-right:55px; font-weight:bold;color:#FFFFFF;}
+.pj_hd h1 a{ color:#FFFFFF;}
+.main {width:320px;height:423px;margin:0 auto;padding-bottom:45px;text-align:center;}
+.pj_tf{width:320px; height:67px; margin:0 auto; background:url(../images/footer.png) no-repeat;-webkit-background-size:100% 67px;background-size:100% 67px; position:fixed; bottom:0px; left:0px; z-index:999;}
+
+.navi_hd {position:relative;width:320px;height:46px;margin:0 auto;background:url(../images/navigation_header.png) no-repeat;-webkit-background-size:100% 46px;background-size:100% 46px;}
+.navi_hd a.hp {position:absolute;right:13px;top:10px;display:block;width:28px;height:25px;line-height:200em;overflow:hidden;}
+.navi_hd h1 {display:block;height:51px;font-size:14px;line-height:40px;text-align:right; margin-right:55px; font-weight:bold;color:#FFFFFF;}
+.navi_hd h1 a{ color:#FFFFFF;}
+.navi_main {width:320px;height:458px;margin:0 auto;padding-bottom:5px;background:url(../images/navigation_bg.png) no-repeat;-webkit-background-size:100% 457px;background-size:100% 458px; text-align:center; padding-top:186px;}
+.navi_main .rules{ margin-top:60px;}
+
+.QR_hd {position:relative;width:320px;height:54px;margin:0 auto;background:url(../images/QR_header.png) no-repeat;-webkit-background-size:100% 54px;background-size:100% 54px;}
+.QR_hd a.hp {position:absolute;right:13px;top:10px;display:block;width:28px;height:25px;line-height:200em;overflow:hidden;}
+.QR_hd h1 {display:block;height:51px;font-size:14px;line-height:40px;text-align:right; margin-right:55px; font-weight:bold;color:#FFFFFF;}
+.QR_hd h1 a{ color:#FFFFFF;}
+.QR_main{ height:408px;margin:0 auto; width:320px; background-color:#0090d5; color:#FFFFFF; }
+.bc{ text-align:center;}
+.QR_main .info{width:320px;height:408px;margin:0 auto; background:url(../images/QR_infor.png) no-repeat;-webkit-background-size:100% 408px;background-size:100% 408px; }
+.QR_main .btn_home{width:133px;margin:10px auto; background:url(../images/btn_home.png) no-repeat;-webkit-background-size:133px 50px;background-size:133px 51px; border:none; height:51px;border:none;}
+.QR_main .info .name{background: none repeat scroll 0% 0% transparent; border: 1px solid rgb(255, 255, 255); margin: 127px 101px 0; height: 30px; width: 153px; font-size: 14px; color:#0090d5; font-weight:bolder; }
+.QR_main .info .phone{background: none repeat scroll 0% 0% transparent; border: 1px solid rgb(255, 255, 255); margin: 16px 101px; height: 30px; width: 153px; font-size: 14px; color:#0090d5; font-weight:bolder; }
+.QR_main .info .birth{background: none repeat scroll 0% 0% transparent; border: 1px solid rgb(255, 255, 255); margin: 0px 101px; height: 30px; width: 153px; font-size: 14px; color:#0090d5; font-weight:bolder; }
+.QR_main .info .btn_info{width:151px;margin:0 auto; background:url(../images/btn_infor.png) no-repeat;-webkit-background-size:151px 50px;background-size:151px 51px; border:none; height:51px; margin:30px 0 0 90px;}
+
+.reward_hd {position:relative;width:320px;height:462px;margin:0 auto;background:url(../images/QR_header.png) no-repeat;-webkit-background-size:100% 54px;background-size:100% 54px; background-color:#0090d5;}
+.reward_hd a.hp {position:absolute;right:13px;top:10px;display:block;width:28px;height:25px;line-height:200em;overflow:hidden;}
+.reward_hd h1 {display:block;height:51px;font-size:14px;line-height:40px;text-align:right; margin-right:55px; font-weight:bold;color:#FFFFFF;}
+.reward_hd h1 a{ color:#FFFFFF;}
+.reward_main{ height:345px;margin:0 auto; width:300px; color:#FFFFFF;  margin-top:-400px;}
+.reward_main img{ position:absolute; z-index:1001;}
+.reward_main .return_ten{width:107px;height:48px;margin:0 auto; background:url(../images/return.png) no-repeat;-webkit-background-size:107px 47px;background-size:107px 48px; border:none; position:absolute; z-index:1002; margin:274px 0 0 97px; cursor:pointer;}
+.reward_main .return_none{width:107px;height:48px;margin:0 auto; background:url(../images/return.png) no-repeat;-webkit-background-size:107px 47px;background-size:107px 48px; border:none; position:absolute; z-index:1002; margin:245px 0 0 92px; cursor:pointer;}
+.reward_main .return_tshirt{width:107px;height:48px;margin:0 auto; background:url(../images/return.png) no-repeat;-webkit-background-size:107px 47px;background-size:107px 48px; border:none; position:absolute; z-index:1002; margin:316px 0 0 97px; cursor:pointer;}
+.reward_main .return_extshirt{width:107px;height:48px; background:url(../images/return.png) no-repeat;-webkit-background-size:107px 47px;background-size:107px 48px; border:none; position:absolute; z-index:1002; margin:302px 0 0 97px; cursor:pointer;}
+.reward_main .return_ipad{width:107px;height:48px;margin:0 auto; background:url(../images/return.png) no-repeat;-webkit-background-size:107px 47px;background-size:107px 48px; border:none; position:absolute; z-index:1002; margin:307px 0 0 97px; cursor:pointer;}
+.mask{height:100%;width:320px; position:fixed; _position:absolute; top:0; z-index:1000;} 
+.opacity{ opacity:0.5; filter: alpha(opacity=30); background-color:#000; } 
+
+.fruit_hd {position:relative;width:320px;height:54px;margin:0 auto;background:url(../images/QR_header.png) no-repeat;-webkit-background-size:100% 54px;background-size:100% 54px; background-color:#0090d5;}
+.fruit_hd a.hp {position:absolute;right:13px;top:10px;display:block;width:28px;height:25px;line-height:200em;overflow:hidden;}
+.fruit_hd h1 {display:block;height:51px;font-size:14px;line-height:40px;text-align:right; margin-right:55px; font-weight:bold;color:#FFFFFF;}
+.fruit_hd h1 a{ color:#FFFFFF;}
+.fruit_main {width:320px;height:408px;margin:0 auto;padding-bottom:5px;background:url(../images/no_fruit.png) no-repeat;-webkit-background-size:100% 408px;background-size:100% 408px; padding-top:101px;}
+.fruit_main .apple{ margin-left:8px;}
+.fruit_main .orange{ margin-left:-5px;}
+.fruit_main .pineapple{ margin-left:-5px; margin-right:5px;}
+.fruit_main .one{ margin-right:210px;}
+.fruit_main .two{ margin-right:105px;}
+.fruit_main .btn_freturn{width:164px;height:68px;margin:0 auto; background:url(../images/return_fruit.png) no-repeat;-webkit-background-size:164px 67px;background-size:164px 68px; border:none; position:absolute; z-index:1002; cursor:pointer; margin-left:78px; margin-top:10px;}
+.fruit_main .btn_bomb{width:189px;height:64px;margin:0 auto; background:url(../images/bomb.png) no-repeat;-webkit-background-size:189px 64px;background-size:189px 64px; border:none;  z-index:1002; cursor:pointer; margin-left:60px; margin-top:12px;}
+.fruit_main .nofruit{margin-top:184px;}
+
+.login_main {width:320px;height:408px;margin:0 auto;padding-bottom:5px;background:url(../images/login.png) no-repeat;-webkit-background-size:100% 408px;background-size:100% 408px; position:relative;}
+.login_main .btn_weico{width:143px;height:61px;margin:0 auto; background:url(../images/btn_weicologin.png) no-repeat;-webkit-background-size:143px 61px;background-size:143px 61px; border:none; position:absolute;cursor:pointer; margin-left:15px; margin-top:260px;}
+.login_main .btn_QQ{width:141px;height:58px;margin:0 auto; background:url(../images/btn_QQlogin.png) no-repeat;-webkit-background-size:141px 58px;background-size:141px 58px; border:none; position:absolute;cursor:pointer; margin-left:165px; margin-top:260px;}
+.login_main a.detail{position:absolute;right:13px;top:335px;display:block;width:100px;height:25px;line-height:200em;overflow:hidden;}
+.login_main_apple {width:320px;height:408px;margin:0 auto;padding-bottom:5px;background:url(../images/apple_login.png) no-repeat;-webkit-background-size:100% 408px;background-size:100% 408px; position:relative;}
+.login_main_apple .btn_weico{width:143px;height:61px;margin:0 auto; background:url(../images/btn_weicologin.png) no-repeat;-webkit-background-size:143px 61px;background-size:143px 61px; border:none; position:absolute;cursor:pointer; margin-left:15px; margin-top:260px;}
+.login_main_apple .btn_QQ{width:141px;height:58px;margin:0 auto; background:url(../images/btn_QQlogin.png) no-repeat;-webkit-background-size:141px 58px;background-size:141px 58px; border:none; position:absolute;cursor:pointer; margin-left:165px; margin-top:260px;}
+.login_main_apple a.detail{position:absolute;right:13px;top:335px;display:block;width:100px;height:25px;line-height:200em;overflow:hidden;}
+
+.login_main_orange {width:320px;height:408px;margin:0 auto;padding-bottom:5px;background:url(../images/orange_login.png) no-repeat;-webkit-background-size:100% 408px;background-size:100% 408px; position:relative;}
+.login_main_orange .btn_weico{width:143px;height:61px;margin:0 auto; background:url(../images/btn_weicologin.png) no-repeat;-webkit-background-size:143px 61px;background-size:143px 61px; border:none; position:absolute;cursor:pointer; margin-left:15px; margin-top:260px;}
+.login_main_orange .btn_QQ{width:141px;height:58px;margin:0 auto; background:url(../images/btn_QQlogin.png) no-repeat;-webkit-background-size:141px 58px;background-size:141px 58px; border:none; position:absolute;cursor:pointer; margin-left:165px; margin-top:260px;}
+.login_main_orange a.detail{position:absolute;right:13px;top:335px;display:block;width:100px;height:25px;line-height:200em;overflow:hidden;}
+.login_main_pineapple {width:320px;height:408px;margin:0 auto;padding-bottom:5px;background:url(../images/pineapple_login.png) no-repeat;-webkit-background-size:100% 408px;background-size:100% 408px; position:relative;}
+.login_main_pineapple .btn_weico{width:143px;height:61px;margin:0 auto; background:url(../images/btn_weicologin.png) no-repeat;-webkit-background-size:143px 61px;background-size:143px 61px; border:none; position:absolute;cursor:pointer; margin-left:15px; margin-top:260px;}
+.login_main_pineapple .btn_QQ{width:141px;height:58px;margin:0 auto; background:url(../images/btn_QQlogin.png) no-repeat;-webkit-background-size:141px 58px;background-size:141px 58px; border:none; position:absolute;cursor:pointer; margin-left:165px; margin-top:260px;}
+.login_main_pineapple a.detail{position:absolute;right:13px;top:335px;display:block;width:100px;height:25px;line-height:200em;overflow:hidden;}
+
+.login_main_game {width:320px;height:408px;margin:0 auto;padding-bottom:5px;background:url(../images/star_login.png) no-repeat;-webkit-background-size:100% 408px;background-size:100% 408px; position:relative;}
+.login_main_game .btn_weico{width:143px;height:61px;margin:0 auto; background:url(../images/btn_weicologin.png) no-repeat;-webkit-background-size:143px 61px;background-size:143px 61px; border:none; position:absolute;cursor:pointer; margin-left:15px; margin-top:295px;}
+.login_main_game .btn_QQ{width:141px;height:58px;margin:0 auto; background:url(../images/btn_QQlogin.png) no-repeat;-webkit-background-size:141px 58px;background-size:141px 58px; border:none; position:absolute;cursor:pointer; margin-left:165px; margin-top:295px;}
+.login_main_game a.detail{position:absolute;right:13px;top:360px;display:block;width:100px;height:25px;line-height:200em;overflow:hidden;}
+
+.login_main_list {width:320px;height:454px;margin:0 auto;padding-bottom:5px;background:url(../images/exchange_list.png) no-repeat;-webkit-background-size:100% 454px;background-size:100% 454px; position:relative;}
+.login_main_list .btn_exchange{width:145px;height:50px; background:url(../images/btn_exchange.png) no-repeat;-webkit-background-size:145px 50px;background-size:145px 50px; border:none; position:absolute;cursor:pointer;}
+.login_main_list .btn_QQ{width:141px;height:58px;margin:0 auto; background:url(../images/btn_QQlogin.png) no-repeat;-webkit-background-size:141px 58px;background-size:141px 58px; border:none; position:absolute;cursor:pointer; margin-left:165px; margin-top:295px;}
+.login_main_list a.detail{position:absolute;right:13px;top:360px;display:block;width:100px;height:25px;line-height:200em;overflow:hidden;}
+.btn_first{ margin:55px 0 0 145px;}
+.btn_second{ margin:60px 0 0 145px;}
+.btn_third{ margin:66px 0 0 145px;}
+.login_main_list p{ font-family:微软雅黑; color:#fff; font-size:12px;}
+.amount_first{ padding:110px 0 0 185px;}
+.amount_second{ padding:115px 0 0 185px;}
+.amount_third{ padding:120px 0 0 185px;}
+.login_main_list .btn_return{width:107px;height:48px;margin:0 auto; background:url(../images/return.png) no-repeat;-webkit-background-size:107px 47px;background-size:107px 48px; border:none; position:absolute; cursor:pointer; margin-left:100px; margin-top:10px;}
+
+.login_main_rules {width:320px;height:621px;margin:0 auto;padding-bottom:5px;background:url(../images/game_rules.png) no-repeat;-webkit-background-size:100% 621px;background-size:100% 621px; position:relative;}
+.login_main_rules .btn_return{width:107px;height:48px;margin:0 auto; background:url(../images/return.png) no-repeat;-webkit-background-size:107px 47px;background-size:107px 48px; border:none; position:absolute; cursor:pointer; margin-left:100px; margin-top:560px;}
+/*--- 爆果冲冲看 连连看 消消看 头部 ---*/
+.game_rush_hd {position:relative;width:320px;height:46px;margin:0 auto;background:url(../images/rush_cover_header.png) no-repeat;-webkit-background-size:100% 46px;background-size:100% 46px; background-color:#0090d5;}
+.game_match_hd {position:relative;width:320px;height:46px;margin:0 auto;background:url(../images/match_header.png) no-repeat;-webkit-background-size:100% 46px;background-size:100% 46px; background-color:#0090d5;}
+.game_eliminate_hd {position:relative;width:320px;height:46px;margin:0 auto;background:url(../images/eliminate_header.png) no-repeat;-webkit-background-size:100% 46px;background-size:100% 46px; background-color:#0090d5;}
+.game_rush_hd a.hp, .game_match_hd a.hp, .game_eliminate_hd a.hp{position:absolute;right:13px;top:10px;display:block;width:28px;height:25px;line-height:200em;overflow:hidden;}
+.game_rush_hd h1, .game_match_hd h1, .game_eliminate_hd h1 {display:block;height:51px;font-size:14px;line-height:40px;text-align:right; margin-right:55px; font-weight:bold;color:#FFFFFF;}
+.game_rush_hd h1 a, .game_match_hd h1 a, .game_eliminate_hd h1 a{ color:#FFFFFF;}
+.game_rush_hd a.hp, .game_match_hd a.hp, .game_eliminate_hd a.hp{position:absolute;right:13px;top:10px;display:block;width:28px;height:25px;line-height:200em;overflow:hidden;}
+.game_rush_hd h1, .game_match_hd h1, .game_eliminate_hd h1{display:block;height:51px;font-size:14px;line-height:40px;text-align:right; margin-right:55px; font-weight:bold;color:#FFFFFF;}
+.game_rush_hd h1 a, .game_match_hd h1 a, .game_eliminate_hd h1 a{ color:#FFFFFF;}
+
+/*--- 爆果冲冲看 封面 ---*/
+.game_rush_main{width:320px;height:417px;margin:0 auto;padding-bottom:5px;background:url(../images/game_rush_body_bg.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px; position:relative;}
+.game_rush_main .btn_top10{ width:134px; height:30px; margin:90px 0 0 25px; background:url(../images/btn_rush_top10.png) no-repeat;-webkit-background-size:134px 30px;background-size:134px 30px; border:none; position:absolute;cursor:pointer;}
+.game_match_main{width:320px;height:417px;margin:0 auto;padding-bottom:5px;background:url(../images/game_match_body_bg.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px; position:relative;}
+.game_match_main .btn_top10{ width:134px; height:30px; margin:90px 0 0 25px; background:url(../images/btn_match_top10.png) no-repeat;-webkit-background-size:134px 30px;background-size:134px 30px; border:none; position:absolute;cursor:pointer;}
+.game_eliminate_main{width:320px;height:417px;margin:0 auto;padding-bottom:5px;background:url(../images/game_eliminate_body_bg.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px; position:relative;}
+.game_eliminate_main .btn_top10{ width:134px; height:30px; margin:90px 0 0 25px; background:url(../images/btn_eliminate_top10.png) no-repeat;-webkit-background-size:134px 30px;background-size:134px 30px; border:none; position:absolute;cursor:pointer;}
+
+.game_rush_main .btn_prop,.game_match_main .btn_prop,.game_eliminate_main .btn_prop{ width:134px; height:30px; margin:90px 0 0 160px; background:url(../images/btn_rush_prop.png) no-repeat;-webkit-background-size:134px 30px;background-size:134px 30px; border:none; position:absolute;cursor:pointer;}
+.game_rush_main .btn_start_play,.game_match_main .btn_start_play,.game_eliminate_main .btn_start_play{width:224px; height:78px; margin:326px 0 0 50px; background:url(../images/btn_rush_start.png) no-repeat;-webkit-background-size:224px 78px;background-size:224px 78px; border:none; position:absolute;cursor:pointer;}
+/*--- 爆果冲冲看 连连看 消消看  top10 ---*/
+.game_rush_list{width:320px;height:417px;margin:0 auto;padding-bottom:5px;background:url(../images/rush_list_bg.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px; position:relative;}
+.game_match_list{width:320px;height:417px;margin:0 auto;padding-bottom:5px;;background:url(../images/match_list_bg.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px; position:relative;}
+.game_eliminate_list{width:320px;height:417px;margin:0 auto;padding-bottom:5px;background:url(../images/eliminate_list_bg.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px;  position:relative;}
+.game_rush_list_2{width:320px;height:417px;margin:0 auto;padding-bottom:5px;background:url(../images/rush_list_bg2.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px; position:relative;}
+.game_match_list_2{width:320px;height:417px;margin:0 auto;padding-bottom:5px;background:url(../images/match_list_bg2.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px; position:relative;}
+.game_eliminate_list_2{width:320px;height:417px;margin:0 auto;padding-bottom:5px;background:url(../images/eliminate_list_bg2.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 417px;position:relative;}
+.game_rush_list ul,.game_match_list ul,.game_eliminate_list ul,.game_rush_list_2 ul,.game_match_list_2 ul,.game_eliminate_list_2 ul{ padding:108px 0 0 70px;} 
+.game_rush_list ul li,.game_rush_list_2 ul li{ color:#9b521c; font-family:微软雅黑; font-size:18px; font-weight:500; line-height:43px; width:200px;} 
+.game_match_list ul li,.game_eliminate_list ul li,.game_match_list_2 ul li,.game_eliminate_list_2 ul li{ color:#9b521c; font-family:微软雅黑; font-size:18px; font-weight:500; line-height:43.5px; width:200px;} 
+.game_rush_list ul li p,.game_match_list ul li p,.game_eliminate_list ul li p,.game_rush_list_2 ul li p,.game_match_list_2 ul li p,.game_eliminate_list_2 ul li p{ display:inline-block; float:right;} 
+.game_rush_list a.hp,.game_match_list a.hp,.game_eliminate_list a.hp,.game_rush_list_2 a.hp,.game_match_list_2 a.hp,.game_eliminate_list_2 a.hp{position:absolute;right:127px;top:334px;display:block;width:28px;height:25px;line-height:200em;overflow:hidden;}
+.game_rush_list .btn_prop,.game_rush_list_2 .btn_prop{ width:132px; height:30px; margin:43px 0 0 21px; background:url(../images/btn_rush_prop.png) no-repeat;-webkit-background-size:132px 29px;background-size:132px 30px; border:none; position:absolute;cursor:pointer;}
+.game_rush_list .btn_start_play,.game_rush_list_2 .btn_start_play{width:143px; height:50px; margin:36px 0 0 158px; background:url(../images/btn_rush_start.png) no-repeat;-webkit-background-size:142px 50px;background-size:143px 50px; border:none; position:absolute;cursor:pointer;}
+.game_match_list .btn_prop,.game_eliminate_list .btn_prop,.game_match_list_2 .btn_prop,.game_eliminate_list_2 .btn_prop{ width:132px; height:30px; margin:43px 0 0 21px; background:url(../images/btn_rush_prop.png) no-repeat;-webkit-background-size:132px 29px;background-size:132px 30px; border:none; position:absolute;cursor:pointer;}
+.game_rush_list .btn_start_play,.game_match_list .btn_start_play,.game_eliminate_list .btn_start_play,.game_rush_list_2 .btn_start_play,.game_match_list_2 .btn_start_play,.game_eliminate_list_2 .btn_start_play{width:143px; height:50px; margin:26px 0 0 158px; background:url(../images/btn_rush_start.png) no-repeat;-webkit-background-size:142px 50px;background-size:143px 50px; border:none; position:absolute;cursor:pointer;}
+/*--- 爆果冲冲看 连连看 消消看  道具 ---*/
+.game_prop_list{width:320px;height:237px;margin:0 auto;padding-bottom:5px;background:url(../images/rush_prop_list.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 416px;position:relative;}
+.game_prop2_list{width:320px;height:237px;margin:0 auto;padding-bottom:5px;background:url(../images/match_prop_list.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 416px;  position:relative;}
+.game_prop3_list{width:320px;height:237px;margin:0 auto;padding-bottom:5px; background:url(../images/eliminate_prop_list.png) no-repeat;-webkit-background-size:100% 416px;background-size:100% 416px;position:relative;}
+.game_list_icon{ padding-top:179px;}
+.game_prop_list a.select_prop_first, .game_prop2_list a.select_prop_first, .game_prop3_list a.select_prop_first{position:absolute;right:167px;top:100px;display:block;width:100px;height:115px;line-height:200em;overflow:hidden;}
+.game_prop_list a.select_prop_second, .game_prop2_list a.select_prop_second, .game_prop3_list a.select_prop_second{position:absolute;right:50px;top:100px;display:block;width:100px;height:115px;line-height:200em;overflow:hidden;}
+.game_prop_list a.select_prop_third, .game_prop2_list a.select_prop_third, .game_prop3_list a.select_prop_third{position:absolute;right:167px;top:235px;display:block;width:100px;height:115px;line-height:200em;overflow:hidden;}
+.game_prop_list a.select_prop_fourth, .game_prop2_list a.select_prop_fourth, .game_prop3_list a.select_prop_fourth{position:absolute;right:50px;top:235px;display:block;width:100px;height:115px;line-height:200em;overflow:hidden;}
+.game_prop_list .first, .game_prop2_list .first, .game_prop3_list .first{ 
+    margin-left: 130px;
+}
+.game_prop_list .second, .game_prop2_list .second, .game_prop3_list .second{ 
+    margin-left: 85px;
+}
+.game_prop_list .third,.game_prop2_list .third, .game_prop3_list .third{ 
+    margin-left: 130px;
+    margin-top: 100px;
+}
+.game_prop_list .fourth, .game_prop2_list .fourth, .game_prop3_list .fourth{ 
+    margin-top: 100px;
+    margin-left: 85px;
+}
+.game_prop_list .btn_prop,.game_prop2_list .btn_prop,.game_prop3_list .btn_prop{ width:132px; height:30px; margin:38px 0 0 21px; background:url(../images/btn_rush_prop.png) no-repeat;-webkit-background-size:132px 29px;background-size:132px 30px; border:none; position:absolute;cursor:pointer; display:block;}
+.game_prop_list .btn_start_play,.game_prop2_list .btn_start_play,.game_prop3_list .btn_start_play{width:143px; height:50px; margin:20px 0 0 158px; background:url(../images/btn_rush_start.png) no-repeat;-webkit-background-size:142px 50px;background-size:143px 50px; border:none; position:absolute;cursor:pointer; display:block;}
+
+/*--- 爆果冲冲看  游戏结果 ---*/
+.game_rush_result{width:320px;height:462px;margin:0 auto;padding-bottom:5px;background:url(../images/rush_result.png) no-repeat;-webkit-background-size:100% 462px;background-size:100% 462px; position:relative; padding-top:12px;}
+.game_match_result{width:320px;height:462px;margin:0 auto;padding-bottom:5px;background:url(../images/match_result.png) no-repeat;-webkit-background-size:100% 462px;background-size:100% 462px; position:relative; padding-top:12px;}
+.game_eliminate_result{width:320px;height:462px;margin:0 auto;padding-bottom:5px;background:url(../images/eliminate_result.png) no-repeat;-webkit-background-size:100% 462px;background-size:100% 462px; position:relative; padding-top:12px;}
+.user{ font-family:微软雅黑; font-size:12px; color:#fff; margin-left:219px;}
+.game_rush_result p.highest,.game_match_result p.highest,.game_eliminate_result p.highest{  
+   position:relative;
+   font-family: Segoe UI, Verdana, sans-serif;  
+   font-size: 12px;   
+}  
+.game_rush_result p.highest a:link,  
+.game_rush_result p.highest a:visited,  
+.game_rush_result p.highest a:hover,  
+.game_rush_result p.highest a:active ,
+.game_eliminate_result p.highest a:link,  
+.game_eliminate_result p.highest a:visited,  
+.game_eliminate_result p.highest a:hover,  
+.game_eliminate_result p.highest a:active ,
+.game_match_result p.highest a:link,  
+.game_match_result p.highest a:visited,  
+.game_match_result p.highest a:hover,  
+.game_match_result p.highest a:active {
+position: absolute;  
+         text-decoration: none;  
+        top: 0;  
+        z-index: 2; 
+        -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0))); 
+		/*-webkit-mask-image: -webkit-linear-gradient(left,rgba(0,0,0,1), rgba(244,198,3,0.5),rgba(0,0,0,1));*/
+		/*background: -webkit-linear-gradient(#f0a600,#f4c603,#f0a600);   
+		-webkit-background-clip:text;/*只有webkit内核支持text的剪切模式*/
+    color: #f0a600; 
+    text-decoration: none;  
+} 
+
+.game_rush_result p.coin ,.game_match_result p.coin ,.game_eliminate_result p.coin {  
+         position: relative;  
+         font-family: Segoe, Verdana, sans-serif;  
+         font-size: 18px;  
+         line-height: 20px;  
+         text-shadow: 0px 0 0px #006; 
+		 margin-left:185px;
+		 margin-top:28px; 
+         }  
+.game_rush_result p.coin:after ,.game_match_result p.coin:after ,.game_eliminate_result p.coin:after {  
+         content: "620";  
+         color: #6e3300;  
+         text-shadow: 0px 0px 0px #600;  
+}  
+
+.game_rush_result p.coin a:link,  
+.game_rush_result p.coin a:visited,  
+.game_rush_result p.coin a:hover,  
+.game_rush_result p.coin a:active,
+.game_match_result p.coin a:link,  
+.game_match_result p.coin a:visited,  
+.game_match_result p.coin a:hover,  
+.game_match_result p.coin a:active,
+.game_eliminate_result p.coin a:link,  
+.game_eliminate_result p.coin a:visited,  
+.game_eliminate_result p.coin a:hover,  
+.game_eliminate_result p.coin a:active {  
+         position: absolute;  
+         text-decoration: none;  
+         top: 0;  
+         z-index: 2;  
+         color: #e49d00;  
+         -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));  
+}  
+
+
+.text{ font-size:16px; font-family:"微软雅黑"; font-weight:500; position:relative;text-shadow: -1px -1px 0px #604b0c; color:#ffdd10; margin-left:250px;}
+.text:after{ position:absolute; left:0px; content:"77,878"; color:#ffdd10; -webkit-mask-image:-webkit-gradient(linear, 0 0,100% 0 , from(rgba(0, 0, 0, 0.9)), color-stop(40%, rgba(0, 0, 0, 0.5)),to(rgba(0, 0, 0, 0))); text-shadow:-0.5px -0.5px 0px rgba(0,0,0,1);}
+.text:before{content:"77,878";text-shadow:-0.5px -0.5px 1px #f0a600; position:absolute; left:0px; color:rgba(0,0,0,0);-webkit-mask-image:-webkit-gradient(linear, 0 0, 100% 0, from(rgba(0, 0, 0, 1)), color-stop(50%, rgba(0, 0, 0, 0.4)), color-stop(70%, rgba(0, 0, 0, 0.7)),to(rgba(0, 0, 0, 0.9))); z-index:99;}
+
+.score{ font-size:38px; font-family:"微软雅黑"; font-weight:bold; position:relative;text-shadow: -1px -1px 0px #604b0c; color:#f3fc0b; margin-top:180px; margin-left:95px;}
+.score:after{ position:absolute; left:0px; content:"80,860"; color:#f3fc0b; -webkit-mask-image:-webkit-gradient(linear, 0 0,100% 0 , from(rgba(0, 0, 0, 0.9)), color-stop(40%, rgba(0, 0, 0, 0.5)),to(rgba(0, 0, 0, 0))); text-shadow:-0.5px -0.5px 0px rgba(0,0,0,1);}
+.score:before{content:"80,860";text-shadow:-0.5px -0.5px 1px #efa500; position:absolute; left:0px; color:rgba(0,0,0,0);-webkit-mask-image:-webkit-gradient(linear, 0 0, 100% 0, from(rgba(0, 0, 0, 1)), color-stop(50%, rgba(0, 0, 0, 0.4)), color-stop(70%, rgba(0, 0, 0, 0.7)),to(rgba(0, 0, 0, 0.9))); z-index:99;}
+
+.game_rush_result .btn_prop,.game_match_result .btn_prop,.game_eliminate_result .btn_prop{width:174px; height:41px; margin:18px 0 0 70px; background:url(../images/share.png) no-repeat;-webkit-background-size:173px 40px;background-size:174px 41px; border:none; position:absolute;cursor:pointer;}
+.game_rush_result .btn_start_play,.game_match_result .btn_start_play,.game_eliminate_result .btn_start_play{width:174px; height:42px; margin:60px 0 0 70px; background:url(../images/play_again.png) no-repeat;-webkit-background-size:174px 41px;background-size:174px 42px; border:none; position:absolute;cursor:pointer;}
+
+/*---游戏页面---*/
+.pause{width:33px; height:32px; background:url(../pic/pause.png) no-repeat;-webkit-background-size:33px 32px;background-size:33px 32px; border:none; position:absolute;cursor:pointer; position:absolute; top:15px; left:15px;}
+
+.text_big{ font-size:26px; font-family:"微软雅黑"; font-weight:500; position:relative;text-shadow: -1px -1px 0px #604b0c; color:#ffdd10; position:absolute; top:15px;left:55px;}
+.text_big:after{ position:absolute; left:0px; content:"80,860"; color:#ffdd10; -webkit-mask-image:-webkit-gradient(linear, 0 0,100% 0 , from(rgba(0, 0, 0, 0.9)), color-stop(40%, rgba(0, 0, 0, 0.5)),to(rgba(0, 0, 0, 0))); text-shadow:-0.5px -0.5px 0px rgba(0,0,0,1);}
+.text_big:before{content:"80,860";text-shadow:-0.5px -0.5px 1px #f0a600; position:absolute; left:0px; color:rgba(0,0,0,0);-webkit-mask-image:-webkit-gradient(linear, 0 0, 100% 0, from(rgba(0, 0, 0, 1)), color-stop(50%, rgba(0, 0, 0, 0.4)), color-stop(70%, rgba(0, 0, 0, 0.7)),to(rgba(0, 0, 0, 0.9))); z-index:99;}
+.u_p{ position:absolute; top:12px; right:20px; margin-left:auto;}
+.s_p{ position:absolute; top:32px; right:20px;}
+
+.p_1{ display:block; background:url(../pic/rush_prop_1.png) no-repeat; width:49px; height:49px;-webkit-background-size:49px 49px;background-size:49px 49px; border:none; position:absolute;cursor:pointer; position:absolute; bottom:175px; left:10px; box-shadow:#666 0px 1px 10px;-webkit-box-shadow: #666 0px 1px 10px;
+-moz-box-shadow: #666 0px 1px 10px;border-radius:5px; }
+.p_2{ display:block; background:url(../pic/rush_prop_2.png) no-repeat; width:49px; height:49px;-webkit-background-size:49px 49px;background-size:49px 49px; border:none; position:absolute;cursor:pointer; position:absolute; bottom:120px; left:10px; box-shadow:#666 0px 1px 10px;-webkit-box-shadow: #666 0px 1px 10px;
+-moz-box-shadow: #666 0px 1px 10px;border-radius:5px; }
+.p_3{ display:block; background:url(../pic/rush_prop_3.png) no-repeat; width:49px; height:49px;-webkit-background-size:49px 49px;background-size:49px 49px; border:none; position:absolute;cursor:pointer; position:absolute; bottom:65px; left:10px;  box-shadow:#666 0px 1px 10px;-webkit-box-shadow: #666 0px 1px 10px;
+-moz-box-shadow: #666 0px 1px 10px;border-radius:5px;}
+.p_4{ display:block; background:url(../pic/rush_prop_4.png) no-repeat; width:49px; height:49px;-webkit-background-size:49px 49px;background-size:49px 49px; border:none; position:absolute;cursor:pointer; position:absolute; bottom:10px; left:10px;  box-shadow:#666 0px 1px 10px;-webkit-box-shadow: #666 0px 1px 10px;
+-moz-box-shadow: #666 0px 1px 10px;border-radius:5px;}
+.plane{display:block; background:url(../pic/plane.png) no-repeat; width:145px; height:149px;-webkit-background-size:145px 149px;background-size:145px 149px; border:none; position:absolute;cursor:pointer; position:absolute; bottom:0px; left:150px; }
+
+/*--- 连连看 ---*/
+.u_p_m{ position:absolute; top:13px; right:80px; margin-left:auto;}
+.s_p_m{ position:absolute; top:12px; right:20px;}
+.p_1_m{ display:block; background:url(../pic/match_prop_1.png) no-repeat; width:40px; height:40px;-webkit-background-size:40px 49px;background-size:40px 40px; border:none; position:absolute;cursor:pointer; position:absolute; top:35px; left:10px; box-shadow:#666 0px 1px 10px;-webkit-box-shadow: #666 0px 1px 10px;
+-moz-box-shadow: #666 0px 1px 10px;border-radius:5px; }
+.p_2_m{ display:block; background:url(../pic/match_prop_2.png) no-repeat; width:40px; height:40px;-webkit-background-size:40px 40px;background-size:40px 40px; border:none; position:absolute;cursor:pointer; position:absolute; top:35px; left:60px; box-shadow:#666 0px 1px 10px;-webkit-box-shadow: #666 0px 1px 10px;
+-moz-box-shadow: #666 0px 1px 10px;border-radius:5px; }
+.p_3_m{ display:block; background:url(../pic/match_prop_3.png) no-repeat; width:40px; height:40px;-webkit-background-size:40px 40px;background-size:40px 40px; border:none; position:absolute;cursor:pointer; position:absolute; top:35px; left:110px;  box-shadow:#666 0px 1px 10px;-webkit-box-shadow: #666 0px 1px 10px;
+-moz-box-shadow: #666 0px 1px 10px;border-radius:5px;}
+.score_m{ height:28px; background:url(../pic/match_score.png) no-repeat left;-webkit-background-size:18px 28px;background-size:18px 28px; position:absolute; top:40px; right:10px; font-size:28px; padding-left:20px; text-shadow:#666 1px 1px 5px; line-height:28px; font-weight:bolder;color:ffffc1;}
+.score_m:after{ position:absolute; left:0px; content:"80,860"; color:#ffdd10; -webkit-mask-image:-webkit-gradient(linear, 0 0,100% 0 , from(rgba(0, 0, 0, 0.9)), color-stop(40%, rgba(0, 0, 0, 0.5)),to(rgba(0, 0, 0, 0))); text-shadow:1px 1px 1px rgba(28,28,28,1);padding-left:20px;}
+.score_m:before{content:"80,860";text-shadow:-0.5px -0.5px 1px #f0a600; position:absolute; left:0px; color:rgba(0,0,0,0);-webkit-mask-image:-webkit-gradient(linear, 0 0, 100% 0, from(rgba(0, 0, 0, 1)), color-stop(50%, rgba(0, 0, 0, 0.4)), color-stop(70%, rgba(0, 0, 0, 0.7)),to(rgba(0, 0, 0, 0.9))); z-index:99;padding-left:20px;}
+.match_body{width:320px;margin:85px auto 0; font-size:0px;}
+.match_body a{margin:0;}
+.kiwifruit{width:45px; height:45px; background:url(../pic/match_kiwifruit.png) no-repeat;-webkit-background-size:45px 45px;background-size:45px 45px; display:inline-block;}
+.applefruit{width:45px; height:45px; background:url(../pic/match_apple.png) no-repeat;-webkit-background-size:45px 45px;background-size:45px 45px;display:inline-block;}
+.cherryfruit{width:45px; height:45px; background:url(../pic/match_cherry.png) no-repeat;-webkit-background-size:45px 45px;background-size:45px 45px;display:inline-block;}
+.orangefruit{width:45px; height:45px; background:url(../pic/match_orange.png) no-repeat;-webkit-background-size:45px 45px;background-size:45px 45px;display:inline-block;}
+.peachfruit{width:45px; height:45px; background:url(../pic/match_peach.png) no-repeat;-webkit-background-size:45px 45px;background-size:45px 45px;display:inline-block;}
+.pineapple{width:45px; height:45px; background:url(../pic/match_pineapple.png) no-repeat;-webkit-background-size:45px 45px;background-size:45px 45px;display:inline-block;}
+.pan_bg{ position:absolute; bottom:41px; left:40px;}
+.clock{ position:absolute; bottom:30px; left:20px;}
+.rate{ background:url(../pic/match_progress.png) repeat-x;width:30px; height:12px; position:absolute; bottom:41px; left:40px;}
+.pause_m{width:33px; height:32px; background:url(../pic/pause.png) no-repeat;-webkit-background-size:33px 32px;background-size:33px 32px; border:none; position:absolute;cursor:pointer; position:absolute; bottom:30px; right:41px;}
+.time {  
+         position: absolute;
+         bottom:40px;
+         left:250px;		 
+         font-family: Segoe, Verdana, sans-serif;  
+         font-size: 18px;  
+         line-height: 20px;  
+         text-shadow: 0px 0 0px #006;
+         font-weight:bolder;		 
+         }  
+.time a{cursor:default; }
+.time:after {  
+         content: "60";  
+         color: #6e3300;  
+         text-shadow: 0px 0px 0px #600;  
+}  
+.time a:link,  
+.time a:visited,  
+.time a:hover,  
+.time a:active {  
+         position: absolute;  
+         text-decoration: none;  
+         top: 0;  
+         z-index: 2;  
+         color: #e2d13c;  
+         -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));  
+}  

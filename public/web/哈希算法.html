@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var a = 0
+        function towNum(nums,target){
+            let map = new Map();
+            console.log(map)
+            for(let i=0;i<nums.length;i++){
+                a++
+                let k = target - nums[i];
+                console.log(k,map.has(k))
+                // 查询map中舒服存在
+                if(map.has(k)){
+                    // 存在去除key对应的值 
+                    return [map.get(k),i]
+                }else{
+                    map.set(nums[i],i)
+                }
+                console.log('map',map)
+            }
+            return []
+        }
+        // console.log(towNum([1,2,35,6,9,7],9))
+        // console.log(towNum([1,2,35,6,9,7,8],9))
+        // console.log('a>>>',a)
+    </script>
+</body>
+</html>

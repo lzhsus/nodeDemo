@@ -1,0 +1,1 @@
+{"code":200,"nickname":"用户昵称","point":"123","props":[{"u_id": 1, "p_id": 12}]}

@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8">
-    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script src="https://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 </head>
 
 <body>
@@ -16,18 +16,41 @@
             jsApiList: [],
             openTagList: ['wx-open-launch-weapp'], // 填入打开小程序的开放标签名
         })
+        wx.ready(function (res) {
+            console.log(res)
+            // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中
+        });
     </script>
 
     Hello World
 
     <!-- 跳转小程序的开放标签。文档 https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_Open_Tag.html -->
-    <wx-open-launch-weapp id="weapp" weappid="wxe7bd80f710c7cb35" path="/pages/index/index">
+    <!-- <wx-open-launch-weapp id="weapp" weappid="wxe7bd80f710c7cb35" path="/pages/index/index">
         <template>
             <button
                 style="width: 200px; height: 45px; line-height: 45px; text-align: center; font-size: 17px; border-radius: 22.5px; color:cornflowerblue;">拉起小程序</button>
         </template>
-    </wx-open-launch-weapp>
+    </wx-open-launch-weapp> -->
 
+    <wx-open-launch-weapp style="padding: 12px;background: red;width: 190px;height: 50px;" id="launch-btn" username="gh_xxxxxxxx" path="pages/home/index?user=123&action=abc">
+        <template style="padding: 12px;background: red;width: 100px;height: 50px;">
+            <style>
+                .btn {
+                    padding: 12px;background: red;width: 100px;height: 50px;
+                }
+            </style>
+            <button class="btn">打开小程序</button>
+        </template>
+    </wx-open-launch-weapp>
+    <script>
+        var btn = document.getElementById('launch-btn');
+        btn.addEventListener('launch', function (e) {
+            console.log('success');
+        });
+        btn.addEventListener('error', function (e) {
+            console.log('fail', e.detail);
+        });
+    </script>
 </body>
 
 </html>
