@@ -20,7 +20,11 @@ var image = require("imageinfo"); //引用imageinfo模块
 
 const nodeGm = async function (req, res, next) {
     let data = []
-    
+    var arg = url.parse(req.url).query;
+
+    console.log(arg)
+    // console.log(url())
+    // console.log(res.query)
     let {time} = req.headers||{}
 
     let signPath = __dirname + `/../public/imgSigin/${time}/`;

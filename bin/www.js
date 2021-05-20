@@ -34,6 +34,8 @@ server.listen(port,res=>{
     }
     var uri = 'http://' + localhost + ':' + port;
     console.log('listen at ' + uri + '\n')
+    console.log('合成图片：'+uri+'/miniapp/api/node/canvas?isToken=true&time=XXXX')
+
     // opn(uri)
 });
 server.on('error', onError);

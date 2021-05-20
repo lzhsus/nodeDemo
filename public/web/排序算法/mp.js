@@ -46,10 +46,12 @@ function insertionSort(arr) {
 }
 // 二分插入排序
 // 起始位置 终止位置
-function insertionSortTow(arr){
+function insertionSortTow(arr) {
     for (var i = 1; i < arr.length; i++) {
         // 当前数组
-        var temp = arr[i], left = 0, right = i - 1;
+        var temp = arr[i],
+            left = 0,
+            right = i - 1;
 
         while (left <= right) {
             var middle = parseInt((left + right) / 2);
@@ -71,50 +73,51 @@ function insertionSortTow(arr){
 }
 // 快速
 function quickSort(arr) {
-    if(arr.length<=1) return arr;
+    if (arr.length <= 1) return arr;
     let left = [];
     let right = [];
     let flag = arr.shift();
-    for(let i=0;i<arr.length;i++){
+    for (let i = 0; i < arr.length; i++) {
         num++
-        if(arr[i]<flag){
+        if (arr[i] < flag) {
             left.push(arr[i])
-        }else{
+        } else {
             right.push(arr[i])
         }
     }
     console.log(num)
-    return quickSort(left).concat(flag,quickSort(right))
+    return quickSort(left).concat(flag, quickSort(right))
 }
+
 function quickSort2(arr) {
-    if(arr.length<=1) return arr;
-    var left=[];  // 用来存放左侧的数据的数组
-    var right=[];  // 用来存放右侧数据的数组
-    let index = Math.floor(arr.length/2);
+    if (arr.length <= 1) return arr;
+    var left = []; // 用来存放左侧的数据的数组
+    var right = []; // 用来存放右侧数据的数组
+    let index = Math.floor(arr.length / 2);
     var middle = arr[index];
-    arr.splice(index,1)
-    for(var i=0;i<arr.length;i++){
+    arr.splice(index, 1)
+    for (var i = 0; i < arr.length; i++) {
         num++
-        if(arr[i]>middle){
+        if (arr[i] > middle) {
             right.push(arr[i]);
-        }else if(arr[i]<middle){
+        } else if (arr[i] < middle) {
             left.push(arr[i]);
         }
     }
     console.log(num)
-    return quickSort2(left).concat(middle,quickSort2(right))
+    return quickSort2(left).concat(middle, quickSort2(right))
 }
 // 冒泡
 function bubbleSort(arr) {
     let num = 1
-    for(let j=0;j<arr.length;j++){
-        for(let i=0;i<arr.length-1-j;i++){
+    for (let j = 0; j < arr.length; j++) {
+        for (let i = 0; i < arr.length - 1 - j; i++) {
             let temp;
             num++
-            if(arr[i]>arr[i+1]){
+            if (arr[i] > arr[i + 1]) {
                 temp = arr[i];
-                arr[i] = arr[i+1];
-                arr[i+1] = temp;
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
             }
         }
     }
@@ -124,7 +127,103 @@ function bubbleSort(arr) {
 
 var arr = [6, 9, 5, 66, 522, 555, 663, 7451, 5454, 2, 88, 45, 63]
 
-console.time('method1的消耗的时间为');
-console.log(arr)
-console.log( insertionSort(arr))
-console.timeEnd('method1的消耗的时间为');
+// console.time('method1的消耗的时间为');
+// console.log(arr)
+// console.log( insertionSort(arr))
+// console.timeEnd('method1的消耗的时间为');
+
+let arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+// 随机数
+// arr2.sort(function(a,b) {
+//     return 0.5 - Math.random();
+// })
+
+function shuffle(arr) {
+    let len = arr.length;
+    while (len) {
+        len--;
+        let index = Math.random() * len >> 0;
+        [arr[len], arr[index]] = [arr[index], arr[len]]
+    }
+    return arr;
+}
+
+function shuffle2(arr) {
+    return arr.sort(() => Math.random() > 0.5);
+}
+// console.log('arr2',shuffle2(arr2))
+let arr3 = [1, 2, 3, 4, 5, [6, 7, 8, 9, [10, [11, 13, 14, 5], 16], 18, 19], 20];
+
+
+function tempStr(arr) {
+    return arr.join(',').split(',');
+}
+
+function returnData(arr, newArr = []) {
+    for (let i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) {
+            returnData(arr[i], newArr)
+        } else {
+            newArr.push(arr[i])
+        }
+    }
+    return newArr;
+}
+const newArr = arr3.reduce((prev, curr) => (prev.concat(curr)), []);
+
+
+// console.log('arr>>   tempStr',tempStr(arr3))
+// console.log('arr>>returnData',returnData(arr3))
+// console.log('arr>>returnData',newArr)
+let arrname = [{
+    desc3: 'affa'
+}, {
+    desc3: 'aacc'
+}, {
+    desc3: 'zccc'
+}, {
+    desc3: 'bfff'
+}, {
+    desc3: 'acag3'
+}]
+// console.log(["aaccc", "accc", "accg", "affa", "afff"])
+
+// console.log(arrname.sort((a,b)=>backSubstr(a.desc3).charCodeAt(0) - backSubstr(b.desc3).charCodeAt(0)))
+// console.log(arrname.sort((a,b)=>backSubstr(a.desc3,1).charCodeAt(0) - backSubstr(b.desc3,1).charCodeAt(0)))
+
+
+
+
+function mySort(arr) {
+    // 获取比较次数
+    let len = arr.map(res=>{ return res.desc3.length||0 }).sort(function (a,b){ return b-a; })[0];
+    for(let j=0;j<len;j++){
+        for(let z=0;z<arr.length;z++){
+            for(let i=0;i<arr.length-1;i++){
+                let a = backSubstrCur(arr[i].desc3,j)+'';
+                let b = backSubstrCur(arr[i+1].desc3,j)+'';
+                let isTrue = backSubstrPer(arr[i].desc3,arr[i+1].desc3,j)
+                if(a.charCodeAt(0)>b.charCodeAt(0)&&isTrue){
+                    let temp = arr[i];
+                    arr[i] = arr[i+1]
+                    arr[i+1] = temp;
+                }
+            }
+        }
+    }
+    function backSubstrCur(str,index=0) {
+        if(str.length<=index) return '0';
+        return str.substr(index,1)
+    }
+    function backSubstrPer(str1,str2,index=0) {
+        if(!str1.substr(0,index)&&!str2.substr(0,index)) return true;
+        return str1.substr(0,index) == str2.substr(0,index);
+    }
+    return arr
+}
+console.log(JSON.stringify(arrname))
+console.log(JSON.stringify(mySort(arrname)))
+
+
+
+

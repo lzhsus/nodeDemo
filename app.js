@@ -55,5 +55,6 @@ app.all("*", function (req, res, next) {
 
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/weixinopen/index'));
-console.log('合成图片：'+'http://192.168.56.1:3002/miniapp/api/node/canvas')
+
+
 module.exports = app;
