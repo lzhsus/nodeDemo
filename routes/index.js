@@ -15,7 +15,9 @@ const nodeCanvas = require('./node_canvas')
 const image_compress = require('./image_compress')
 const image_webp = require('./image_webp')
 const txVID = require('./vid_tx')
-const txt_json = require('./txt_json')
+const txt_json = require('./txt_json');
+const tenpay = require('tenpay');
+
 
 /**
  * 验证前端传过来的appid 是否匹配
@@ -100,11 +102,24 @@ router.post('/miniapp/api/login', async function (req, res) {
             })
             await Ut.updataJsonDB(__dirname + '/../public/data/userInfo.json', params, res,{});
         } catch (error) { }
-        Ut.requestSuccess({result:{token:JSON.parse(r2).access_token,openid:JSON.parse(r1).openid}},res)
+        Ut.requestSuccess({
+            result:{
+                token:JSON.parse(r2).access_token,
+                expires_in:JSON.parse(r2).expires_in,
+                openid:JSON.parse(r1).openid||'',
+                r1:r1,
+                r2:r2,
+                appid:config['appid']||'',
+            }
+        },res)
     } catch (err) {
         Ut.requestErr({err:err},res)
     }
 });
+// 获取统一下单
+
+var pay=require('./pay');
+router.post('/miniapp/api/pay', pay);
 /**
  * 获取用户流水数据
  */
